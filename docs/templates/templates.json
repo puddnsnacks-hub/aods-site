@@ -1,0 +1,321 @@
+[
+  {
+    "id": "shell",
+    "title": "Page shell",
+    "file": "shell.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "site-alert",
+      "header",
+      "layout",
+      "section-heading",
+      "prose",
+      "footer"
+    ],
+    "purpose": "The canonical order every page starts from: skip-link, gov-banner, site-alert, header, main, footer."
+  },
+  {
+    "id": "landing",
+    "title": "Landing page",
+    "file": "landing.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "site-alert",
+      "header",
+      "hero",
+      "search",
+      "button",
+      "section-heading",
+      "layout",
+      "stat",
+      "tile",
+      "section-opener",
+      "card",
+      "summary-box",
+      "footer"
+    ],
+    "purpose": "A front door: hero with search and a call to action, a stat band, program tiles, a numbered section opener, a row of cards and a summary."
+  },
+  {
+    "id": "agency-home",
+    "title": "Agency homepage",
+    "file": "agency-home.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "site-alert",
+      "header",
+      "hero",
+      "search",
+      "button",
+      "section-heading",
+      "layout",
+      "stat",
+      "section-opener",
+      "card",
+      "field",
+      "collection",
+      "summary-box",
+      "footer"
+    ],
+    "purpose": "The department's front door, reimagined: a 16:9 hero with search, a stat band, the priorities as numbered openers, a full-bleed dark identity band (gold cards and an updates field), the newsroom and a summary."
+  },
+  {
+    "id": "program",
+    "title": "Program page",
+    "file": "program.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "site-alert",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "layout",
+      "in-page-nav",
+      "prose",
+      "accordion",
+      "reference-list",
+      "footer"
+    ],
+    "purpose": "A long reading page: breadcrumb, title, a sticky in-page nav beside long prose, an FAQ accordion and a dark reference list that blends into the footer."
+  },
+  {
+    "id": "office",
+    "title": "Program office",
+    "file": "office.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "hero",
+      "breadcrumb",
+      "layout",
+      "in-page-nav",
+      "prose",
+      "section-heading",
+      "tile",
+      "reference-list",
+      "footer"
+    ],
+    "purpose": "A program office's page, aviation-flavored: a dark 16:9 masthead as the office's identity, light reading in the middle (in-page nav beside long prose), then a dark interstitial band that blends through the references into the footer."
+  },
+  {
+    "id": "article",
+    "title": "Article",
+    "file": "article.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "site-alert",
+      "header",
+      "breadcrumb",
+      "eyebrow",
+      "prose",
+      "dl",
+      "pull-quote",
+      "section-heading",
+      "collection",
+      "pagination",
+      "footer"
+    ],
+    "purpose": "A news article: breadcrumb, eyebrow and title, a metadata row, prose with a pull-quote, related items and pagination."
+  },
+  {
+    "id": "newsroom",
+    "title": "Newsroom",
+    "file": "newsroom.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "chip",
+      "collection",
+      "pagination",
+      "dl",
+      "footer"
+    ],
+    "purpose": "A press index: the display heading, toggle-chip filters, a six-item collection with mixed thumbnails, pagination, and the media contacts on a raised band."
+  },
+  {
+    "id": "press-release",
+    "title": "Press release",
+    "file": "press-release.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "breadcrumb",
+      "eyebrow",
+      "prose",
+      "dl",
+      "document-link",
+      "footer"
+    ],
+    "purpose": "A press release: eyebrow, heading, the contact and release-number block, the body, and the documents that go with it."
+  },
+  {
+    "id": "data",
+    "title": "Data page",
+    "file": "data.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "layout",
+      "stat",
+      "table",
+      "document-link",
+      "reference-list",
+      "footer"
+    ],
+    "purpose": "A statistics page: headline numbers, a sortable table that stacks on narrow screens, the downloads, and the sources."
+  },
+  {
+    "id": "form",
+    "title": "Multi-page form",
+    "file": "form.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "steps",
+      "error-summary",
+      "form",
+      "field",
+      "label",
+      "input",
+      "select",
+      "checkbox",
+      "radio",
+      "disclosure",
+      "button",
+      "modal",
+      "toast",
+      "footer"
+    ],
+    "purpose": "One page of a journey: the step indicator, an error summary, the form laid out by the form pattern rules, the journey actions, a confirm dialog and a toast."
+  },
+  {
+    "id": "grant",
+    "title": "Grant application",
+    "file": "grant.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "steps",
+      "error-summary",
+      "form",
+      "field",
+      "label",
+      "input",
+      "select",
+      "checkbox",
+      "document-link",
+      "dl",
+      "disclosure",
+      "button",
+      "modal",
+      "toast",
+      "footer"
+    ],
+    "purpose": "Multi-page application journey — steps, sectioned form, error flow, review, confirm."
+  },
+  {
+    "id": "search",
+    "title": "Search results",
+    "file": "search.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "section-heading",
+      "search",
+      "chip",
+      "collection",
+      "pagination",
+      "summary-box",
+      "footer"
+    ],
+    "purpose": "Site search: the full-width field, filter chips, a results collection and pagination; then the empty state the same page shows when nothing matches."
+  },
+  {
+    "id": "emergency",
+    "title": "Emergency notice",
+    "file": "emergency.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "site-alert",
+      "header",
+      "section-heading",
+      "alert",
+      "summary-box",
+      "steps",
+      "prose",
+      "footer"
+    ],
+    "purpose": "A page that leads with an emergency: the one role=alert band above the header, the list of current alerts, the summary and the steps to take."
+  },
+  {
+    "id": "assistant",
+    "title": "Assistant",
+    "file": "assistant.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "section-heading",
+      "conv-thread",
+      "conv-notice",
+      "conv-message",
+      "conv-avatar",
+      "conv-step",
+      "conv-source",
+      "conv-actions",
+      "conv-typing",
+      "conv-chip",
+      "conv-composer",
+      "footer"
+    ],
+    "purpose": "An AI assistant page: the header, a title, and the whole conversational exchange in a container."
+  },
+  {
+    "id": "program-assistant",
+    "title": "Program + assistant",
+    "file": "program-assistant.html",
+    "order": [
+      "skip-link",
+      "gov-banner",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "layout",
+      "in-page-nav",
+      "prose",
+      "page",
+      "conv-thread",
+      "conv-message",
+      "conv-avatar",
+      "conv-step",
+      "conv-source",
+      "conv-actions",
+      "conv-chip",
+      "conv-composer",
+      "accordion",
+      "footer"
+    ],
+    "purpose": "The assistant embedded in a page type: a program reading page with the conversational exchange scoped into a labeled sunken region between the prose and the FAQ — the same components as the Assistant page, owned by the page instead of owning it."
+  }
+]

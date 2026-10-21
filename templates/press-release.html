@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../dist/tokens.css">
+<link rel="stylesheet" href="../dist/aods.css">
+<link rel="stylesheet" href="templates.css">
+<script src="../dist/theme.js"></script>
+<link rel="icon" type="image/svg+xml" href="../assets/identity/savory-32.svg" data-identity="favicon" data-identity-base="../">
+<script src="../dist/aods.js"></script>
+<meta charset="utf-8">
+<title>Press release</title>
+</head>
+<body class="aods-page">
+<div class="tpl-return" data-tpl-return>
+<a class="aods-button tpl-return__btn" data-variant="primary" href="index.html#t-press-release" data-tpl-close>
+<svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-close"></use></svg>Close template</a>
+</div>
+<script>
+(function () {
+  if (new URLSearchParams(location.search).has("shot")) document.documentElement.setAttribute("data-shot", "");
+  var btn = document.querySelector("[data-tpl-close]");
+  btn.addEventListener("click", function (e) {
+    var opener = null;
+    try { opener = window.opener && !window.opener.closed && /\/templates\/(index\.html)?$/.test(window.opener.location.pathname) ? window.opener : null; } catch (err) {}
+    if (!opener) return;                      /* no landing page behind us: follow the link to it */
+    e.preventDefault();
+    try { opener.focus(); } catch (err) {}
+    window.close();
+    setTimeout(function () { if (!window.closed) location.href = btn.href; }, 200);
+  });
+})();
+</script>
+<a class="aods-skip-link" href="#main">Skip to main content</a>
+<header class="aods-header">
+  <div class="aods-header__utility" data-surface="dark"><div class="aods-header__content"><ul class="aods-header__utility-links"><li><a class="aods-header__utility-link" href="#">Help</a></li><li><a class="aods-header__utility-link" href="#">Contact</a></li><li><a class="aods-header__utility-link" href="#">Sign in</a></li></ul></div></div>
+  <div class="aods-header__bar"><div class="aods-header__content">
+    <a class="aods-header__lockup" href="#"><svg class="aods-header__logo" data-identity="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M2 2H12L46 36V46H36L2 12Z"/><path d="M10 28L20 38L12 46H2V36Z"/><path d="M28 10L36 2H46V12L38 20Z"/></svg><span class="aods-header__brand" data-identity="wordmark">Example Agency</span></a>
+    <button class="aods-header__menu" type="button" aria-label="Menu" aria-expanded="false"><svg class="aods-icon aods-header__menu-open" aria-hidden="true"><use href="#aods-menu"></use></svg><svg class="aods-icon aods-header__menu-close" aria-hidden="true"><use href="#aods-close"></use></svg></button>
+    <div class="aods-header__drawer"><nav aria-label="Primary"><ul class="aods-header__nav"><li><a class="aods-header__nav-item" href="#">About</a></li><li><button class="aods-header__nav-item" type="button" aria-expanded="false" aria-controls="mega-programs">Programs</button></li><li><a class="aods-header__nav-item" href="#" aria-current="page">Newsroom</a></li><li><button class="aods-header__nav-item" type="button" aria-expanded="false" aria-controls="mega-resources">Resources</button></li></ul></nav><form class="aods-header__search" role="search" onsubmit="return false"><input class="aods-input" type="search" aria-label="Search" placeholder="Begin typing to search"><button class="aods-button" data-variant="primary" data-icon="only" aria-label="Search"><svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-search"></use></svg></button></form></div>
+  </div></div>
+  <div class="aods-header__mega" id="mega-programs" hidden><div class="aods-header__content"><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Aviation</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Office of Programs</a></li><li><a class="aods-header__mega-link" href="#">Air travel consumer protection</a></li><li><a class="aods-header__mega-link" href="#">Aircraft registration</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Highways and roads</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Office of Operations</a></li><li><a class="aods-header__mega-link" href="#">Bridge inspection</a></li><li><a class="aods-header__mega-link" href="#">Road safety</a></li><li><a class="aods-header__mega-link" href="#">National Highway System</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Maritime and rail</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Office of Grants</a></li><li><a class="aods-header__mega-link" href="#">Office of Research</a></li><li><a class="aods-header__mega-link" href="#">Pipeline and hazmat</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Transit and mobility</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Office of Safety</a></li><li><a class="aods-header__mega-link" href="#">Public transportation</a></li><li><a class="aods-header__mega-link" href="#">Active transportation</a></li></ul></div></div></div>
+  <div class="aods-header__mega" id="mega-resources" hidden><div class="aods-header__content"><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Data</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Data catalog</a></li><li><a class="aods-header__mega-link" href="#">Performance dashboards</a></li><li><a class="aods-header__mega-link" href="#">Open government</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Documents</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Forms</a></li><li><a class="aods-header__mega-link" href="#">Reports to Congress</a></li><li><a class="aods-header__mega-link" href="#">Strategic plan</a></li></ul></div></div></div>
+</header>
+<main id="main" tabindex="-1">
+<section class="aods-ground"><div class="aods-layout" data-kind="container" data-width="set" data-set="page"><div class="aods-layout" data-kind="stack" data-gap="xl">
+<nav class="aods-breadcrumb" aria-label="Breadcrumb"><ol class="aods-breadcrumb__list"><li><a class="aods-breadcrumb__link" href="#">Home</a></li><li><a class="aods-breadcrumb__link" href="#">Newsroom</a></li><li><a class="aods-breadcrumb__link" href="#">Press releases</a></li><li><span class="aods-breadcrumb__current" aria-current="page">Agency 42-26</span></li></ol></nav>
+<article class="aods-prose">
+<p class="aods-eyebrow" data-divider>Press release</p>
+<h1>Example Agency announces $1.2 billion for rural bridge repair</h1>
+<p class="aods-prose__lead">Grants to 43 states will replace or rehabilitate 284 bridges in poor condition, with a set-aside for counties under 50,000 people.</p>
+</article>
+<dl class="aods-dl" data-layout="row" data-dividers><div class="aods-dl__group"><dt>Contact</dt><dd>Office of Public Affairs, 555-010-4570</dd></div><div class="aods-dl__group"><dt>Release number</dt><dd>Agency 42-26</dd></div><div class="aods-dl__group"><dt>Date</dt><dd><time datetime="2026-08-18">Tuesday, August 18, 2026</time></dd></div><div class="aods-dl__group"><dt>Docket</dt><dd>Operations Office-2026-0012</dd></div></dl>
+<article class="aods-prose">
+<p><strong>WASHINGTON</strong> – The Example Agency's Office of Operations today announced $1.2 billion in Bridge Investment Program grants to 43 states for 284 bridges rated in poor condition. Two hundred of the bridges are owned by counties, towns or tribal governments, and 61 of them are currently closed or load-posted.</p>
+<p>"A bridge that is closed is not a transportation asset. It is a detour, and the detour is paid for every day by the people who live on the wrong side of it," said the Secretary. "These grants go to the bridges that carry school buses, grain trucks and ambulances, in the places least able to pay for them alone."</p>
+<p>The awards include $340 million under the program's set-aside for bridges owned by counties, tribes and communities under 50,000 people, which may be funded at up to 100 percent federal share. The largest single award, $96 million, goes to the replacement of the Route 9 crossing of the Kennebec River in Maine, closed since 2024.</p>
+<h2>Selected awards</h2>
+<ul><li>Maine: $96 million to replace the Route 9 Kennebec River bridge</li><li>Ohio: $71 million for 19 county bridges in the Appalachian region</li><li>Montana: $44 million for six bridges on the Crow Reservation</li><li>Texas: $38 million to rehabilitate the Brazos River crossing on FM 1462</li></ul>
+<p>The full list of awards, by state, is attached. Applications for the fiscal year 2027 round open in January.</p>
+<p>###</p>
+</article>
+<header class="aods-section-heading"><div class="aods-section-heading__row"><h2 class="aods-section-heading__heading">Documents</h2></div></header>
+<div class="aods-layout" data-kind="stack" data-gap="sm"><a class="aods-document-link" href="#" download><svg class="aods-icon aods-document-link__icon" aria-hidden="true"><use href="#aods-file"></use></svg><span class="aods-document-link__body"><span class="aods-document-link__title">Full list of awards, fiscal year 2026</span><span class="aods-document-link__meta">PDF · 1.1 MB · 9 pages</span></span></a><a class="aods-document-link" href="#" download><svg class="aods-icon aods-document-link__icon" aria-hidden="true"><use href="#aods-file"></use></svg><span class="aods-document-link__body"><span class="aods-document-link__title">Awards by state and bridge</span><span class="aods-document-link__meta">CSV · 48 KB · 284 rows</span></span></a><a class="aods-document-link" href="#" rel="external" target="_blank"><svg class="aods-icon aods-document-link__icon" aria-hidden="true"><use href="#aods-file"></use></svg><span class="aods-document-link__body"><span class="aods-document-link__title">Docket Operations Office-2026-0012 on regulations.gov</span><span class="aods-document-link__meta">regulations.gov · opens in a new tab</span></span></a></div>
+</div></div>
+</section>
+</main>
+<footer class="aods-footer" data-surface="dark">
+  <div class="aods-footer__band" data-band="top"><div class="aods-footer__content">
+    <div class="aods-footer__agency"><div class="aods-footer__lockup"><svg class="aods-footer__logo" data-identity="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M2 2H12L46 36V46H36L2 12Z"/><path d="M10 28L20 38L12 46H2V36Z"/><path d="M28 10L36 2H46V12L38 20Z"/></svg><p class="aods-footer__brand" data-identity="wordmark">Example Agency</p></div><address class="aods-footer__address">100 Example Street<br>Anytown, ST 00000<br>555-010-4100</address></div>
+    <form class="aods-footer__newsletter" onsubmit="return false"><p class="aods-footer__heading">Stay connected</p><p class="aods-footer__description">Sign up for email updates from the Example Agency.</p><div class="aods-footer__subscribe"><input class="aods-input" type="email" aria-label="Email address" placeholder="Email address"><button class="aods-button" data-variant="primary">Subscribe</button></div></form>
+  </div></div>
+  <details class="aods-footer__band" data-band="nav" open><summary class="aods-footer__sitemap">Site map</summary><nav class="aods-footer__content" aria-label="Footer"><div class="aods-footer__columns"><div class="aods-footer__column"><p class="aods-footer__heading">About the Agency</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">Mission</a></li><li><a class="aods-footer__link" href="#">Leadership</a></li><li><a class="aods-footer__link" href="#">Careers</a></li><li><a class="aods-footer__link" href="#">Budget and performance</a></li><li><a class="aods-footer__link" href="#">Strategic plan</a></li></ul></div><div class="aods-footer__column"><p class="aods-footer__heading">Programs</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">Aviation</a></li><li><a class="aods-footer__link" href="#">Highway</a></li><li><a class="aods-footer__link" href="#">Maritime</a></li><li><a class="aods-footer__link" href="#">Rail</a></li><li><a class="aods-footer__link" href="#">Transit</a></li></ul></div><div class="aods-footer__column"><p class="aods-footer__heading">Connect</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">Newsroom</a></li><li><a class="aods-footer__link" href="#">Subscribe</a></li><li><a class="aods-footer__link" href="#">Public engagement</a></li><li><a class="aods-footer__link" href="#">Social media</a></li><li><a class="aods-footer__link" href="#">Contact us</a></li></ul></div><div class="aods-footer__column"><p class="aods-footer__heading">Resources</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">Forms</a></li><li><a class="aods-footer__link" href="#">Reports</a></li><li><a class="aods-footer__link" href="#">Data catalog</a></li><li><a class="aods-footer__link" href="#">Performance</a></li><li><a class="aods-footer__link" href="#">Open government</a></li></ul></div></div></nav></details>
+  <div class="aods-footer__band" data-band="social"><div class="aods-footer__content"><p class="aods-footer__social-label">Connect with us:</p><ul class="aods-footer__socials"><li><a class="aods-footer__social" href="#" aria-label="Facebook"><svg class="aods-icon" aria-hidden="true"><use href="#aods-social-facebook"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="Instagram"><svg class="aods-icon" aria-hidden="true"><use href="#aods-social-instagram"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="LinkedIn"><svg class="aods-icon" aria-hidden="true"><use href="#aods-social-linkedin"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="YouTube"><svg class="aods-icon" aria-hidden="true"><use href="#aods-social-youtube"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="X"><svg class="aods-icon" aria-hidden="true"><use href="#aods-social-x"></use></svg></a></li></ul></div></div>
+  <div class="aods-footer__band" data-band="compliance"><nav class="aods-footer__content" aria-label="Policies"><ul class="aods-footer__compliance"><li><a class="aods-footer__link" href="#">Privacy policy</a></li><li><a class="aods-footer__link" href="#">FOIA</a></li><li><a class="aods-footer__link" href="#">Accessibility</a></li><li><a class="aods-footer__link" href="#">No FEAR Act</a></li><li><a class="aods-footer__link" href="#">Information quality</a></li><li><a class="aods-footer__link" href="#">USA.gov</a></li><li><a class="aods-footer__link" href="#">Plain writing</a></li><li><a class="aods-footer__link" href="#">Web policies</a></li></ul></nav></div>
+  <div class="aods-footer__band" data-band="copyright"><div class="aods-footer__content"><p class="aods-footer__legal">Example Agency · 100 Example Street · Anytown, ST 00000</p></div></div>
+</footer>
+</body>
+</html>

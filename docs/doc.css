@@ -1,0 +1,352 @@
+/* DOCUMENTATION CSS. Binds --s-* only (R5). IBM Plex Sans / Mono — the third voice,
+ never a product face. Anything inside a .spec is a live component and wears aods.css. */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor — see data-anchor-travel="off" */
+body.doc {
+  margin: 0; background: var(--s-color-surface-page); color: var(--s-color-text-primary);
+  font-family: var(--s-font-family-doc), system-ui, sans-serif;
+  font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height);
+}
+code, .mono { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-lg-size); }
+
+.doc-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.doc-nav {
+  position: sticky; top: 0; height: 100vh; overflow: auto;
+  padding: var(--s-space-xl) var(--s-space-base);
+  border-right: var(--s-border-width-hairline) solid var(--s-color-border-on-page);
+  background: var(--s-color-surface-sunken);
+}
+.doc-nav h1 { margin: 0 0 var(--s-space-xs); font-size: var(--s-type-heading-xs-size); line-height: var(--s-type-heading-xs-line-height); font-weight: var(--s-font-weight-bold); }
+.doc-nav .ver { color: var(--s-color-text-tertiary); font-size: var(--s-type-ui-sm-size); margin: 0 0 var(--s-space-xl); }
+.doc-nav h2 { margin: var(--s-space-lg) 0 var(--s-space-xs); font-size: var(--s-type-ui-xs-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); font-weight: var(--s-font-weight-medium); }
+.doc-nav a { display: block; padding: var(--s-space-2xs) 0; color: var(--s-color-text-secondary); text-decoration: none; font-size: var(--s-type-ui-md-size); line-height: var(--s-type-ui-md-line-height); }
+.doc-nav a:hover { color: var(--s-color-text-primary); }
+.doc-main { padding: var(--s-space-3xl) var(--s-space-3xl) var(--s-space-5xl); max-width: 1400px; }
+
+.doc-head { margin-bottom: var(--s-space-3xl); max-width: var(--s-size-measure-prose); }
+.eyebrow { margin: 0 0 var(--s-space-sm); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.doc-head h1 { margin: 0 0 var(--s-space-md); font-size: var(--s-type-display-sm-size); line-height: var(--s-type-display-sm-line-height); font-weight: var(--s-font-weight-bold); }
+.lede { margin: 0; font-size: var(--s-type-body-md-size); line-height: var(--s-type-body-md-line-height); color: var(--s-color-text-secondary); }
+.lede.counts { margin-top: var(--s-space-md); font-size: var(--s-type-code-md-size); }
+/* The two paragraphs under the lede answer how to use the page and who it is for: same measure,
+ one step quieter, so the first paragraph still reads as the definition (2026-08-25). */
+.lede.sub { margin-top: var(--s-space-base); font-size: var(--s-type-body-sm-size); line-height: var(--s-type-body-sm-line-height); }
+.lede.sub b { color: var(--s-color-text-primary); font-weight: var(--s-font-weight-medium); }
+.doc-toolbar { display: flex; gap: var(--s-space-md); align-items: center; margin: var(--s-space-xl) 0 0; font-size: var(--s-type-ui-md-size); color: var(--s-color-text-secondary); }
+.doc-toolbar label { display: inline-flex; gap: var(--s-space-xs); align-items: center; cursor: pointer; }
+
+/* RULING 2026-08-25: the state-dependent gap lives on the BOTTOM margin only. It used to be margin-block,
+ so opening a section grew its own top margin 24 → 64px and shoved its heading 40px down the screen —
+ the user clicked a title and the title ran away. A section's top edge is now fixed; only what follows
+ it moves. */
+section.doc-section { margin-block-start: var(--s-space-xl); margin-block-end: var(--s-space-5xl); margin-inline: 0; scroll-margin-top: var(--s-space-xl); }
+section.doc-section > h2 { margin: 0 0 var(--s-space-xs); padding-bottom: var(--s-space-xs); border-bottom: var(--s-border-width-thick) solid var(--s-color-text-primary); font-size: var(--s-type-heading-lg-size); line-height: var(--s-type-heading-lg-line-height); font-weight: var(--s-font-weight-bold); }
+section.doc-section > .blurb { margin: var(--s-space-sm) 0 var(--s-space-xl); max-width: var(--s-size-measure-prose); color: var(--s-color-text-secondary); }
+
+/* rules list */
+.rules { display: grid; gap: var(--s-space-sm); margin: 0; padding: 0; list-style: none; max-width: 960px; }
+.rules li { display: grid; grid-template-columns: 40px 1fr; gap: var(--s-space-md); padding: var(--s-space-md); background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.rules li b { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; color: var(--s-color-text-tertiary); }
+
+/* tiers diagram */
+.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-space-base); max-width: 960px; }
+.tier { padding: var(--s-space-base); background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.tier h3 { margin: 0 0 var(--s-space-xs); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-heading-xs-size); }
+.tier p { margin: 0; color: var(--s-color-text-secondary); font-size: var(--s-type-ui-md-size); line-height: var(--s-type-ui-md-line-height); }
+.tier .n { display: block; margin-top: var(--s-space-sm); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+
+/* swatches */
+.family { margin: var(--s-space-xl) 0; }
+.family h3 { margin: 0 0 var(--s-space-2xs); font-size: var(--s-type-heading-xs-size); font-weight: var(--s-font-weight-bold); }
+.family .path { margin: 0 0 var(--s-space-sm); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+.ramp { display: grid; grid-template-columns: repeat(10, 1fr); border: var(--s-border-width-hairline) solid var(--s-color-border-on-page); max-width: 1100px; }
+.ramp.short { width: 40%; grid-template-columns: repeat(4, 1fr); }
+.ramp.two { width: 20%; grid-template-columns: repeat(2, 1fr); }
+.swatch { min-height: 96px; padding: var(--s-space-sm); display: flex; flex-direction: column; justify-content: space-between; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); line-height: var(--s-type-code-sm-line-height); }
+.swatch b { font-size: var(--s-type-ui-lg-size); }
+
+/* token tables */
+.tok-table { width: 100%; border-collapse: collapse; font-size: var(--s-type-ui-md-size); line-height: var(--s-type-ui-md-line-height); }
+.tok-table th { text-align: left; padding: var(--s-space-xs) var(--s-space-sm); border-bottom: var(--s-border-width-thick) solid var(--s-color-text-primary); font-weight: var(--s-font-weight-medium); font-size: var(--s-type-ui-xs-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.tok-table td { padding: var(--s-space-xs) var(--s-space-sm); border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-on-page); vertical-align: top; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-md-size); }
+.tok-table td.d { font-family: var(--s-font-family-doc), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); color: var(--s-color-text-secondary); }
+.chip { display: inline-block; width: 12px; height: 12px; vertical-align: -1px; margin-right: 4px; border: 1px solid var(--s-color-border-on-raised); }
+details.toks { margin-top: var(--s-space-base); }
+details.toks summary { cursor: pointer; font-size: var(--s-type-ui-md-size); color: var(--s-color-text-secondary); }
+
+/* component entries */
+/* more breathing room between pattern specimens — 64px between entries, 32px under each rule. */
+.entry { margin: 0 0 var(--s-space-5xl); padding-top: var(--s-space-2xl); border-top: var(--s-border-width-hairline) solid var(--s-color-border-on-page); scroll-margin-top: var(--s-space-xl); }
+.entry-head { display: grid; grid-template-columns: minmax(220px, 26%) 1fr; gap: var(--s-space-2xl); margin-bottom: var(--s-space-lg); }
+.entry-head h3 { margin: 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-heading-sm-size); font-weight: var(--s-font-weight-regular); color: var(--s-color-text-tertiary); }
+.entry-head .tier-tag { display: inline-block; margin-top: var(--s-space-xs); font-size: var(--s-type-ui-xs-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.entry-head p { margin: 0; max-width: var(--s-size-measure-prose); color: var(--s-color-text-secondary); }
+.entry-head .font-line { margin-top: var(--s-space-xs); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+
+.spec-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: var(--s-border-width-hairline) solid var(--s-color-border-on-page); }
+.spec-pair.single { grid-template-columns: 1fr; }
+.spec { padding: var(--s-space-xl); min-width: 0; overflow: auto; }
+.spec .aods-header { position: static; }   /* a sticky header inside a specimen would fight the doc bar; the page it ships in keeps the sticky */
+/* DR-01 : the dark specimen
+ was sitting in a .aods-page well — a LIGHT ground — so every dark variant was being judged against the wrong
+ backdrop. The well now carries the pinned dark ground, and its marker flips with it. */
+.spec[data-ground="dark"] { background-color: var(--s-color-pinned-surface-dark); color: var(--s-color-pinned-ink-dark); }
+.spec[data-ground="dark"] .spec-marker { color: var(--s-color-pinned-ink-quiet-dark); }
+/* Specimen captions on a dark ground. RULING 2026-08-25: .cap inherited text.tertiary (gray/50) from the light
+ docs page and measured 2.69:1 on the dark spec ground — unreadable. The pinned quiet ink holds the caption at
+ the same relative weight it has on light, and passes on all three dark grounds a caption can land on. */
+.spec[data-ground="dark"] .cap { color: var(--s-color-pinned-ink-quiet-dark); }
+.spec-marker { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-space-md); margin: 0 0 var(--s-space-md); padding-bottom: var(--s-space-2xs); border-bottom: 1px dashed currentColor; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.row { display: flex; flex-wrap: wrap; gap: var(--s-space-md); align-items: center; margin-bottom: var(--s-space-md); }
+.row:last-child { margin-bottom: 0; }
+.stack { display: flex; flex-direction: column; gap: var(--s-space-md); }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-space-xl); }   /* minmax(0,…): a fixed-width specimen inside may not widen the track */
+.cap { width: 100%; margin: calc(-1 * var(--s-space-xs)) 0 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+
+.apparatus { margin-top: var(--s-space-base); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-space-base); }
+.panel { padding: var(--s-space-base); background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); border-left: 4px solid var(--s-color-text-tertiary); }
+.panel h4 { margin: 0 0 var(--s-space-sm); font-size: var(--s-type-ui-xs-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); font-weight: var(--s-font-weight-medium); }
+.panel pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-md-size); line-height: var(--s-type-code-md-line-height); color: var(--s-color-text-primary); }
+.panel dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: var(--s-space-2xs) var(--s-space-md); font-size: var(--s-type-ui-sm-size); }
+.panel dt { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; color: var(--s-color-text-tertiary); }
+.panel dd { margin: 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; }
+.panel.wide { grid-column: 1 / -1; }
+
+.open-list { margin: 0; padding-left: 1.2em; max-width: var(--s-size-measure-prose); color: var(--s-color-text-secondary); }
+.open-list li { margin-bottom: var(--s-space-sm); }
+footer.doc-foot { margin-top: var(--s-space-5xl); padding-top: var(--s-space-base); border-top: var(--s-border-width-hairline) solid var(--s-color-border-on-page); color: var(--s-color-text-tertiary); font-size: var(--s-type-ui-sm-size); }
+
+@media (max-width: 1000px) {
+  .doc-shell { grid-template-columns: 1fr; }
+  .doc-nav { position: static; height: auto; }
+  .spec-pair, .apparatus, .tiers, .grid2 { grid-template-columns: minmax(0, 1fr); }
+  .entry-head { grid-template-columns: 1fr; gap: var(--s-space-sm); }
+  .ramp { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* rule examples */
+.rules li > div { min-width: 0; }
+.ex { margin: var(--s-space-sm) 0 0; padding: var(--s-space-sm) var(--s-space-md); white-space: pre-wrap; word-break: break-word; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); line-height: var(--s-type-code-sm-line-height); background: var(--s-color-surface-sunken); border-left: 3px solid var(--s-color-status-success-base); color: var(--s-color-text-secondary); }
+.ex.bad { border-left-color: var(--s-color-status-error-base); }
+.ex-tag { display: block; margin-bottom: 2px; letter-spacing: 0.06em; text-transform: uppercase; font-size: var(--s-type-ui-xs-size); color: var(--s-color-status-success-text); }
+.ex.bad .ex-tag { color: var(--s-color-status-error-text); }
+
+/* ============================================================================
+ COLLAPSE (2026-08-22). Every section the side menu can reach folds — from the
+ menu or from its own heading — and the same state drives both. A 20,000px page
+ is only navigable if you can put most of it away.
+ ============================================================================ */
+.toggle {
+  display: flex; align-items: center; gap: var(--s-space-md);
+  width: 100%; padding: 0; margin: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; color: inherit; letter-spacing: inherit; text-align: left; text-transform: inherit;
+}
+.toggle:focus-visible { outline: var(--s-border-width-thick) solid var(--s-color-focus-ring); outline-offset: var(--s-space-2xs); }
+/* RULING 2026-08-25: the chevron is a fixed 10px box, not 0.6em. Tied to the type size it rendered 27px wide
+ on a 32px section heading and 9px in the menu — the same control at three sizes, and on the big headings it
+ read as artwork rather than a marker. Now one size for every heading and entry, with the arm thickened
+ 2 → 3px (the arm-to-box ratio the small menu chevron always had), and the gap to the word moved 8 → 12px.
+ The box is a literal because a two-border chevron is furniture with no part to bind — the same reason the
+ stroke was already a literal here. */
+.chev { flex: none; width: 10px; height: 10px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor;
+  transform: rotate(45deg); transform-origin: 55% 55%; transition: transform var(--s-motion-fast) ease; opacity: 0.55; }
+.toggle[aria-expanded="false"] .chev { transform: rotate(-45deg); }
+/* The menu sets 11px uppercase type; the heading chevron beside it would be furniture, not a marker.
+ Same arm-to-box ratio (0.29 vs 0.30), two thirds the size — it reads as the same mark, quieter. */
+.doc-nav .chev { width: 7px; height: 7px; border-right-width: 2px; border-bottom-width: 2px; }
+.toggle:hover .chev { opacity: 1; }
+.count { margin-left: auto; flex: none; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-ui-xs-size); font-weight: var(--s-font-weight-regular); letter-spacing: 0.04em; color: var(--s-color-text-tertiary); text-transform: none; }
+.sec-body[hidden], .entry-body[hidden], .nav-group[hidden] { display: none; }
+/* The chip strip is the closed section's table of contents. Open, the entries themselves are the index,
+ so the strip stands down — but the FILTER stays, because it now narrows the entries too (2026-08-25). */
+.sec-chips { margin: var(--s-space-base) 0 var(--s-space-xs); }
+/* The strip is DOCUMENTATION, not a specimen, so it speaks in the documentation face. A chip on the light ground
+ resolved --c-chip-font-family at :root, from the product families, before any voice scope could exist —
+ so the face is set on the element rather than through the s tier. When build.py emits the voice scope
+ (the enumerated c-tier font list), this line goes away and the scope covers it. */
+.sec-chips .aods-chip, .sec-filters .aods-chip, .entry-facets .aods-chip { font-family: var(--s-font-family-doc), system-ui, sans-serif; }
+
+/* ---- FACETS AND THE FILTER (2026-08-25) ----
+ Two chip roles, and the component itself tells them apart: a nav chip (an <a>, unfilled) travels,
+ a filter chip (a <button> carrying aria-pressed) narrows. The facet chips under a component name
+ are neither — they are plain chips, stating what the thing is. */
+.entry-facets { margin-top: var(--s-space-sm); }
+.entry-tool { margin: var(--s-space-sm) 0 0; font-size: var(--s-type-body-sm-size); line-height: var(--s-type-body-sm-line-height); color: var(--s-color-text-secondary); }
+.doc-nav a.nav-tool { padding-left: var(--s-space-md); color: var(--s-color-action-base); }
+.sec-filters { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-space-md); margin: var(--s-space-base) 0 var(--s-space-sm); }
+.filter-label, .filter-count { margin: 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.filter-count:empty { display: none; }
+.sec-filters[data-on="yes"] .filter-count { color: var(--s-color-text-primary); }
+.facet-n { margin-left: var(--s-space-xs); opacity: 0.6; font-variant-numeric: tabular-nums; }
+.sec-chips a[hidden], .entry[hidden] { display: none; }
+section.doc-section:has(> h2 .toggle[aria-expanded="true"]) > .sec-chips { display: none; }
+
+/* ---- PARTS (2026-08-25): four named places, each with a title, an intro and its sections inside ---- */
+section.doc-section > h3 { margin: 0 0 var(--s-space-xs); padding-bottom: var(--s-space-xs); border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-divider-strong); font-size: var(--s-type-heading-md-size); line-height: var(--s-type-heading-md-line-height); font-weight: var(--s-font-weight-bold); }
+.doc-part > .sec-body > section.doc-section { margin-block-start: var(--s-space-xl); margin-block-end: var(--s-space-3xl); }
+.doc-part > .sec-body > section.doc-section:has(> h3 .toggle[aria-expanded="false"]) { margin-block-end: var(--s-space-xl); }
+.doc-part > .sec-body > section.doc-section:first-child { margin-top: var(--s-space-2xl); }
+/* a part's own intro is the one blurb allowed to run wide — it is the page for that part */
+.doc-part > .blurb { font-size: var(--s-type-body-lg-size); line-height: var(--s-type-body-lg-line-height); color: var(--s-color-text-primary); }
+/* a part with nothing to expand is a plain link, styled like the headings it stands beside */
+.doc-nav h2.nav-solo { padding: 0; }
+.doc-nav h2.nav-solo a { display: block; padding: var(--s-space-2xs) 0; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; }
+.doc-nav h2.nav-solo a:hover { color: var(--s-color-text-primary); }
+section.doc-section:has(> h2 .toggle[aria-expanded="false"], > h3 .toggle[aria-expanded="false"]) { margin-block-end: var(--s-space-xl); }
+.entry:has(> .entry-head .toggle[aria-expanded="false"]) { padding-bottom: var(--s-space-base); }
+.doc-allbtn { display: inline-flex; align-items: center; gap: var(--s-space-sm); font: inherit; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+  color: var(--s-color-text-secondary); background: none; cursor: pointer; padding: var(--s-space-2xs) var(--s-space-sm);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-page); }
+.doc-allbtn:hover { color: var(--s-color-text-primary); border-color: var(--s-color-text-primary); }
+.doc-allbtn:focus-visible { outline: var(--s-border-width-thick) solid var(--s-color-focus-ring); outline-offset: var(--s-space-2xs); }
+.doc-allbtn[data-state="collapsed"] .chev { transform: rotate(-45deg); }
+/* The menu heading is two controls (2026-08-25): a chevron that opens the group, and the heading itself
+ as a link to that section. Clicking the name expands the group AND travels; the chevron alone just opens. */
+.doc-nav h2 { display: flex; align-items: center; gap: var(--s-space-md); }
+.doc-nav h2 .toggle { color: inherit; width: auto; flex: none; padding: var(--s-space-xs); margin: calc(var(--s-space-xs) * -1); }
+.nav-head__link { color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; text-decoration: none; }
+.nav-head__link:hover { color: var(--s-color-text-primary); }
+.doc-nav h2.nav-solo a { padding-left: calc(7px + var(--s-space-md)); }   /* aligns with the labels that follow a chevron */
+
+/* NOTHING may push the page sideways: wide content scrolls inside its own container (audit 2026-08-22) */
+.spec, .scroll-x { overflow-x: auto; }
+.doc-main, .doc-shell, .entry, .panel { min-width: 0; }
+.spec-pair > *, .apparatus > *, .tiers > *, .grid2 > * { min-width: 0; }
+.panel pre, .ex, .rules pre { overflow-x: auto; }
+
+/* ============================================================================
+ COMPACT (≤ narrow). The nav leaves the flow entirely and folds behind a sticky
+ hamburger, so the page is one column with nothing to scroll sideways past.
+ ============================================================================ */
+.doc-bar { display: none; }
+.doc-scrim { display: none; }
+@media (max-width: {s.breakpoint.narrow}) {
+  .doc-bar {
+    display: flex; align-items: center; gap: var(--s-space-md);
+    position: sticky; top: 0; z-index: 70;
+    padding: var(--s-space-sm) var(--s-space-base);
+    background-color: var(--s-color-surface-page);
+    border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-on-page);
+  }
+  .doc-bar__title { font-family: var(--s-font-family-heading), system-ui, sans-serif; font-weight: var(--s-font-weight-bold); font-size: var(--s-type-ui-lg-size); }
+  .doc-menu {
+    display: inline-flex; align-items: center; gap: var(--s-space-sm);
+    min-height: var(--s-size-target-min); padding: var(--s-space-2xs) var(--s-space-sm);
+    font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+    color: var(--s-color-text-secondary); background: none; cursor: pointer;
+    border: var(--s-border-width-hairline) solid var(--s-color-border-on-page);
+  }
+  .doc-menu:focus-visible { outline: var(--s-border-width-thick) solid var(--s-color-focus-ring); outline-offset: var(--s-space-2xs); }
+  .doc-menu__glyph { position: relative; width: 16px; height: 2px; background-color: currentColor; }
+  .doc-menu__glyph::before, .doc-menu__glyph::after { content: ""; position: absolute; left: 0; width: 16px; height: 2px; background-color: currentColor; transition: transform var(--s-motion-fast) ease; }
+  .doc-menu__glyph::before { top: -5px; } .doc-menu__glyph::after { top: 5px; }
+  .doc[data-nav="open"] .doc-menu__glyph { background-color: transparent; }
+  .doc[data-nav="open"] .doc-menu__glyph::before { transform: translateY(5px) rotate(45deg); }
+  .doc[data-nav="open"] .doc-menu__glyph::after { transform: translateY(-5px) rotate(-45deg); }
+
+  .doc-shell { grid-template-columns: 1fr; }
+  .doc-nav {
+    position: fixed; top: 0; bottom: 0; left: 0; z-index: 80;
+    width: min(300px, 86vw); height: 100%; overflow-y: auto;
+    padding: var(--s-space-xl) var(--s-space-base);
+    background-color: var(--s-color-surface-raised);
+    border-right: var(--s-border-width-hairline) solid var(--s-color-border-on-raised);
+    transform: translateX(-100%); transition: transform var(--s-motion-base) ease;
+  }
+  .doc[data-nav="open"] .doc-nav { transform: none; }
+  .doc-scrim { display: block; position: fixed; inset: 0; z-index: 75; background-color: var(--s-color-surface-scrim); }
+  .doc-scrim[hidden] { display: none; }
+  .doc-main { padding: var(--s-space-xl) var(--s-space-base) var(--s-space-4xl); }
+  .count { display: none; }                                       /* the heading needs the whole line here */
+  .ramp { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); }
+  section.doc-section { scroll-margin-top: var(--s-space-5xl); }
+  .entry { scroll-margin-top: var(--s-space-5xl); }
+}
+@media (prefers-reduced-motion: reduce) { .doc-nav, .chev, .doc-menu__glyph::before, .doc-menu__glyph::after { transition: none; } }
+
+.doc-toolbar { flex-wrap: wrap; }
+.doc-toolbar select, .doc-toolbar > span { max-width: 100%; min-width: 0; }
+
+/* ---- icons section ---- */
+.ic-contract dl { display: grid; grid-template-columns: minmax(0, 8rem) minmax(0, 1fr); gap: var(--s-space-sm) var(--s-space-lg); margin: 0 0 var(--s-space-2xl); max-width: 62rem; }
+.ic-contract dt { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-md-size); color: var(--s-color-text-tertiary); }
+.ic-contract dd { margin: 0; color: var(--s-color-text-secondary); }
+.ic-lede { max-width: 62rem; margin: 0 0 var(--s-space-lg); color: var(--s-color-text-secondary); }
+.ic-sizes { display: flex; align-items: flex-end; gap: var(--s-space-2xl); flex-wrap: wrap; margin-bottom: var(--s-space-md); }
+.ic-sizes figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--s-space-sm); }
+.ic-sizes figcaption { display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); }
+.ic-sizes figcaption span { color: var(--s-color-text-tertiary); }
+.ic-tones { display: flex; flex-wrap: wrap; gap: var(--s-space-lg); margin-bottom: var(--s-space-2xl); }
+.ic-tone { display: flex; align-items: center; gap: var(--s-space-xs); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+.ic-a11y { max-width: 62rem; margin-bottom: var(--s-space-2xl); border-left: 4px solid var(--s-color-text-primary); padding-left: var(--s-space-lg); }
+.ic-a11y p { margin: 0 0 var(--s-space-sm); color: var(--s-color-text-secondary); }
+.ic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr)); gap: 0; border: 1px solid var(--s-color-border-on-page); margin-bottom: var(--s-space-3xl); }
+.ic-card { display: flex; gap: var(--s-space-lg); padding: var(--s-space-lg); min-width: 0; border-right: 1px solid var(--s-color-border-on-page); border-bottom: 1px solid var(--s-color-border-on-page); }
+.ic-art { display: flex; align-items: baseline; gap: var(--s-space-sm); flex: none; }
+.ic-body { min-width: 0; }
+.ic-body code { font-size: var(--s-type-code-md-size); }
+.ic-what { margin: var(--s-space-xs) 0 var(--s-space-xs); font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height); }
+.ic-note { margin: 0; font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height); color: var(--s-color-text-tertiary); }
+
+/* ---- search results (2026-08-25). Binds --s-* only (R5). The panel sits between the page's own head
+ and the first section: it is an answer to a question the user asked, so it goes where the eye
+ already is rather than in a column beside it. ---- */
+.doc-results { margin-block: var(--s-space-2xl) var(--s-space-3xl); padding: var(--s-space-2xl);
+  background: var(--s-color-surface-sunken); border: var(--s-border-width-hairline) solid var(--s-color-border-on-sunken); }
+.doc-results:focus { outline: none; }
+.doc-results__count { margin: 0 0 var(--s-space-base); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.doc-results__list { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-space-sm); }
+.doc-results__list li { padding-block: var(--s-space-xs); border-top: var(--s-border-width-hairline) solid var(--s-color-border-divider); }
+.doc-results__list li:first-child { border-top: 0; }
+.doc-results__list a { display: inline-flex; align-items: center; gap: var(--s-space-sm);
+  min-height: var(--s-size-icon-lg);   /* 24 — the wide hit floor */
+  color: var(--s-color-action-link); text-decoration: none; }
+.doc-results__list a:hover { text-decoration: underline; }
+.doc-results__list a b { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; }
+.doc-results__list p { margin: 0; color: var(--s-color-text-secondary); font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height); }
+.doc-results__none { margin: 0 0 var(--s-space-base); color: var(--s-color-text-secondary); }
+.doc-results__clear { color: var(--s-color-action-link); }
+
+/* A PATTERN'S STARTER (2026-09-03). A pairing that lives at body level - the cover is the one -
+   has no component whose own html example could carry it, so the markup hangs off the rule.
+   ONLY THE GROUND AND THE BOX: .panel pre already sets the face (doc-mono), the wrapping and the
+   overflow for every example on this page, and it outranks a lone class here (0,1,1 against 0,1,0).
+   Repeating those four declarations would have been dead CSS that reads as if it were deciding
+   something. */
+.pat-starter { margin: 8px 0 0; padding: 12px;
+               background-color: var(--s-color-surface-sunken);
+               border: var(--s-border-width-hairline) solid var(--s-color-border-on-sunken); }
+
+/* ---- the docket: what is filed against a component ------------------------------------------
+ These used to sit in the summary, which is the field that ships into the agent contract, so an
+ open defect was reaching build agents as guidance. R31 keeps them apart now; this is where the
+ maintainer reads them. Bound to the accent emphasis pair rather than a warning color the system
+ does not have - a filed item is something to attend to, not an error state on the page. */
+.docket { margin-top: var(--s-space-md); padding: var(--s-space-sm) var(--s-space-md);
+  background-color: var(--s-color-emphasis-accent-surface);
+  border-inline-start: var(--s-border-width-thick) solid var(--s-color-emphasis-accent-edge);
+  max-width: var(--s-size-measure-prose); }
+.docket p { margin: 0; }
+.docket p + p { margin-top: var(--s-space-2xs); }
+.docket-head { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+.docket-kind { font-size: var(--s-type-ui-xs-size); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--s-color-emphasis-accent-ink-strong); font-weight: var(--s-font-weight-bold); }
+.docket-id { color: var(--s-color-text-secondary); }
+.docket-quote { font-style: italic; color: var(--s-color-text-secondary); }
+.docket-note { font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+
+/* THE THEME SWITCHER (D51). One native <select> with a visible label, injected by docs/doc-header.js into the masthead's utility strip
+ (and, on template pages, into the .t-docbar strip in docs/templates/templates.css). Documentation chrome: it wears the pinned dark
+ tokens, in the chrome's own mono face, and never the theme it switches (D23.4). Not a registry component. */
+.doc-theme { display: inline-flex; align-items: center; gap: var(--s-space-sm); margin-inline-start: var(--s-space-xl);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); color: var(--s-color-pinned-ink-quiet-dark); }
+.doc-theme__select { min-height: var(--s-size-icon-lg); font: inherit; color: var(--s-color-pinned-ink-strong-dark);
+  background-color: var(--s-color-pinned-surface-elevated-dark); border: var(--s-border-width-hairline) solid var(--s-color-pinned-ink-quiet-dark);
+  border-radius: 0; padding-inline: var(--s-space-sm); cursor: pointer; }
+.doc-theme__select:focus-visible { outline: var(--s-focus-width) solid var(--s-color-focus-ring); outline-offset: var(--s-focus-gap); }
+/* At phone width the utility strip's three links and the switcher do not fit on one line: let the strip wrap, so no link is cut off. */
+.aods-header__utility .aods-header__content { flex-wrap: wrap; row-gap: var(--s-space-2xs); }

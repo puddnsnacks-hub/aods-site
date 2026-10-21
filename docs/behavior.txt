@@ -1,0 +1,619 @@
+==============================================================================
+AODS — BEHAVIOR
+==============================================================================
+
+Sixteen blocks, the last of them the smaller behaviors. This is the whole of
+aods.js as a state and event table. It is not a summary of the script: it is
+the specification the script was written from, and it is what you implement
+against. A few lines marked CSS describe what the stylesheet does over time;
+the script plays no part in them.
+
+  :=            becomes. an assignment.
+  →             then. the effect of the trigger on its left.
+  key X         a keydown of X while focus is inside the named part
+  ≤bp           viewport width at or under --c-page-breakpoint-compact
+  ≤narrow       viewport width at or under --c-page-breakpoint-narrow
+  ¬             never. the absence is the rule.
+
+RULES THAT HOLD FOR EVERY BEHAVIOR
+  · Bind once. Every root carries a guard flag; a second pass over the same
+    element does nothing. Components are initialized on DOMContentLoaded and
+    again whenever markup is injected.
+  · Every duration and every breakpoint is read from a token at run time. A
+    literal in the script is a fallback for a page served without tokens.css.
+  · Escape closes the innermost open thing and returns focus to what opened
+    it; a menu only reports it (see menu).                       #all.escape
+  · Tab closes a popover (the select's list, a fold, the tabs' overflow) and
+    does NOT return focus.                                        #all.tab-closes
+  · A click outside the select, the in-page-nav fold or a tabs popover closes
+    it, without refocus. The disclosure closes on a pointerdown outside it
+    instead. The mega panel and the header drawer ignore an outside click;
+    Escape closes them. A modal closes on its backdrop only with
+    data-modal-light.                                             #all.outside-click
+  · Nothing animates when prefers-reduced-motion is set; the end state is
+    applied at once.                                              #all.reduced-motion
+  ¬ No behavior invents a control. Every trigger is an element the contract
+    already names, or a part listed under BUILT AT RUNTIME below.
+  · The identity slots are filled by dist/theme.js, not aods.js: the page's
+    theme (?theme=<id>, else the house) sets data-theme on <html>, and its
+    themes/<id>.json fills [data-identity="wordmark"] text, [data-identity="mark"]
+    paths and link[data-identity="favicon"].                     #all.identity
+
+══════════════════════════════════════════════════════════════════════════════
+select                                                    .aods-select
+══════════════════════════════════════════════════════════════════════════════
+ROLE      __trigger is the combobox. Focus really moves to the option;
+          aria-activedescendant is not used.                        #select.role
+NAME      __trigger takes aria-labelledby from the .aods-label of the enclosing
+          .aods-field, unless it already has a name.                 #select.name
+MIRROR    from __native → aria-required when required; aria-invalid when the
+          native is invalid and non-empty. The DS select never owns validity.  #select.mirror
+STATE     aria-expanded on __trigger · aria-selected on each __option ·  #select.state
+          data-placeholder on __trigger while nothing is chosen
+EVENTS
+  click __trigger                → toggle open
+  key ArrowDown|ArrowUp|Enter|Space on __trigger
+                                 → open, focus the selected option else first  #select.open
+  key ArrowDown / ArrowUp in list→ focus next / previous, wrapping  #select.arrows
+  key Home / End                 → focus first / last               #select.home-end
+  key Enter|Space on an option   → choose it                        #select.choose
+  key Escape                     → close, refocus __trigger         #select.escape
+  key Tab                        → close, ¬refocus
+  key (any single character)     → focus the next option whose text starts
+                                   with it, wrapping to the top     #select.typeahead
+  click an option                → choose it
+  click outside root             → close, ¬refocus
+CHOOSE    active := index → repaint → close → __native value := the option's
+          data-value, else its text → fire `change` on __native and
+          `aods:change` on root, both bubbling.
+¬         Options are tabindex=-1. The list is never focusable as a whole.
+¬         The native <select> carries the value for the form; it is not a
+          fallback. It is hidden and out of the tab order, with or without
+          script.
+
+══════════════════════════════════════════════════════════════════════════════
+header                                                    .aods-header
+══════════════════════════════════════════════════════════════════════════════
+PUBLISHES --_aods-header-height on the document element, in px, via a
+          ResizeObserver, while the header is sticky. Any page may read it;
+          only aods.js writes it.
+¬         A measurement is not a design decision, so this is a private
+          property and NEVER a token. That says who OWNS the value - the
+          header measures it, nobody declares it - and nothing about who may
+          read it. aods.css has read it since the in-page-nav shipped. Read
+          it; never write it, and never re-measure the header.
+¬         No token states the header's height. 90px = 33 utility + 57 bar at
+          wide; 78px = 33 + 45 at compact. Both are the sum of padded bars.
+COVER     data-cover on root: the bar is LAYERED ON the hero's photograph,
+          not stacked above it. aods.css pulls main up by --_aods-header-height,
+          so the photograph's top edge is the top of the window, and brings
+          the content of main's first hero child back down by the same
+          measure. The bar is translucent while the cover is behind it.
+  the cover's bottom edge reaches the bar
+                                 → data-past-cover on root; the bar goes
+                                   opaque
+  scrolling back up past it      → data-past-cover removed
+          One IntersectionObserver on the cover - not a scroll listener, not
+          a page-supplied sentinel - its rootMargin re-armed from the
+          measurement that publishes the height, so the trip wire and the bar
+          cannot drift apart.
+¬         A Z relationship, not a flow one. A bar with the photograph
+          beginning BELOW it is not a cover and must not carry the prop - the
+          glass would composite over the white page ground and read as slate.
+¬         The page writes no CSS for a cover and measures nothing: no negative
+          margin, no z-index, no position, no sentinel element, no scroll
+          listener.
+MEGA      One panel open at a time. An open panel overlays the page from the
+          header's bottom edge: nothing below the header moves, and the
+          published height does not change.
+  click a nav item with a panel  → toggle it: shown, aria-expanded true on
+                                   its item; every other panel hidden,
+                                   aria-expanded false              #header.mega-toggle
+  key Escape anywhere in the document
+                                 → close the open panel, focus its nav item
+                                   (not while data-open="true")     #header.mega-escape
+  a panel opens with slack       → its columns sit under the nav item that
+                                   opened it (--_mega-anchor, measured)
+¬         A click outside does not close the panel; only a nav item and
+          Escape do.
+SHELF     MEASURED, not a breakpoint. With data-gate="measuring" the bar row
+  AND     is read unfolded, at max-content, and the result stamped on root.
+  GATE    Three stages:
+  the row holds lockup + nav +   → data-gate="off", no data-shelf
+  the search at its floor
+  it does not, but the top row   → data-gate="off", data-shelf="on": the nav
+  holds lockup + a hugging         drops to a strip under the bar; the
+  search or CTA and the nav        search or CTA hugs and stays in the top
+  fits one shelf row               row
+  otherwise                      → data-gate="on": the menu button shows;
+                                   the nav and the search go into the drawer
+  the header resizes and the     → measure again
+  row's width changed, or
+  document.fonts.ready
+¬         One number could not serve every header: a fixed 900 was 174px
+          early for one page and 218px late for another, which is where that
+          page's 92px overflow at 901 came from.
+¬         "measuring" belongs to neither the fold rules nor the no-script
+          floor, so the row is measured as it would be with room to spare.
+          Removing the attribute instead reads a FOLDED state and puts the
+          gate 275px late.
+¬         The search never shrinks: its width and its floor are one rung. It
+          leaves the top row only at the gate, into the drawer, where it comes
+          first. Hugging is max-content: the search asks for what its own
+          content needs.
+¬         The row's width is a function of the face, and the fallback face is
+          not the shipped one: hence the second read on fonts.ready.
+¬         Without script there is no gate: while the header is at or under
+          the compact breakpoint, an unmeasured header hides the search and
+          stacks the nav under the bar, visible. Not a hamburger: a menu
+          button whose script never arrives is navigation locked behind a
+          control that cannot open.                                 #header.no-script
+INSETS    the header at or under --c-page-breakpoint-compact → padding, bar
+          height, logo and brand size step to compact, independent of
+          data-gate. CSS
+DRAWER    while data-gate="on"
+  data-gate turns on             → each mega panel moves into its nav item's
+                                   <li> and flows there as a nested list
+  click the menu button          → toggle data-open on root and aria-expanded
+                                   on the button; opening focuses the
+                                   drawer's first input, link or button  #header.drawer
+  key Escape while open          → close, refocus the menu button   #header.drawer-escape
+  data-gate turns off            → data-open := false; every mega panel
+                                   returns to its place in the DOM  #header.drawer-gate
+¬         In the drawer each mega column keeps its heading above its
+          list: hiding the headings left the nested lists unlabeled. CSS  #header.drawer-headings
+STATE     aria-expanded on each nav item with a panel and on the menu button ·
+          aria-controls on the menu button · data-open on root · data-gate,  #header.menu-state
+          data-shelf and data-past-cover written by the script, never
+          authored
+
+══════════════════════════════════════════════════════════════════════════════
+page                                                      a[href^="#"]
+══════════════════════════════════════════════════════════════════════════════
+ANCHOR    one listener on the document for every a[href^="#"]
+  click (primary button, no modifier key) on a link whose #id names an
+  element                        → URL := #id; the page travels to the
+                                   target over --c-page-motion-travel on an
+                                   ease-out, the same duration whatever the
+                                   distance; then focus the target,
+                                   tabindex=-1 first if it has none, with
+                                   preventScroll so the browser's own jump
+                                   is not doubled                   #page.anchor
+  where it lands                 := the target's scroll-margin-block-start
+                                   below the window top: the header's
+                                   published --_aods-header-height +
+                                   c.page.stack
+  the link or an ancestor carries data-anchor-travel="off"
+                                 → the browser's own jump; the script does
+                                   nothing
+¬         A click another handler already prevented (error-summary's links)
+          is left alone.
+¬         Reduced motion jumps to the same place and still focuses the
+          target. No target, or a bare #: the browser's own behavior.
+
+══════════════════════════════════════════════════════════════════════════════
+in-page-nav                                               .aods-in-page-nav
+══════════════════════════════════════════════════════════════════════════════
+STICKY    The rail sticks, always: position:sticky at --_aods-header-height
+          + c.in-page-nav.sticky-gap. There is nothing to author.
+          The slot holding the nav stretches (ground[data-container] or
+          paper[data-container] > slot > nav), so the rail has its whole
+          band to travel in. At ≤bp that ground becomes a flex column and
+          the slot display:contents, so the folded trigger keeps the band
+          as its containing block and stays pinned under the header.
+¬         A grid item can only stick inside its own grid area; a flex item's
+          containing block is the whole flex container. Anything between the
+          slot and the nav stops the stretch: sticky computes and moves
+          nothing. Nothing errors. P29 catches it.
+BUILT AT RUNTIME
+  __fold-wrap   div     inserted before __list, and __list moves into it.
+                        Permanent, so the popover always has a positioning
+                        context. Inert when unfolded.
+  __fold        button  also carries .aods-select__trigger — the DS select,
+                        not the native one. aria-controls := __list  #in-page-nav.fold-trigger
+  __fold-label  span    inside __fold
+STATE     data-fold=on on root · aria-expanded on __fold
+          aria-current=true on exactly one __link
+EVENTS
+  viewport ≤bp                   → data-fold := on, __list hidden
+  viewport > bp                  → data-fold removed, __list shown,
+                                   aria-expanded := false
+  click __fold                   → toggle. On open, focus the aria-current
+                                   link, else the first
+  key ArrowDown|ArrowUp|Enter|Space on __fold   → open
+  key Escape in __list, folded   → close, refocus __fold
+  key Tab in __list, folded      → close, ¬refocus
+  click a __link, folded         → close, ¬refocus; the page travels (page,
+                                   ANCHOR). Choosing commits: without this
+                                   the popover stays open over the very
+                                   section the page just traveled to  #in-page-nav.choose
+  click outside root             → close, ¬refocus
+¬         The fold is a breakpoint, not a measurement: a matchMedia on
+          --c-page-breakpoint-compact, the width the two-container ground
+          collapses at. Tabs measure their rail; this does not.
+CURRENT   The line is the bottom of the sticky header, --_aods-header-height.
+          aria-current := the target whose section has passed the line and  #in-page-nav.current
+          sits closest to it; above the first section, the first. A target's
+          top is its container's or paper's, and when one container holds
+          two targets the first in document order claims it.
+          An IntersectionObserver (rootMargin -line 0 0 0) and a scroll
+          sampler, once per animation frame, both repaint. The observer is
+          re-armed on resize and on document.fonts.ready.
+LABEL     __fold-label := the current link's text, else the first link's,
+          else the __label's text, else "On this page".
+¬         The fold is layout and must NOT depend on the observer. A nav with
+          one mistyped href, or one whose sections are absent, still folds.
+          It used to bail early and kept the full rail at compact.
+¬         Without script there is no fold, and the author's aria-current
+          stands.                                                   #in-page-nav.no-script
+
+══════════════════════════════════════════════════════════════════════════════
+tabs                                                      .aods-tabs
+══════════════════════════════════════════════════════════════════════════════
+SELECT    Roving tabindex. Arrow keys move selection and follow focus.  #tabs.roving
+  key ArrowRight|ArrowDown       → select next enabled tab, wrapping
+  key ArrowLeft|ArrowUp          → select previous enabled tab, wrapping
+  key Home / End                 → select first / last enabled      #tabs.home-end
+  click a tab                    → select it. From a popover, also close
+                                   it and focus its trigger
+  every selection                → aria-selected and tabindex on every tab,
+                                   hidden on the panels, then fire
+                                   `aods:tabchange` on root
+  selecting a tab held in a shut __held
+                                 → focus goes to __more, which already wears
+                                   its name, never to a hidden button  #tabs.held-focus
+WIRE      A tab's panel is its aria-controls target, else the panel at its
+          index. The tab gets aria-controls, the panel aria-labelledby and  #tabs.wire
+          tabindex=0 unless it has one. First selection: the
+          aria-selected=true tab, else the first enabled.
+¬         Both arrow pairs work on every orientation.               #tabs.both-arrows
+¬         A tab with aria-disabled=true is skipped by the arrows, and a
+          click on it does nothing.                                 #tabs.disabled
+¬         Without script nothing is wired: each tab is a button in the Tab
+          order that selects nothing, and a panel shows unless the author
+          wrote hidden on it - an authored hidden panel stays hidden.  #tabs.no-script
+OVERFLOW  ¬ The rail never scrolls sideways: it clips on the inline axis, and
+          this ladder is what happens instead. Measured against the rail's
+          real width, never guessed. Every pass starts from the whole rail
+          (numerals on, nothing held) and takes a step only if the one
+          before did not fit:
+  1  data-numerals-off, when the root carries data-numerals. The numerals
+     cost ~40px a tab and they are ornament, so they go before a single
+     tab name does.
+  2  data-overflow := on. Hold the last 3 tabs in __held behind __more; keep
+     taking one more from the tail while it still does not fit. The fit
+     reserves c.tabs.overflow-min-inline for __more, never its rendered
+     width, so the choice cannot chase its own output.
+  3  THE FLOOR: if no tab can stay on the rail, OR the held names cannot
+     keep 3 letters each, take the whole rail instead — data-fold := on,
+     data-overflow removed, __list becomes a .aods-menu of .aods-menu__item
+     rows, numerals restored.
+     At 480px eight names came out at one letter each. That is texture, not
+     names, so the split has stopped buying anything.
+     ¬ Folded, the tablist and its tabs only gain classes (.aods-menu,
+     .aods-menu__item) and keep their roles; the menu script does not
+     bind to them (no role=menu).                                   #tabs.fold-roles
+BUILT AT RUNTIME
+  __fold-wrap / __fold / __fold-label   as in-page-nav. __fold's
+                        aria-controls := the tablist; no aria-haspopup  #tabs.fold-trigger
+  __overflow    div     role=presentation, appended inside the tablist  #tabs.overflow
+  __more        button  also carries .aods-select__trigger. It fills what the
+                        rail leaves
+  __more-label  span    inside __more
+  __held        div     .aods-menu, role=presentation, inside __overflow. A
+                        held tab moves in and wears .aods-menu__item
+  a hidden ruler span wearing __more's own type, so the letter count is
+  measured and not guessed
+LABELS    __fold-label := the selected tab's content, else the first tab's.
+          __more-label := the held tab that is selected; if none is selected,
+          every held name, numeral stripped, cut to the SAME letter count
+          and joined " · ". The count is the most letters that fit __more's
+          real width, computed from the held names always, never from the
+          selection, so choosing a tab cannot change what fits.
+HOLD      Re-append every held tab each pass, in index order. Appending only
+          the newly-held ones left them stacked after the ones already there.
+EVENTS
+  click __fold / __more          → toggle that popover
+  key ArrowDown|ArrowUp|Enter|Space on either trigger
+                                 → open, focus the selected tab in it, else
+                                   its first
+  key Escape                     → close, refocus · key Tab → close, ¬refocus
+  click outside root             → close, ¬refocus
+  aods:tabchange                  → repaint whichever label is showing
+¬         Arrows inside a popover select and repaint only. They must not
+          close it: the arrows select as they move, and closing would slam
+          the popover shut on the first press. Committing closes it — and
+          <button> fires click for Enter and Space, so the click handler
+          already covers both.
+RESIZE    Remeasure when the root's size changes (ResizeObserver) and on
+          document.fonts.ready, at most once per animation frame.
+
+══════════════════════════════════════════════════════════════════════════════
+explorer                                                  .aods-explorer
+══════════════════════════════════════════════════════════════════════════════
+          The tabs controller without the chrome: SELECT and WIRE exactly as
+          tabs, keyed off the roles, both arrow pairs moving and selecting.  #explorer.controller
+¬         No fold and no overflow. A vertical list cannot run out of width.
+  viewport ≤bp                   → one column: the index, then the selected
+                                   panel under it. CSS
+
+══════════════════════════════════════════════════════════════════════════════
+menu                                                      .aods-menu
+══════════════════════════════════════════════════════════════════════════════
+          Scripted only when the root carries role=menu. Side navigation,
+          nav > ul.aods-menu with plain links, gets no script at all.  #menu.nav-unscripted
+ITEMS     [role=menuitem|menuitemradio|menuitemcheckbox], skipping
+          aria-disabled=true. Roving tabindex: the first enabled item is the
+          menu's one Tab stop. A <button> item gets type=button.    #menu.roving
+  key ArrowDown / ArrowUp        → next / previous, wrapping        #menu.arrows
+  key Home / End                 → first / last                     #menu.home-end
+  key (any single character)     → the next item whose text starts with it,  #menu.typeahead
+                                   wrapping to the top
+  key Escape                     → fire `aods:menuescape` on root, bubbling.
+                                   The owner closes the menu and returns
+                                   focus; the menu does neither itself  #menu.escape
+  click an aria-disabled item    → preventDefault; propagation stops at the
+                                   root                             #menu.disabled
+
+══════════════════════════════════════════════════════════════════════════════
+disclosure                                                .aods-disclosure
+══════════════════════════════════════════════════════════════════════════════
+OVERLAY   An upside-down select, drawn by CSS but for --_rise. The details
+          keeps its closed bar's footprint in the flow; nothing on the page
+          moves.
+  open                           → ::details-content, anchored to the bar's
+                                   bottom edge, eases block-size 0 → auto:
+                                   the panel grows UPWARD over the content
+                                   above
+                                 → --_rise := the panel's height (aods.js, on
+                                   toggle); the bar rides up by it and stays
+                                   on top
+                                 → the divider wipes in right to left along
+                                   the bar's top edge; title, index and
+                                   glyph cross-fade to the open ink
+  close                          → the reverse; the bar settles back into
+                                   its footprint
+DURATION  One, the state duration: c.disclosure.motion-expand binds
+          s.motion.fast, as c.page.motion-state does. Height, wipe and
+          cross-fade share it.
+FALLBACK  Without ::details-content the panel flows under the bar and opens
+          DOWNWARD, eased by aods.js like any <details> (the <details> block,
+          --c-page-motion-state).
+BUILT AT RUNTIME
+  __close-row   li      or div when __panel is not a list. Appended to
+                        __panel once, at bind
+  __close       button  "Close" + __close-glyph "−" (aria-hidden), inside
+                        __close-row: the bar's own mark for the same act
+EVENTS
+  click __close                  → close, refocus the summary       #disclosure.close
+  key Escape                     → close, refocus the summary
+  pointerdown outside root       → close, ¬refocus (a pointerdown, not a
+                                   click)
+¬         Headroom. An ancestor whose overflow is not visible clips the top of
+          the panel: give the container room, or let it overflow.
+
+══════════════════════════════════════════════════════════════════════════════
+accordion · reference-list · footer sitemap · gov-banner  <details>
+══════════════════════════════════════════════════════════════════════════════
+          Every details whose class starts aods- and whose stylesheet does not
+          ease it: the reference-list items, the gov-banner and the footer's
+          sitemap band; the accordion item and the disclosure only where
+          ::details-content is unsupported. Elsewhere those two ease in CSS.
+OPEN      height 0 → the panel's scroll height, then cleared. overflow hidden
+          only while traveling.
+CLOSE     the reverse, and `open` is removed on finish, never before — remove
+          it first and the panel is gone before it can move.
+EVENTS
+  click the summary              → animate instead of the native jump
+DURATION  --c-page-motion-state, read at run time.
+¬         No Escape here. Only the disclosure closes on Escape.
+
+══════════════════════════════════════════════════════════════════════════════
+modal                                                     <dialog>
+══════════════════════════════════════════════════════════════════════════════
+NAME      aria-labelledby := __title's id at bind, unless aria-labelledby is  #modal.name
+          present
+OPEN      remember the opener → showModal() → focus [autofocus], else
+          __close, else the first focusable → fire `aods:open`       #modal.open
+  click a [data-modal-open=<id>] button
+                                 → open that dialog
+  click a [data-modal-close] inside
+                                 → close
+  `cancel` (Escape)              → close
+  click the backdrop             → close, only when data-modal-light is
+                                   present
+CLOSE     fade out over --c-page-motion-state on the exit curve → focus
+          returns to the opener → fire `aods:close`                  #modal.focus-return
+
+══════════════════════════════════════════════════════════════════════════════
+toast                                        AODS.toast(message, opts)
+══════════════════════════════════════════════════════════════════════════════
+REGION    .aods-toast-region is created on first use and appended to the body.
+STACK     bottom-right, newest last.
+LEAVE     after --c-toast-motion-stay, unless opts.sticky, or opts.status is
+          error or emergency: those stay until dismissed.           #toast.stay
+  pointerenter / focusin         → cancel the timer                 #toast.pause
+  pointerleave / focus leaving the toast
+                                 → restart it
+  click the dismiss              → leave now
+ROLE      status for info, success and warning; alert for error and
+          emergency.                                                #toast.role
+¬         A toast is never the only record of something the user must act on.
+
+══════════════════════════════════════════════════════════════════════════════
+table                                                     .aods-table
+══════════════════════════════════════════════════════════════════════════════
+SORT      aria-sort on each sortable head, th[aria-sort] holding
+          button.__sort: one of ascending|descending|none. Base state none.
+  click a head's __sort          → that head := ascending, or descending if
+                                   it was ascending; every other sortable
+                                   head := none → reorder the tbody rows
+                                   (by number when both cells read as one,
+                                   else locale order with numeric
+                                   collation) → "Sorted by {column},
+                                   {direction}" in a polite live region
+                                   placed after the table → fire
+                                   `aods:sort` on the table          #table.sort
+¬         A tbody[data-empty] is never reordered, announced or evented;
+          only aria-sort changes.
+STACK     data-stacked only: every body cell without data-label gets its
+          column head's text. At ≤narrow the rows restack, the head is
+          clipped with the sr-only pattern, and each cell shows its
+          data-label. CSS.                                          #table.stack
+WRAP      The author writes div.aods-table-wrap. aods.js names it by the
+          caption (aria-labelledby, unless it has an aria-label) and, only
+          while it actually overflows, gives it tabindex=0 and role=region;
+          when it fits, both are removed. Re-checked on resize.     #table.overflow-region
+¬         NO HORIZONTAL SCROLLERS. The wrap is a last-resort accessibility
+          affordance for genuine data, not a layout tool. Restack instead.
+BUSY      aria-busy="true" on the table, set and cleared by the page while
+          it updates → the table dims and takes no pointer input, its
+          __sort buttons included. CSS                     #table.busy
+
+══════════════════════════════════════════════════════════════════════════════
+dl                                                        .aods-dl
+══════════════════════════════════════════════════════════════════════════════
+  viewport ≤narrow, data-layout=row
+                                 → each __group restacks, dt above dd. CSS  #dl.restack
+
+══════════════════════════════════════════════════════════════════════════════
+site-alert                                                .aods-site-alert
+══════════════════════════════════════════════════════════════════════════════
+  click __dismiss                → fire aods:dismiss, then remove the band;
+                                   a focused __dismiss goes with it, so
+                                   focus falls to <body>  #site-alert.dismiss
+¬         Every band carries the __dismiss. There is no attribute to turn
+          it on.
+
+══════════════════════════════════════════════════════════════════════════════
+section-heading                                           .aods-section-heading
+══════════════════════════════════════════════════════════════════════════════
+FIT       the display heading only: .aods-section-heading[data-scale=display]
+          .aods-section-heading__heading. CSS holds each line to
+          c.section-heading.headline-measure (40ch). The script counts lines
+          and stamps a rung.
+  init · resize (150ms after the last) · document.fonts.ready
+                                 → remove data-rung from every display
+                                   __heading, then measure each one from
+                                   the top
+  __heading taller than 2 of its own line-heights
+                                 → data-rung := 1 (display-sm), then
+                                   measure again; still taller →
+                                   data-rung := 2 (display-xs) and stop
+  own width ≤ --c-page-breakpoint-compact
+                                 → the statement starts at display-sm;
+                                   data-rung 1 or 2 → display-xs. CSS
+  own width ≤ --c-page-breakpoint-narrow
+                                 → display-xs at any rung. CSS
+¬         A rung only steps DOWN from what the width chose, and display-xs is
+          the floor: a heading still over two lines there stays over.
+          data-rung is the script's and is never authored. Without script the
+          heading keeps the rung its width gives it.
+
+══════════════════════════════════════════════════════════════════════════════
+smaller behaviors
+══════════════════════════════════════════════════════════════════════════════
+icon           at load (at DOMContentLoaded if the document is still
+               loading) → AODS_SPRITE, which ships inside aods.js, is inserted
+               once as div#aods-sprite, aria-hidden, first in the body. Every
+               icon is <svg class="aods-icon"><use href="#aods-name"></use>
+               </svg>.
+               ¬ Nothing is fetched: a <use href> reaches only symbols in the
+               document. Skipped when #aods-sprite is already there or aods.js
+               carries no sprite.
+button         click on .aods-button[aria-disabled=true] → preventDefault
+               and stop, in the capture phase, before any handler runs;
+               it stays focusable and announced, unlike disabled.   #button.aria-disabled
+chip-group     click a chip → toggle aria-pressed. Multi-select by default.  #chip.toggle
+               click __dismiss → fire aods:dismiss on the chip (bubbling),
+               remove it, focus the next chip's __dismiss, else the group
+               (tabindex=-1 first).                                 #chip.remove
+form           a checkbox carrying data-reveal, on bind and on change → the
+               region its aria-controls names: hidden := not checked;
+               aria-expanded := checked; on check, focus the region's first
+               input, select, textarea or button.                   #form.reveal
+search         input → data-has-value on the root while the field is
+               non-empty; click the clear control → empty it, drop the flag,
+               refocus the input and fire `input`.                  #search.clear
+steps          an empty __marker with no aria-label → aria-label := "Step N:
+               <its label's text>", N its position. The script announces no
+               state.                                               #steps.marker-name
+error-summary  bind → tabindex=-1; if data-autofocus is present and the
+               summary is not hidden, focus it.                     #error-summary.autofocus
+               click an error link → focus the field it names and scroll
+               it to the middle of the view.                        #error-summary.link-focus
+               ¬ A summary revealed after bind is not focused by the
+               component.
+reference-list click a __row, or key Enter|Space on it → toggle that row (the
+               native <summary>); opening one closes every other row in the
+               list. Open and close ease as the <details> block says.  #reference-list.one-open
+               ¬ Escape does not close a row. No hover preview. The list
+               itself never collapses: its head is a heading, not a summary.  #reference-list.head
+               A link to a reference is the page block's ANCHOR: it travels
+               to the reference and focuses it.
+skip-link      no script of its own: its click is the page block's ANCHOR,
+               which focuses the target (tabindex=-1 first if needed) with
+               preventScroll, so the browser's own jump is not doubled.  #skip-link.focus
+footer         the footer at or under --c-page-breakpoint-compact → the bands
+               stack (CSS) and the nav band closes into the Site Map
+               disclosure, unless data-open="true"; the footer wider than that
+               → the nav band is open and its Site Map summary hidden (CSS).  #footer.sitemap
+               The site map opens and closes like any <details> (the
+               <details> block).
+accordion      open and close ease in CSS (::details-content,
+               c.accordion.motion-expand); the script eases only where the
+               selector is unsupported (the <details> block).
+settled        pointerup, ¬touch, on an interactive host wearing an aods- class
+               (summary, button, link, tab, option, menuitem, label, row,
+               chip, conv-source, role=button, data-interactive) →
+               data-aods-settled on it, and the hover wash clears;
+               pointerleave removes it. Every component, not only <details>.
+hero           data-media=1-1 at ≤bp → the halves stack, the photograph first
+               and the content under it. Viewport-based: the grid is on the
+               hero itself. CSS
+               the hero's own width ≤ compact → data-scale=display rejoins the
+               standard ladder: the heading takes the compact step and the
+               subhead its ordinary size; ≤ narrow → the heading steps once
+               more. CSS
+section-opener ≤bp → one column: the media stacks under the copy whichever
+               side data-media put it, so what is seen follows the source
+               order. CSS                            #section-opener.stack
+objective      ≤bp → the strategies column drops under the prose, the
+               index gutter releases: one column. CSS      #objective.stack
+code           a line longer than the .aods-code-block → wraps, breaking
+               anywhere (white-space: pre-wrap; overflow-wrap: anywhere).
+               ¬ The block never scrolls sideways. CSS
+prose          a <pre> line longer than the column → the <pre> scrolls
+               sideways inside itself (overflow-x: auto); the page does not.
+               CSS                                                  #prose.pre-scrolls
+sr-only        focus-visible on the element → unclipped: it paints where it
+               stands in the flow; focus leaves → clipped again. CSS
+               (.aods-sr-only:not(:focus-visible))                   #sr-only.unclip
+               ¬ Focus that is not focus-visible, such as a mouse click,
+               leaves it clipped.
+ground         ≤bp → every data-container arrangement := one column; the
+               slots stack in source order, including a spanning slot and the
+               rail. ≤bp → a slot whose direct child is an in-page-nav :=
+               display:contents, so the nav's fold sticks against the whole
+               ground. CSS; no attribute changes.                   #ground.stack
+               wider than bp → no arrangement moves a slot out of source
+               order: the rail of hug-right|set-right is the LAST slot, of
+               hug-left|set-left the first after any spanning head. Reading
+               and focus order are the DOM's. CSS                   #ground.source-order
+layout         ≤bp → data-kind=grid := 2 columns, whatever data-columns says;
+               ≤narrow → data-kind=grid := 1 column. CSS            #layout.grid-collapse
+               ¬ A container inside a ground keeps its
+               c.layout.container-inset at every width; the ground's inset is
+               what steps (law layout-ground-inset).
+conv-composer  typing in __input → __input grows with its content from
+               --c-conv-composer-min-height to --c-conv-composer-max-height,
+               then scrolls inside itself. CSS (field-sizing: content)
+               ¬ A browser without field-sizing keeps the textarea at a fixed
+               height.
+               ¬ No key is handled: Enter in __input is a new line, as in any
+               textarea. Sending on Enter, and a hint that promises it, are
+               the app's.                                           #conv-composer.keys
+conv-step      data-state=running → the marker pulses, opacity 1 → 0.3 → 1,
+               every 6 × --c-conv-motion-step, until the state changes. CSS
+               ¬ Reduced motion stops the pulse; the hollow ring still says
+               running.

@@ -1,0 +1,312 @@
+/* PAGE TEMPLATE CSS. Binds --s-* only (the R5 contract for documentation). Not built — linked as is.
+ The template pages are system markup end to end; this file carries only what a page, not a component, owns:
+ the block inset on main (the system has no page-rhythm token yet — see the templates index) and the index page. */
+/* NOTHING HERE OVERRIDES THE SYSTEM ANY MORE (operator 2026-09-04: "I don't want these templates to
+ override anything. Rules are Rules and the templates need to be shining examples of their adherence.
+ I think if we start with three and remove every rule override we will have a truer starting point").
+ WHAT WAS HERE, AND WHY IT WENT. Four rules on .t-main and two on the dark band:
+   .t-main { padding-block-start: 2xl }                       - a page-level top inset
+   .t-main > .aods-ground:first-child > [data-kind=container]  - and the first container gave up its
+     { padding-block-start: 0 }                                 own top pad to pay for it
+   .t-main[data-lead="hero"] ...                              - the hero pair of the same exception
+   .t-main > .aods-ground[data-ground="dark"] { margin-block }  - a ground with vertical margin
+   .t-main[data-close="dark"] ...                             - and its last-child exception
+ THE RULING BEHIND THEM WAS REAL and is not being denied: 2026-08-23, hit list 17 - headlines were
+ starting too low, because the gov-banner, utility bar and header already spend the top of the
+ viewport on EVERY page, so the page's own top inset wants to be tighter than a bare page would use.
+ That was written before the container owned vertical space. What it produced afterwards was a page
+ where the FIRST container padded 0 where the law says 60, and a ground carrying vertical margin
+ where the law says a ground has none - measured on shell.html, ground -> h1 was 0.
+ A TEMPLATE THAT OVERRIDES THE MODEL CANNOT BE READ AS AN EXAMPLE OF IT, and every one of these was
+ invisible to every check, because nothing said page CSS may not reach a system class. P27 says it
+ now. If the top of a page still wants to be tighter after this, that is a change to the LEAD LAW or
+ to the header, argued on the render - not an exception filed in page CSS. */
+
+
+/* ---- FOCUS STYLE (UX experiment — focus-style.html + focus-style.js) ----
+ The visitor's chosen focus indicator, applied site-wide. focus-style.js stamps
+ data-focus-style on <html> from localStorage; these rules override the three shared
+ focus bindings. DELIBERATE CONTRACT EXCEPTION: this block writes --c-page-* values —
+ that IS the mechanism (the three tokens restyle focus on every component at once) —
+ and it must set them on every element with !important, because tokens.css re-derives
+ them per element on dark surfaces and on the pinned-light list. Literals are commented
+ with their source; the periwinkle is the approved mock and is not a system token. */
+[data-focus-style="highlight"], [data-focus-style="highlight"] * {
+  --c-page-focus-ring: #6b85e0 !important;   /* periwinkle — the mock; ≥3:1 on light and dark */
+  --c-page-focus-width: 8px !important;      /* stroke, per mock */
+  --c-page-focus-gap: 4px !important;        /* offset, per mock */
+}
+[data-focus-style="contrast"], [data-focus-style="contrast"] * {
+  --c-page-focus-ring: #262321 !important;   /* --g-color-brand-gray-90 (templates.css may not bind g-) */
+  --c-page-focus-width: 3px !important;      /* = --s-focus-width */
+  --c-page-focus-gap: 2px !important;        /* = --s-focus-gap */
+}
+/* The high-visibility pair: a warning/30 halo fills the 2px offset gap, so the ring reads
+ dark-on-light AND bright-on-dark. (While focused, this shadow temporarily replaces any
+ decorative box-shadow the element carries — e.g. a card's emphasis edge.) */
+[data-focus-style="contrast"] :focus-visible {
+  box-shadow: 0 0 0 var(--c-page-focus-gap) #ffb700;   /* --g-color-warning-30 */
+}
+[data-focus-style="mint"], [data-focus-style="mint"] * {
+  --c-page-focus-ring: #a7d2c8 !important;   /* mint — the second highlight mock */
+  --c-page-focus-width: 8px !important;
+  --c-page-focus-gap: 4px !important;
+}
+/* The mint is the softest ring in the set and fails 3:1 on white on its own (1.6:1, audit 2026-08-23).
+ The system corrects for its one weakness instead of dropping it: a gray/90 keyline at the element's
+ edge anchors the eye on light grounds; the wide mint band does the finding. */
+[data-focus-style="mint"] :focus-visible {
+  box-shadow: 0 0 0 2px #262321;   /* --g-color-brand-gray-90 keyline inside the gap */
+}
+
+/* ---- focus-style.html only: the chooser's page CSS (--s-* bindings) ---- */
+.t-choices { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-space-base); margin: 0; padding: 0; border: 0; }
+@media (max-width: 75em) { .t-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }   /* 1200px: the four choices pair up */
+@media (max-width: 56.25em) { .t-choices { grid-template-columns: minmax(0, 1fr); } }   /* = --s-breakpoint-compact (900px); custom properties cannot feed media queries */
+.t-choices > legend { padding: 0; margin-block-end: var(--s-space-base); }
+.t-choice { display: flex; flex-direction: column; gap: var(--s-space-sm); cursor: pointer;
+  background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised);
+  padding: var(--s-space-xl); }
+.t-choice:has(.t-choice__control:checked) { border-color: var(--s-color-emphasis-selected-edge); background: var(--s-color-surface-selected); }
+.t-choice__head { display: flex; align-items: center; gap: var(--s-space-md); font-weight: var(--s-font-weight-bold); }
+.t-choice__desc { color: var(--s-color-text-secondary); font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height); }
+/* The stage holds a simulated ring, drawn with the same geometry the real style uses —
+ generous inset so the 8px/4px highlight ring never clips at the card edge. */
+.t-choice__stage { display: flex; justify-content: center; padding: var(--s-space-xl); margin-block-start: auto; background: var(--s-color-surface-page); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.t-focus-sample { pointer-events: none; }
+.t-choice[data-style="standard"] .t-focus-sample { outline: var(--s-focus-width) solid var(--s-color-focus-ring); outline-offset: var(--s-focus-gap); }
+.t-choice[data-style="highlight"] .t-focus-sample { outline: 8px solid #6b85e0; outline-offset: 4px; }   /* periwinkle — the mock */
+.t-choice[data-style="mint"] .t-focus-sample { outline: 8px solid #a7d2c8; outline-offset: 4px; box-shadow: 0 0 0 2px #262321; }   /* mint + the gray/90 keyline */
+.t-choice[data-style="contrast"] .t-focus-sample { outline: 3px solid #262321; outline-offset: 2px; box-shadow: 0 0 0 2px #ffb700; }   /* brand-gray/90 + warning/30 */
+/* accessibility.html only: the night band the chooser rides on (the story's ground progression) */
+/* accessibility.html only: the who/what/how/does framing row and the keyboard keys */
+.t-frame { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-space-xl); }
+@media (max-width: 56.25em) { .t-frame { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.t-frame p { margin: 0; color: var(--s-color-text-secondary); font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height); }
+.t-kbd { display: inline-block; padding: 0 var(--s-space-sm); border: var(--s-border-width-hairline) solid var(--s-color-border-on-page); border-bottom-width: var(--s-border-width-thick); background: var(--s-color-surface-raised); font-family: var(--s-font-family-code), ui-monospace, monospace; font-size: var(--s-type-code-md-size); line-height: var(--s-type-ui-lg-line-height); }
+/* the Tab trick (accessibility.html): the key graphics are the first three focus stops of chapter six;
+ the ring itself comes from the page focus contract, so it arrives in whichever style the user chose */
+.t-kbd[tabindex] { cursor: default; }
+.t-tab-sentinel { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); outline: none; }
+/* The try strip: real controls, padded so even the widest ring stays inside the panel. */
+.t-try { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-space-xl); padding: var(--s-space-xl);
+  background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.t-focus-note { margin: 0; color: var(--s-color-text-secondary); font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height); }
+
+/* ---- templates/index.html only: a small docs page in the documentation voice ---- */
+body.t-index {
+  margin: 0; background: var(--s-color-surface-page); color: var(--s-color-text-primary);
+  font-family: var(--s-font-family-doc), system-ui, sans-serif;
+  font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height);
+}
+.t-index main { max-width: var(--s-size-measure-page); margin: 0 auto; padding: var(--s-space-3xl) var(--s-space-2xl) var(--s-space-5xl); }
+.t-index .eyebrow { margin: 0 0 var(--s-space-sm); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.t-index h1 { margin: 0 0 var(--s-space-md); font-size: var(--s-type-display-sm-size); line-height: var(--s-type-display-sm-line-height); font-weight: var(--s-font-weight-bold); }
+.t-index .lede { margin: 0 0 var(--s-space-3xl); max-width: var(--s-size-measure-prose); font-size: var(--s-type-body-md-size); line-height: var(--s-type-body-md-line-height); color: var(--s-color-text-secondary); }
+.t-index a { color: var(--s-color-action-link); }
+.t-index code { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); }
+.t-list { display: grid; gap: var(--s-space-base); margin: 0; padding: 0; list-style: none; }
+.t-list li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: var(--s-space-md); padding: var(--s-space-base); background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.t-list .n { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; color: var(--s-color-text-tertiary); }
+.t-list h2 { margin: 0 0 var(--s-space-2xs); font-size: var(--s-type-heading-xs-size); line-height: var(--s-type-heading-xs-line-height); font-weight: var(--s-font-weight-bold); }
+.t-list .purpose { margin: 0 0 var(--s-space-sm); color: var(--s-color-text-secondary); }
+.t-list .order { margin: 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); line-height: var(--s-type-code-sm-line-height); color: var(--s-color-text-tertiary); overflow-wrap: anywhere; }
+.t-list .links { display: flex; flex-wrap: wrap; gap: var(--s-space-md); margin: 0 0 var(--s-space-sm); font-size: var(--s-type-ui-md-size); }
+.t-index .note { margin: var(--s-space-3xl) 0 0; max-width: var(--s-size-measure-prose); color: var(--s-color-text-secondary); }
+
+/* ---- the chapters rail, site-wide behaviors (hit list 7): a close control on the rail, the choice
+ remembered (localStorage aods-rail-closed, wired in focus-style.js), and a quiet reopen tab at the
+ right edge while it is closed. Applies to any [data-rail] wrapper (accessibility, strategic plan). ---- */
+[data-rail] { position: relative; }
+.t-rail-close { pointer-events: auto; position: absolute; top: calc(-1 * var(--s-space-3xl)); right: 0; }
+[data-rail] .t-rail-inner { position: relative; pointer-events: auto; }
+html[data-rail-closed] [data-rail] { display: none; }
+.t-rail-open { position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 30;
+  display: none; writing-mode: vertical-rl; padding: var(--s-space-base) var(--s-space-sm);
+  background: var(--s-color-pinned-surface-dark); color: var(--s-color-pinned-ink-dark);
+  border: 0; cursor: pointer; font-family: var(--s-font-family-ui), system-ui, sans-serif;
+  font-size: var(--s-type-ui-xs-size); letter-spacing: var(--s-font-tracking-caps); text-transform: uppercase; }
+html[data-rail-closed] .t-rail-open { display: block; }
+@media (max-width: 1280px) { .t-rail-open { display: none !important; } }
+
+/* ---- accessibility.html page CSS: the graphic set pieces (all --s-* bindings, R5) ---- */
+/* the triad — three faces of the same person; press one and the example changes */
+.t-triad { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-space-base); }
+@media (max-width: 56.25em) { .t-triad { grid-template-columns: minmax(0, 1fr); } }
+.t-triad button { display: flex; flex-direction: column; gap: var(--s-space-md); text-align: left; cursor: pointer;
+  padding: var(--s-space-2xl) var(--s-space-xl); background: var(--s-color-surface-tint-cream);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); font: inherit; }
+.t-triad button:hover { --aods-wash: var(--s-color-state-hover); }
+.t-triad .t-triad__word { font-family: var(--s-font-family-heading), system-ui, sans-serif;
+  font-size: var(--s-type-heading-md-size); line-height: var(--s-type-heading-md-line-height); font-weight: var(--s-font-weight-bold); color: var(--s-color-text-primary); }
+.t-triad .t-triad__case { font-family: var(--s-font-family-display), system-ui, sans-serif;
+  font-size: var(--s-type-display-xs-size); line-height: var(--s-type-display-xs-line-height); letter-spacing: var(--s-type-display-xs-tracking);
+  font-weight: var(--s-font-weight-bold); color: var(--s-color-accent-deep); min-height: calc(2 * var(--s-type-display-xs-line-height)); text-wrap: balance; }
+.t-triad .t-triad__hint { font-size: var(--s-type-ui-xs-size); line-height: var(--s-type-ui-xs-line-height); color: var(--s-color-text-tertiary); font-family: var(--s-font-family-ui), system-ui, sans-serif; }
+/* POUR — the four words as dark display-scale reveals */
+.t-pour .aods-accordion__title { font-family: var(--s-font-family-display), system-ui, sans-serif;
+  font-size: var(--s-type-display-xs-size); line-height: var(--s-type-display-xs-line-height); letter-spacing: var(--s-type-display-xs-tracking); font-weight: var(--s-font-weight-bold); }
+.t-pour .t-pour__tag { display: block; font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-sm-line-height); font-weight: var(--s-font-weight-regular); letter-spacing: var(--s-font-tracking-caps); text-transform: uppercase; color: var(--s-color-pinned-ink-dark); margin-block-start: var(--s-space-xs); }
+/* the contrast proof strip — real pairs, real ratios, flip the ground */
+.t-swatches { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--s-space-md); }
+@media (max-width: 56.25em) { .t-swatches { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+.t-swatch { display: flex; flex-direction: column; gap: var(--s-space-xs); padding: var(--s-space-lg);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.t-swatch b { font-family: var(--s-font-family-heading), system-ui, sans-serif; font-size: var(--s-type-heading-sm-size); line-height: var(--s-type-heading-sm-line-height); font-weight: var(--s-font-weight-bold); }
+.t-swatch span { font-family: var(--s-font-family-code), ui-monospace, monospace; font-size: var(--s-type-code-md-size); line-height: var(--s-type-code-md-line-height); }
+/* the target proof — drawn at true size */
+.t-targets { display: flex; align-items: center; gap: var(--s-space-2xl); flex-wrap: wrap; }
+.t-target-24, .t-target-44 { display: grid; place-content: center; cursor: pointer; border: var(--s-border-width-hairline) solid var(--s-color-action-outline); background: var(--s-color-surface-raised); color: var(--s-color-action-base); font-family: var(--s-font-family-ui), system-ui, sans-serif; font-weight: var(--s-font-weight-medium); }
+.t-target-24 { width: 24px; height: 24px; font-size: 10px; }
+.t-target-44 { width: 44px; height: 44px; font-size: var(--s-type-ui-sm-size); }
+.t-targets button:hover { --aods-wash: var(--s-color-state-hover); }
+.t-demo-note { margin: 0; font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-md-line-height); color: var(--s-color-text-tertiary); }
+/* motion proof */
+.t-motion { display: flex; align-items: center; gap: var(--s-space-xl); flex-wrap: wrap; }
+.t-motion__dot { width: var(--s-size-icon-lg); height: var(--s-size-icon-lg); background: var(--s-color-action-base); animation: t-bounce 1.2s var(--s-motion-ease-standard) infinite alternate; }
+@keyframes t-bounce { from { transform: translateY(-6px); } to { transform: translateY(6px); } }
+.t-motion[data-reduced] .t-motion__dot { animation: none; }
+.t-motion__spinner { width: var(--s-size-icon-lg); height: var(--s-size-icon-lg); border: 3px solid var(--s-color-border-on-raised); border-top-color: var(--s-color-action-base); border-radius: 50%; animation: t-spin 1s linear infinite; }
+.t-motion[data-reduced] .t-motion__spinner { animation-duration: 4s; }
+@keyframes t-spin { to { transform: rotate(360deg); } }
+/* what the screen reader sees */
+.t-outline { margin: 0; padding: var(--s-space-lg); background: var(--s-color-surface-sunken); border: var(--s-border-width-hairline) solid var(--s-color-border-on-sunken); font-family: var(--s-font-family-code), ui-monospace, monospace; font-size: var(--s-type-code-md-size); line-height: var(--s-type-code-lg-line-height); color: var(--s-color-text-secondary); white-space: pre; overflow-x: auto; }
+/* the dark-loses proof: a deliberately failing mock, clearly labeled */
+.t-cut { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-space-md); }
+@media (max-width: 56.25em) { .t-cut { grid-template-columns: minmax(0,1fr); } }
+.t-cut__bad { padding: var(--s-space-lg); background: var(--s-color-pinned-surface-dark); color: #4a5a6d; border: var(--s-border-width-hairline) solid #24364d; font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-md-size); line-height: var(--s-type-ui-md-line-height); }   /* literals: a mock of the FAILURE the system refuses to ship */
+.t-cut__good { padding: 0; }
+
+/* ---- accessibility v4 page CSS (hit-list round three; --s-* only) ---- */
+/* hit list 46: every chapter anchor lands with its eyebrow visible — clear the sticky header */
+.t-chapter { scroll-margin-block-start: calc(var(--s-space-4xl) + var(--s-space-sm)); }
+/* ch1: the equal two-column spread — prose left, ONE big card right (hit list 26) */
+.t-duo { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-space-3xl); align-items: center; }
+@media (max-width: 56.25em) { .t-duo { grid-template-columns: minmax(0,1fr); } }
+.t-bigcard { display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-space-2xl); width: 100%; aspect-ratio: 1 / 0.85; padding: var(--s-space-2xl); text-align: left; cursor: pointer; font: inherit; border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.t-bigcard[data-register="permanent"] { background: var(--s-color-surface-tint-primary); }
+.t-bigcard[data-register="temporary"] { background: var(--s-color-surface-tint-cream); }
+.t-bigcard[data-register="situational"] { background: var(--s-color-surface-tint-vivid); }
+.t-bigcard:hover { --aods-wash: var(--s-color-state-hover); }
+.t-bigcard .t-bigcard__register { font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); letter-spacing: var(--s-font-tracking-caps); text-transform: uppercase; font-weight: var(--s-font-weight-medium); color: var(--s-color-text-tertiary); }
+.t-bigcard .t-bigcard__case { font-family: var(--s-font-family-display), system-ui, sans-serif; font-size: var(--s-type-display-md-size); line-height: var(--s-type-display-md-line-height); letter-spacing: var(--s-type-display-md-tracking); font-weight: var(--s-font-weight-bold); color: var(--s-color-text-primary); text-wrap: balance; }
+.t-bigcard .t-bigcard__hint { display: inline-flex; align-items: center; gap: var(--s-space-sm); font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-md-size); line-height: var(--s-type-ui-md-line-height); font-weight: var(--s-font-weight-medium); color: var(--s-color-action-deep); }
+.t-bigcard .t-bigcard__hint::after { content: "↻"; font-size: var(--s-type-ui-xl-size); }
+/* centered passages: the content area is defined only by the shape the content makes (hit list 36) */
+/* hit list 47 (his correction): "center" means center the CONTENT AREA with the margins — never the
+ line. A centered block, left-aligned text, and no decoration announcing the container. */
+.t-center { margin-inline: auto; max-width: var(--s-size-measure-prose); }
+/* THE CONTENT AREA (the corrected principle, at last): one column, CENTERED between the page
+ margins — equal air left and right. Its edges are defined only by the shape the content makes:
+ no line, no color, no decoration. Text left-aligns inside it. Full-bleed bands are the occasional
+ break, not the rule. The rail lives out in the natural right margin — it never pushes the
+ content off center. */
+.t-area { max-width: var(--s-size-measure-feature); margin-inline: auto; }
+/* chapter one's block runs wider: 90% of the page width, still centered. */
+.t-area[data-wide] { width: 90%; max-width: none; }
+/* THE FULL-WIDTH CONTENT AREA (his type 2): for multi-column passages. The ground runs edge
+ to edge; the content is not confined to the centered block — it takes a small, equal margin
+ each side and uses the rest. Content still left-aligns inside. */
+.t-area[data-full] { width: auto; max-width: none; margin-inline: var(--s-space-3xl); }
+/* ch1 duo: the deck stays centered in the viewport for the length of the two columns.
+ The right column stretches to the row's full height; the sticky element rides inside it,
+ its offset measured by script so the card is truly viewport-centered. */
+.t-duo--pin > :last-child { align-self: stretch; }
+/* the deck sits CENTERED in the right column — horizontally by margin, vertically by the
+ measured sticky offset — and holds there while the left column's copy scrolls past. */
+/* min-width:0 is load-bearing (2026-08-26): .t-stick is a GRID ITEM, so its min-width:auto resolves to the
+ min-content width of the card inside it — 374px — and an automatic minimum size OVERRIDES the specified
+ width. At 375 it blew 55px past the viewport and gave the page a sideways scroll, which this system does
+ not do. The width below was never being honored. */
+.t-stick { position: sticky; top: var(--_stick, 33vh); width: min(100%, 30rem); min-width: 0; margin-inline: auto; display: grid; gap: var(--s-space-xl); }
+.t-stick .t-kicker { margin: 0; }
+/* the two-column passage ends with the quote spanning BOTH columns */
+.t-area .t-quote-span.aods-pull-quote { max-width: none; margin-inline: 0; }
+/* closing copy and the summary box line up with the quote's TEXT edge (rule + inset) */
+.t-align-quote { margin-inline-start: calc(var(--s-space-2xl) + var(--s-emphasis-edge-4)); }
+@media (max-width: 56.25em) {
+  .t-area[data-wide] { width: auto; }
+  .t-stick { position: static; }
+  .t-align-quote { margin-inline-start: 0; }
+}
+/* hit list 48: the first section sits in its own quiet inset — a margin on either side, no border,
+ no background; the shape of the content is the only boundary. */
+.t-inset { margin-inline: var(--s-space-5xl); }
+@media (max-width: 56.25em) { .t-inset { margin-inline: 0; } }
+.t-kicker { margin: 0 0 var(--s-space-md); font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-sm-line-height); font-weight: var(--s-font-weight-medium); letter-spacing: var(--s-font-tracking-caps); text-transform: uppercase; color: var(--s-color-text-tertiary); }
+/* hit list 49: the heading column carries ch4's gray as a panel — the guarantee column literally
+ sits on the ground the audit chapter arrives on. */
+/* RULING 2026-08-25 : the title bar takes the ground of the chapter it runs into — vivid/5,
+ the same papery blue as t-ground-friendly — instead of the sunken gray. Renamed with it. */
+.t-aside-friendly { background: var(--s-color-surface-tint-vivid); box-sizing: border-box;
+  /* IT BLEEDS (2026-08-25, ): out to the LEFT EDGE of the window, and up and down to the
+ chapter's own edges so it meets the section above and the section below with nothing between.
+ The negative block margins escape the chapter's 5xl padding and the padding puts it back, so the
+ title does not move. The leftward fill is a box-shadow, which paints without creating overflow —
+ a negative margin or 100vw width would open a sideways scrollbar. */
+  padding-inline: var(--s-space-2xl);
+  margin-block: calc(-1 * var(--s-space-5xl));
+  padding-block: calc(var(--s-space-5xl) + var(--s-space-2xl));
+  position: relative; }
+/* the leftward fill is a strip pinned to the band's own left edge and 100vw wide. The earlier
+ box-shadow offset the whole box by 100vw, which put the copy off-screen instead of beside it —
+ it never covered the gutter. A left-overflowing absolute box cannot be scrolled to, so no
+ sideways scrollbar either. */
+.t-aside-friendly::before { content: ""; position: absolute; inset-block: 0; inset-inline-end: 100%; inline-size: 100vw; background: inherit; }
+/* hit list 51: the feature turns FRIENDLY — the whole section on the light-blue highlight surface,
+ and the picked style highlights in yellow so the choice reads against the blue. Literals from the
+ warning ramp, commented (page CSS precedent: the focus-style block). */
+.aods-ground[data-ground="friendly"] .t-choice:has(.t-choice__control:checked) { background: #fff2d4; border-color: #ffb700; }   /* warning/10 fill + warning/30 edge */
+/* ch3 → ch4: the vertical band on the heading side, fading blue → gray down the scroll (hit list 31) */
+.t-bandcol { position: relative; }
+.t-bandcol::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: calc(-1 * var(--s-space-xl)); width: var(--s-space-md); background: linear-gradient(to bottom, var(--s-color-surface-tint-primary), var(--s-color-surface-tint-gray, #f2f0ef)); }
+/* The five .t-ground-* fills are retired: a ground is a component now, and .aods-ground[data-ground]
+   binds these same surface tokens. Anything that reached INSIDE one of them had to be retargeted
+   rather than deleted - see the friendly/choice rule above, which is the one that mattered. */
+/* the shelf intro band: darker blue, centered (hit list 42) */
+.t-shelf-intro { background: var(--s-color-pinned-surface-elevated-dark); padding-block: var(--s-space-4xl) var(--s-space-lg); }   /* hit list 52 + 2026-08-24: intro and shelf are ONE SECTION — the same primary/60 surface as the reference band */
+.t-shelf-columns .aods-reference-list__columns { max-width: var(--s-size-measure-feature); margin-inline: auto; }
+.t-shelf-columns .aods-reference-list__head { max-width: var(--s-size-measure-feature); margin-inline: auto; }
+/* ch5 chooser, designed (hit list 38): a 2×2 with tall stages */
+.t-choices[data-big] { grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-space-lg); }
+@media (max-width: 56.25em) { .t-choices[data-big] { grid-template-columns: minmax(0,1fr); } }
+.t-choices[data-big] .t-choice__stage { padding: var(--s-space-3xl); }
+.t-choices[data-big] .t-choice { padding: var(--s-space-2xl); gap: var(--s-space-md); }
+/* practice links never wrap under a ring (hit list 39) */
+.t-nowrap-links .aods-link { white-space: nowrap; }
+
+/* the key reference (accessibility ch6): the keys nobody told you about */
+.t-keys { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-space-lg) var(--s-space-3xl); }
+@media (max-width: 56.25em) { .t-keys { grid-template-columns: minmax(0,1fr); } }
+.t-key { display: grid; grid-template-columns: minmax(160px, auto) 1fr; gap: var(--s-space-lg); align-items: baseline; padding-block: var(--s-space-md); border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-on-page); }
+.t-key__caps { display: flex; flex-wrap: wrap; gap: var(--s-space-xs); align-items: center; font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); color: var(--s-color-text-tertiary); }
+.t-key__what { margin: 0; font-family: var(--s-font-family-body), Georgia, serif; font-size: var(--s-type-body-xs-size); line-height: var(--s-type-body-xs-line-height); color: var(--s-color-text-secondary); }
+/* the key label steps down from bold to medium and gets air under it (2026-08-25, ): it labels
+ the line beneath it, and at bold it was competing with the keycaps beside it. */
+.t-key__what b { color: var(--s-color-text-primary); font-family: var(--s-font-family-ui), system-ui, sans-serif; font-weight: var(--s-font-weight-medium); font-size: var(--s-type-ui-md-size); display: block; padding-block-end: var(--s-space-xs); }
+
+/* the way out (2026-08-25) — the template index offered no link out */
+.t-back { margin: 0 0 var(--s-space-base); }
+.t-back a { color: var(--s-color-action-link); }
+
+/* ---- the way out of a template (2026-08-25). A template page carries the PRODUCT header, because that
+ header is part of what it demonstrates — so the documentation masthead must not stack on top of it and
+ turn the specimen into a lie about its own top-of-page. This strip is unmistakably documentation, not product: it sits
+ above everything, it does not stick, and it says what the page below it is. Injected by
+ docs/doc-header.js, which sends every other documentation page a real masthead instead. ---- */
+.t-docbar { background: var(--s-color-pinned-surface-dark); color: var(--s-color-pinned-ink-dark);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+  border-block-end: var(--s-emphasis-edge-2) solid var(--s-color-pinned-surface-elevated-dark); }
+.t-docbar__in { max-width: var(--s-size-measure-page); margin-inline: auto;
+  padding: var(--s-space-sm) var(--s-space-2xl); display: flex; align-items: center; gap: var(--s-space-xl); flex-wrap: wrap; }
+.t-docbar a { display: inline-flex; align-items: center; min-height: var(--s-size-icon-lg);   /* 24 — the wide hit floor */
+  color: var(--s-color-pinned-ink-strong-dark); text-decoration: none; letter-spacing: 0.06em; }
+.t-docbar a:hover { text-decoration: underline; }
+.t-docbar a:focus-visible { outline: var(--s-focus-width) solid var(--s-color-focus-ring); outline-offset: var(--s-focus-gap); }
+.t-docbar__note { margin-inline-start: auto; color: var(--s-color-pinned-ink-quiet-dark); }
+/* The theme switcher in this strip (D51): the same control and rules as the masthead's, in docs/doc.css. */
+.t-docbar .doc-theme { margin-inline-start: 0; }
+.t-docbar .doc-theme__select { font: inherit; color: var(--s-color-pinned-ink-strong-dark); background-color: var(--s-color-pinned-surface-elevated-dark);
+  border: var(--s-border-width-hairline) solid var(--s-color-pinned-ink-quiet-dark); border-radius: 0; min-height: var(--s-size-icon-lg); padding-inline: var(--s-space-sm); cursor: pointer; }
+.t-docbar .doc-theme__select:focus-visible { outline: var(--s-focus-width) solid var(--s-color-focus-ring); outline-offset: var(--s-focus-gap); }
+@media (max-width: 700px) { .t-docbar__note { display: none; } }

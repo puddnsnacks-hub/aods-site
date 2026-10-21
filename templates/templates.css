@@ -1,0 +1,23 @@
+/* Templates landing page: the reference page's documentation chrome (documentation/doc.css) plus the preview pair.
+   Binds --s-* tokens only. */
+.tpl-previews { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: var(--s-space-xl); align-items: start; margin-block: var(--s-space-lg); }
+.tpl-shot { margin: 0; }
+.tpl-shot img { display: block; width: 100%; height: auto; background: var(--s-color-surface-sunken);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-page); box-shadow: var(--s-elevation-raised); }
+.tpl-shot--phone img { border-radius: var(--s-radius-conv-lg); border-width: 6px; border-color: var(--s-color-text-primary); }
+.tpl-shot figcaption { margin-top: var(--s-space-sm); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+.tpl-actions { margin-block: var(--s-space-lg); }
+.tpl-parts { margin-block-end: var(--s-space-xl); }
+.tpl-parts .aods-chip-group { margin-top: var(--s-space-sm); }
+.doc-foot { margin-top: var(--s-space-4xl); color: var(--s-color-text-tertiary); font-size: var(--s-type-ui-sm-size); }
+@media (max-width: 600px) {
+  .tpl-previews { grid-template-columns: minmax(0, 1fr) minmax(0, 132px); gap: var(--s-space-base); }
+}
+
+/* Template pages (templates/<slug>.html): the Close-template control.
+   Kept out of the pages so they carry no page CSS of their own (index/laws.json, the template law). */
+.tpl-return { position: fixed; z-index: 2147483000; inset-block-end: var(--s-space-base); inset-inline-end: var(--s-space-base);
+  box-shadow: var(--s-elevation-overlay); }
+html[data-shot] .tpl-return { display: none; }
+@media print { .tpl-return { display: none; } }

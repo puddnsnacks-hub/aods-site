@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>AODS — the AODS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- LINKS the system, never copies it. -->
+<link rel="stylesheet" href="../../dist/tokens.css">
+<link rel="stylesheet" href="../../dist/aods.css">
+<link rel="stylesheet" href="templates.css">
+<script src="../../dist/aods.js" defer></script>
+<script src="../doc-header.js" defer></script>
+<style>
+/* ---- home.css — THE PORTAL. Page CSS; binds --s-* only (R5). The front door to the system's
+   documents: a dark title-page hero in the pinned ink pattern, then the shelves — every document
+   in the centered content area, grouped the way a person would look for it. ---- */
+.h-hero { background: var(--s-color-pinned-surface-dark); padding-block: var(--s-space-5xl); }
+.h-hero__eyebrow { margin: 0 0 var(--s-space-md); font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-sm-line-height); font-weight: var(--s-font-weight-medium); letter-spacing: var(--s-font-tracking-caps); text-transform: uppercase; color: var(--s-color-pinned-ink-strong-dark); }
+.h-hero__rule { width: var(--s-space-3xl); height: 4px; background: var(--s-color-emphasis-eyebrow-divider); margin: 0 0 var(--s-space-xl); }
+.h-hero__title { margin: 0 0 var(--s-space-lg); font-family: var(--s-font-family-display), system-ui, sans-serif; font-size: var(--s-type-display-lg-size); line-height: var(--s-type-display-lg-line-height); letter-spacing: var(--s-type-display-lg-tracking); font-weight: var(--s-font-weight-bold); color: var(--s-color-pinned-heading-dark); max-width: 24ch; text-wrap: balance; }
+.h-hero__sub { margin: 0; font-family: var(--s-font-family-body), Georgia, serif; font-size: var(--s-type-body-lg-size); line-height: var(--s-type-body-lg-line-height); color: var(--s-color-pinned-ink-strong-dark); max-width: 52ch; }
+.h-hero__note { margin: var(--s-space-xl) 0 0; font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-sm-line-height); color: var(--s-color-pinned-ink-dark); }
+.h-section { padding-block: var(--s-space-4xl) 0; }
+.h-section:last-of-type { padding-block-end: var(--s-space-5xl); }
+.h-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-space-lg); }
+.h-tiles[data-two] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 56.25em) { .h-tiles, .h-tiles[data-two] { grid-template-columns: minmax(0, 1fr); } }
+.h-foot { border-top: var(--s-border-width-hairline) solid var(--s-color-border-on-page); margin-block-start: var(--s-space-4xl); padding-block: var(--s-space-xl) var(--s-space-4xl); font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-sm-line-height); color: var(--s-color-text-tertiary); }
+</style>
+
+<body class="aods-page">
+<a class="aods-skip-link" href="#main">Skip to main content</a>
+
+<!-- title page: the pinned ink pattern — cream eyebrow → vivid rule → gold heading → cream subhead -->
+<header class="h-hero">
+  <section class="aods-ground"><div class="aods-layout" data-kind="container" data-width="set" data-set="page" data-lead="display-lg"><div class="t-area">
+    <p class="h-hero__eyebrow">AODS · AODS</p>
+    <div class="h-hero__rule" aria-hidden="true"></div>
+    <h1 class="h-hero__title">The Agent-Optimized Design System.</h1>
+    <p class="h-hero__sub">The system, as code, in the browser. Every token, every component and every page pattern below is the real thing, running live — not a picture of it.</p>
+    <p class="h-hero__note">Built for the people — and the AIs — who build with it.</p>
+  </div></div></section>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- START HERE -->
+  <section class="h-section" aria-label="Start here">
+    <section class="aods-ground"><div class="aods-layout" data-kind="container" data-width="set" data-set="page"><div class="t-area">
+      <div class="aods-layout" data-kind="stack" data-gap="xl">
+        <header class="aods-section-heading" data-scale="display"><p class="aods-eyebrow">Start here</p><div class="aods-section-heading__row"><h2 class="aods-section-heading__heading">Two documents that show what the system is.</h2></div></header>
+        <div class="h-tiles" data-two>
+          <a class="aods-tile" data-variant="accent" data-emphasis="2" href="accessibility.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">The inaugural chapter</p><h3 class="aods-tile__title">The accessibility story</h3><p class="aods-tile__meta">Six chapters · playable demos · choose your own focus</p></div></a>
+          <a class="aods-tile" data-variant="accent" data-emphasis="2" href="strategic-plan.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">The flagship document</p><h3 class="aods-tile__title">The strategic plan</h3><p class="aods-tile__meta">A full publication, built entirely from the system</p></div></a>
+        </div>
+      </div>
+    </div></div></section>
+
+  <!-- THE SYSTEM ITSELF -->
+  <section class="h-section" aria-label="The system itself">
+    <section class="aods-ground"><div class="aods-layout" data-kind="container" data-width="set" data-set="page"><div class="t-area">
+      <div class="aods-layout" data-kind="stack" data-gap="xl">
+        <header class="aods-section-heading" data-scale="display"><p class="aods-eyebrow">The system itself</p><div class="aods-section-heading__row"><h2 class="aods-section-heading__heading">Tokens, components, and every page side by side.</h2></div></header>
+        <div class="h-tiles" data-two>
+          <a class="aods-tile" href="../../dist/aods-v4.artifact.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Explorer</p><h3 class="aods-tile__title">The system explorer</h3><p class="aods-tile__meta">2,200+ tokens · 68 components · every face, live</p></div></a>
+          <a class="aods-tile" href="../../dist/aods-templates.artifact.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Gallery</p><h3 class="aods-tile__title">All page templates, side by side</h3><p class="aods-tile__meta">17 pages in one switcher</p></div></a>
+        </div>
+      </div>
+    </div></div></section>
+
+  <!-- PAGE TEMPLATES -->
+  <section class="h-section" aria-label="Page templates">
+    <section class="aods-ground"><div class="aods-layout" data-kind="container" data-width="set" data-set="page"><div class="t-area">
+      <div class="aods-layout" data-kind="stack" data-gap="2xl">
+        <header class="aods-section-heading" data-scale="display"><p class="aods-eyebrow">Page templates</p><div class="aods-section-heading__row"><h2 class="aods-section-heading__heading">Every page the site knows how to be.</h2></div><p class="aods-section-heading__lede">Each opens as a full working page. Grouped the way you would look for them.</p></header>
+
+        <div class="aods-layout" data-kind="stack" data-gap="lg">
+          <header class="aods-section-heading"><div class="aods-section-heading__row"><h3 class="aods-section-heading__heading">The site&rsquo;s foundations</h3></div></header>
+          <div class="h-tiles">
+            <a class="aods-tile" href="shell.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Structure</p><h3 class="aods-tile__title">Page shell</h3><p class="aods-tile__meta">The canonical order every page starts from</p></div></a>
+            <a class="aods-tile" href="landing.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Entry</p><h3 class="aods-tile__title">Landing page</h3><p class="aods-tile__meta">A front door for a topic or initiative</p></div></a>
+            <a class="aods-tile" href="agency-home.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Front door</p><h3 class="aods-tile__title">Agency homepage</h3><p class="aods-tile__meta">The department&rsquo;s own front page</p></div></a>
+          </div>
+        </div>
+
+        <div class="aods-layout" data-kind="stack" data-gap="lg">
+          <header class="aods-section-heading"><div class="aods-section-heading__row"><h3 class="aods-section-heading__heading">Programs &amp; organizations</h3></div></header>
+          <div class="h-tiles">
+            <a class="aods-tile" href="program.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Program</p><h3 class="aods-tile__title">Program page</h3><p class="aods-tile__meta">One program, explained end to end</p></div></a>
+            <a class="aods-tile" href="office.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Organization</p><h3 class="aods-tile__title">Program office</h3><p class="aods-tile__meta">An administration&rsquo;s own home</p></div></a>
+            <a class="aods-tile" href="program-assistant.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Hybrid</p><h3 class="aods-tile__title">Program + assistant</h3><p class="aods-tile__meta">The assistant embedded in a program page</p></div></a>
+          </div>
+        </div>
+
+        <div class="aods-layout" data-kind="stack" data-gap="lg">
+          <header class="aods-section-heading"><div class="aods-section-heading__row"><h3 class="aods-section-heading__heading">News &amp; publishing</h3></div></header>
+          <div class="h-tiles">
+            <a class="aods-tile" href="article.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Long form</p><h3 class="aods-tile__title">Article</h3><p class="aods-tile__meta">A reading page, at the reading measure</p></div></a>
+            <a class="aods-tile" href="newsroom.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Index</p><h3 class="aods-tile__title">Newsroom</h3><p class="aods-tile__meta">The stream of what the department said</p></div></a>
+            <a class="aods-tile" href="press-release.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Record</p><h3 class="aods-tile__title">Press release</h3><p class="aods-tile__meta">The official word, dated and attributed</p></div></a>
+          </div>
+        </div>
+
+        <div class="aods-layout" data-kind="stack" data-gap="lg">
+          <header class="aods-section-heading"><div class="aods-section-heading__row"><h3 class="aods-section-heading__heading">Services, data &amp; alerts</h3></div></header>
+          <div class="h-tiles">
+            <a class="aods-tile" href="form.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Task</p><h3 class="aods-tile__title">Multi-page form</h3><p class="aods-tile__meta">A long task, one step at a time</p></div></a>
+            <a class="aods-tile" href="grant.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Task</p><h3 class="aods-tile__title">Grant application</h3><p class="aods-tile__meta">The money page: apply, qualify, track</p></div></a>
+            <a class="aods-tile" href="search.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Find</p><h3 class="aods-tile__title">Search results</h3><p class="aods-tile__meta">Results, filters, and the empty state</p></div></a>
+            <a class="aods-tile" href="data.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Evidence</p><h3 class="aods-tile__title">Data page</h3><p class="aods-tile__meta">Tables, stats and downloads that hold up</p></div></a>
+            <a class="aods-tile" href="emergency.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Urgent</p><h3 class="aods-tile__title">Emergency notice</h3><p class="aods-tile__meta">When the site has one job</p></div></a>
+            <a class="aods-tile" href="assistant.bundle.html"><div class="aods-tile__body"><p class="aods-tile__eyebrow">Conversation</p><h3 class="aods-tile__title">Assistant</h3><p class="aods-tile__meta">The conversational interface, full page</p></div></a>
+          </div>
+        </div>
+
+      </div>
+    </div></div></section>
+
+  <footer><section class="aods-ground"><div class="aods-layout" data-kind="container" data-width="set" data-set="page"><div class="t-area">
+    <p class="h-foot">AODS · the AODS · every page above is generated from the same tokens, components and rules — change the system, and every one of them changes with it.</p>
+  </div></div></section></footer></section></section></section>
+
+</main>
+</body>
+</html>

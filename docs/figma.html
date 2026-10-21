@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keeping Figma in sync · AODS</title>
+<!-- LINKS the system. Never copies it. Change a token, rebuild, this page follows.
+     The documentation CSS is the style guide's (guide/guide.css) plus the two-layer how-to pattern below;
+     both bind --s-* only (R5) and speak in the two documentation faces. No system face, no
+     literal value, no component class — this page is documentation, not a specimen. -->
+<link rel="stylesheet" href="../dist/tokens.css">
+<link rel="stylesheet" href="../dist/aods.css">
+<link rel="stylesheet" href="guide/guide.css">
+<script src="../dist/manifest.js"></script>
+<script src="../dist/tokens.js"></script>
+<script src="../dist/palette.js"></script>
+<script src="../dist/aods.js" defer></script>
+<script src="doc-header.js" defer></script>
+<style>
+/* ---- the how-to pattern: every topic twice ------------------------------------------------
+   TECHNICAL, always visible — a vivid left edge and a mono micro-label.
+   PLAIN LANGUAGE, folded — an accent left edge on a cream ground, a native <details>.
+   Two signals each (edge color + label, edge color + ground) so the layers still read apart in
+   grayscale and to a reader who does not see the hue. Binds --s-* only. */
+.f-lede { max-width: var(--s-size-measure-prose); }
+.f-legend { display: flex; flex-wrap: wrap; gap: var(--s-space-md); margin-top: var(--s-space-xl); }
+.f-legend span { display: inline-flex; align-items: center; gap: var(--s-space-sm);
+  padding: var(--s-space-xs) var(--s-space-md) var(--s-space-xs) var(--s-space-sm);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+  line-height: var(--s-type-code-sm-line-height); color: var(--s-color-text-secondary);
+  background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.f-legend span::before { content: ""; display: inline-block; width: var(--s-emphasis-edge-3); height: var(--s-space-base); }
+.f-legend [data-layer="tech"]::before { background: var(--s-color-border-vivid); }
+.f-legend [data-layer="plain"]::before { background: var(--s-color-accent-base); }
+
+.f-tech { position: relative; margin-top: var(--s-space-xl); padding: var(--s-space-xl) var(--s-space-xl) var(--s-space-xl) var(--s-space-2xl);
+  background: var(--s-color-surface-raised); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised);
+  box-shadow: calc(-1 * var(--s-emphasis-edge-3)) 0 0 0 var(--s-color-border-vivid); margin-left: var(--s-emphasis-edge-3); }
+.f-tech > .f-tag { display: block; margin: 0 0 var(--s-space-md); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-border-vivid); }
+.f-tech p, .f-tech li { max-width: var(--s-size-measure-prose); color: var(--s-color-text-primary); }
+.f-tech p { margin: 0; }
+.f-tech p + p, .f-tech p + ul, .f-tech ul + p, .f-tech p + pre, .f-tech pre + p, .f-tech p + .f-scroll, .f-tech .f-scroll + p, .f-tech pre + ul, .f-tech p + ol, .f-tech ol + p { margin-top: var(--s-space-md); }
+.f-tech ul, .f-tech ol { margin: 0; padding-left: var(--s-space-xl); }
+.f-tech li + li { margin-top: var(--s-space-xs); }
+.f-tech h3 { margin: var(--s-space-xl) 0 0; font-family: var(--s-font-family-doc), system-ui, sans-serif;
+  font-size: var(--s-type-heading-xs-size); line-height: var(--s-type-heading-xs-line-height); font-weight: var(--s-font-weight-semibold); color: var(--s-color-text-primary); }
+.f-tech h3 + p, .f-tech h3 + pre, .f-tech h3 + ul, .f-tech h3 + ol, .f-tech h3 + .f-scroll { margin-top: var(--s-space-sm); }
+.f-tech b { font-weight: var(--s-font-weight-semibold); }
+
+pre.f-cmd { margin: 0; padding: var(--s-space-base); overflow-x: auto; white-space: pre;
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); line-height: var(--s-type-code-md-line-height);
+  color: var(--s-color-text-primary); background: var(--s-color-surface-sunken); border: var(--s-border-width-hairline) solid var(--s-color-border-on-sunken); }
+pre.f-cmd .c { color: var(--s-color-text-tertiary); }
+code { font-size: var(--s-type-code-sm-size); }
+.f-scroll { overflow-x: auto; }
+table.f-table { width: 100%; border-collapse: collapse; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-sm-line-height); }
+.f-table th, .f-table td { text-align: left; vertical-align: top; padding: var(--s-space-sm) var(--s-space-base) var(--s-space-sm) 0;
+  border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-divider-soft); }
+.f-table th { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+  letter-spacing: 0.06em; text-transform: uppercase; font-weight: var(--s-font-weight-regular); color: var(--s-color-text-tertiary); white-space: nowrap; }
+.f-table td { color: var(--s-color-text-primary); min-width: 9rem; }
+.f-table td:first-child { font-weight: var(--s-font-weight-semibold); }
+
+details.f-plain { margin-top: var(--s-space-base); margin-left: var(--s-emphasis-edge-3);
+  background: var(--s-color-emphasis-accent-surface); border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised);
+  box-shadow: calc(-1 * var(--s-emphasis-edge-3)) 0 0 0 var(--s-color-accent-base); }
+.f-plain > summary { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--s-space-md); row-gap: var(--s-space-xs); cursor: pointer; list-style: none;
+  padding: var(--s-space-base) var(--s-space-xl) var(--s-space-base) var(--s-space-2xl);
+  font-family: var(--s-font-family-doc), system-ui, sans-serif; font-size: var(--s-type-body-xs-size); font-weight: var(--s-font-weight-semibold); color: var(--s-color-text-primary); }
+.f-plain > summary::-webkit-details-marker { display: none; }
+.f-plain > summary::before { content: "+"; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; color: var(--s-color-emphasis-accent-ink); }
+.f-plain[open] > summary::before { content: "\2212"; }
+.f-plain > summary:hover { text-decoration: underline; }
+.f-plain > summary:focus-visible { outline: var(--s-border-width-thick) solid var(--s-color-action-base); outline-offset: calc(-1 * var(--s-border-width-thick)); }
+.f-plain > summary .f-tag { margin-left: auto; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+  letter-spacing: 0.06em; text-transform: uppercase; font-weight: var(--s-font-weight-regular); color: var(--s-color-emphasis-accent-ink); }
+.f-plain > .f-body { padding: 0 var(--s-space-xl) var(--s-space-xl) var(--s-space-2xl); }
+.f-plain h4 { margin: var(--s-space-base) 0 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; font-weight: var(--s-font-weight-regular); color: var(--s-color-emphasis-accent-ink); }
+.f-plain p, .f-plain li { max-width: var(--s-size-measure-prose); color: var(--s-color-text-primary); }
+.f-plain p { margin: var(--s-space-xs) 0 0; }
+.f-plain ol, .f-plain ul { margin: var(--s-space-xs) 0 0; padding-left: var(--s-space-xl); }
+.f-plain li + li { margin-top: var(--s-space-xs); }
+.f-analogy { margin: var(--s-space-base) 0 0; padding: var(--s-space-md) var(--s-space-base); max-width: var(--s-size-measure-prose);
+  font-style: italic; color: var(--s-color-text-secondary); background: var(--s-color-surface-raised);
+  border-left: var(--s-emphasis-edge-2) solid var(--s-color-accent-soft); }
+.f-analogy b { font-style: normal; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--s-color-emphasis-accent-ink); font-weight: var(--s-font-weight-regular); }
+
+.f-foot a { color: var(--s-color-action-link); }
+.g-foot p { margin: 0; } .g-foot p + p { margin-top: var(--s-space-sm); }
+@media (max-width: 800px) { .f-plain > summary { grid-template-columns: auto minmax(0, 1fr); } .f-plain > summary .f-tag { grid-column: 2; margin-left: 0; } }
+@media print { details.f-plain { break-inside: avoid; } .f-tech { break-inside: avoid; } }
+</style>
+</head>
+<body data-anchor-travel="off">
+<a class="g-skip" href="#f-main">Skip to content</a>
+<main id="f-main" class="g-wrap">
+
+  <header class="g-cover">
+    <p class="g-eyebrow">How-to · the Figma target</p>
+    <h1 class="g-title">Keeping Figma in sync with AODS</h1>
+    <p class="g-lede f-lede">How a new AODS build becomes an update to the Figma library, how to read what the update did, and what to do when a Figma component does not match the real one.</p>
+    <p class="g-body f-lede">Every topic on this page is written twice. The <b>technical block</b> is the reference: commands, files, counts, terms — for whoever runs the build and the plugin. The <b>plain-language walkthrough</b> under it is folded shut; open it for what the thing is, why it is done this way, and the steps in everyday words — for a designer who uses the library and wants to understand what happens to it.</p>
+    <div class="f-legend" aria-label="How to read this page">
+      <span data-layer="tech">TECHNICAL · vivid edge · always visible</span>
+      <span data-layer="plain">PLAIN LANGUAGE · accent edge · click to expand</span>
+    </div>
+  </header>
+
+  <!-- ============================================================ 1 -->
+  <section class="g-section" id="from">
+    <p class="g-eyebrow">Section 1 of 5</p>
+    <div class="g-rule"></div>
+    <h2 class="g-heading">Where the Figma library comes from</h2>
+    <div class="f-tech">
+      <span class="f-tag">Technical</span>
+      <p>Figma is a <b>build target</b> of the design system, not a second source of truth. Nothing in the library is authored in Figma: the same source that emits <code>dist/tokens.css</code> and <code>dist/aods.css</code> emits the library, and one plugin applies each release to <b>one long-lived library file, in place</b>.</p>
+<pre class="f-cmd">tokens/g.json  s.json  c.json          <span class="c"># the three tiers</span>
+components/registry.json  aods.css       <span class="c"># the contracts and the CSS</span>
+build/figma_plan.json                   <span class="c"># what the registry cannot say: axes, state recipes, splits, specimens</span>
+        │
+        ▼  python3 build/build.py        <span class="c"># dist/tokens.css · aods.css · manifest.json · tokens.json</span>
+        ▼  python3 build/gen_figma.py    <span class="c"># dist/figma/figma.json — THE PLAN (+ report.md)</span>
+        ▼  python3 build/render_figma.py <span class="c"># dist/figma/nodes.json — THE DRAWINGS (+ render-report.md)</span>
+        ▼  dist/figma/plugin/            <span class="c"># the plugin, with the release inlined</span>
+        ▼  Figma · Plugins · AODS · apply release  →  the library file</pre>
+      <h3>What maps to what</h3>
+      <div class="f-scroll"><table class="f-table">
+        <tr><th>System</th><th>Figma</th><th>How</th></tr>
+        <tr><td><code>g.*</code> (224)</td><td>collection <b>g</b>, one mode per brand theme (Agency, Programs Office)</td><td>literals, hidden from every picker — nothing binds <code>--g-*</code></td></tr>
+        <tr><td><code>s.*</code> (300)</td><td>collection <b>s</b>, modes Light · Dark</td><td>every value an alias into g; <code>$dark</code> is the Dark leg</td></tr>
+        <tr><td><code>c.*</code> (1,705)</td><td>collection <b>c</b>, modes Light · Dark</td><td>Light aliases s; Dark mirrors <code>tokens.css</code> exactly (R9) — 215 flip, 181 are pinned</td></tr>
+        <tr><td>type roles + faces</td><td>text styles <code>ui/md/medium</code>, <code>heading/sm/bold</code> …</td><td>every property bound to its s-tier variable; 55 planned + the tuples the renderer observed</td></tr>
+        <tr><td><code>dist/sprite.svg</code> (41)</td><td>components <code>icon/&lt;name&gt;</code> on Foundations · Icons</td><td>32-grid vectors; consumers bind the fill to an ink token</td></tr>
+        <tr><td>a registry component</td><td>a component set — 68 components, 85 sets after splits, 1,347 variants</td><td>variants named <code>Variant=primary, Size=md, Surface=light, State=rest</code>; every paint, size, gap and face bound; text as text properties, icons as instance swaps</td></tr>
+        <tr><td><code>data-surface="dark"</code></td><td>a <code>Surface</code> axis</td><td>the dark variant's root sets s and c to Dark — dark is a variant, never a page mode</td></tr>
+        <tr><td>hover · active · focus-visible</td><td>the set's description and its doc frame</td><td>documented, not built (ruling 2026-09-03)</td></tr>
+        <tr><td>the canvas</td><td>a page per tier; a section per component (doc frame, then its sets); each set a table on a <b>ground sheet</b></td><td>rows and columns come from the axes that vary inside the set (Size down, Surface × State across), cells sized to what the variants paint; dark panels sit under the <code>Surface=dark</code> cells; sections stack in release order — all re-laid on every apply</td></tr>
+      </table></div>
+      <p>Identity is what makes the update in place possible. Every node the plugin makes carries its key in shared plugin data (<code>aods / key</code>, e.g. <code>comp:card::Emphasis=4, Density=comfortable, Interactive=false, Variant=default, Surface=light</code>); the file root carries the <b>ledger</b> (<code>aods / ledger</code>, in parts) and the release <code>version</code> + <code>sourceHash</code> (sha256 of the inputs, first 16 hex). Variables are named by token path (<code>button/primary-fill</code>) and <code>codeSyntax.WEB</code> is the real <code>var(--c-button-primary-fill)</code>, so Dev Mode shows the name a builder writes.</p>
+      <p>The long form — the IR schema, the mapping in full, what does not map — is <a href="../FIGMA.md">FIGMA.md</a>.</p>
+    </div>
+    <details class="f-plain">
+      <summary>Why can’t we just draw the components in Figma and keep them there? <span class="f-tag">Learn more</span></summary>
+      <div class="f-body">
+        <h4>What</h4>
+        <p>The AODS components are real, running code: a card is a piece of HTML with a stylesheet, and every color, size and spacing in it comes from a named <b>token</b> (a value with a name, like <code>c.card.inset</code> = 24px). The Figma library is a <b>copy of those running components, drawn automatically</b>. A script opens each component in a hidden browser, measures exactly what the browser painted, and writes down which token produced every fill, stroke, gap and font. A second program — the plugin — rebuilds that in Figma, binding each measurement to the matching Figma <b>variable</b> (Figma’s word for a named value) or <b>text style</b>.</p>
+        <h4>Why</h4>
+        <p>If the library were drawn by hand, it would be a second thing to keep true. Every token change, every fix to a component, every new variant would have to be repeated in Figma by someone who noticed — and over months the two drift until nobody knows which one is right. Generating the library from the code means there is one truth, and Figma follows it. It also means a designer can trust that what the library shows is what the site will actually render.</p>
+        <h4>How</h4>
+        <ol>
+          <li>Someone changes the system — a token value, a component’s CSS, a contract in the registry.</li>
+          <li>The build runs and turns that into the shipped CSS.</li>
+          <li>Two scripts turn the shipped CSS into a Figma <b>plan</b> (which collections, styles and sets exist) and the <b>drawings</b> (every variant, measured).</li>
+          <li>The plugin reads both and updates the library file — the same file every time, changing only what changed.</li>
+        </ol>
+        <div class="f-analogy"><b>Analogy</b> — A printed brochure comes out of a layout file. When a phone number changes you do not correct it on the printouts with a pen; you change the file and print again. The Figma library is the printout. The tokens and the CSS are the file.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================ 2 -->
+  <section class="g-section" id="sync">
+    <p class="g-eyebrow">Section 2 of 5</p>
+    <div class="g-rule"></div>
+    <h2 class="g-heading">Sync a new build into the library</h2>
+    <div class="f-tech">
+      <span class="f-tag">Technical</span>
+      <p>The recommended route is the plugin: one click applies a whole release and needs no assistant in the loop. Build the release first, from the source repository:</p>
+<pre class="f-cmd">python3 build/build.py                 <span class="c"># must end "errors 0"</span>
+python3 build/gen_figma.py             <span class="c"># the plan: dist/figma/figma.json (+ report.md)</span>
+python3 build/render_figma.py          <span class="c"># the drawings: dist/figma/nodes.json (+ render-report.md) — ~13 min, needs Playwright's Chromium</span>
+python3 build/audit_figma.py           <span class="c"># optional: binding coverage → dist/figma/audit.json</span>
+node figma-plugin/test/run.js          <span class="c"># optional, seconds: applies the release twice to a mock Figma; must say "idempotent: YES"</span></pre>
+      <p>Both Figma scripts re-bundle <code>dist/figma/plugin/</code> with the release inlined into <code>ui.html</code>, because a development plugin cannot read files beside itself. Then, in Figma desktop, in <b>the</b> library file:</p>
+      <ol>
+        <li><b>Once:</b> Plugins → Development → <b>Import plugin from manifest…</b> → <code>dist/figma/plugin/manifest.json</code>. Figma reads the plugin files from disk every time it runs, so a later build needs no re-import.</li>
+        <li>Plugins → Development → <b>AODS · apply release</b>. The window shows the release it carries (name, version, generated date, source hash, counts, and “N of M variants rendered”) and what the file already holds (collections, text styles, pages, the ledger’s version and last applied time).</li>
+        <li>Leave the five phases ticked — <b>variables · text styles · icons · components · docs</b> — leave <b>purge retired</b> off and the <b>only</b> field empty. <b>Apply release.</b></li>
+        <li>Read the summary (Section 3). If it lists problems, resolve them and apply again; re-applying is safe.</li>
+        <li>Publish the library through Figma’s own publish flow (Assets → Libraries → Publish). Put the release version and source hash in the description, e.g. <code>AODS 2.1.0 · 70b3c573b58b4020</code>.</li>
+      </ol>
+      <h3>What an apply does to what is already there</h3>
+      <ul>
+        <li><b>Same release again:</b> creates nothing. Variables, styles and sets are found by key and left in place; variant contents are repainted identically.</li>
+        <li><b>A new release:</b> variable values, text styles and variant contents are <b>updated in place</b> — the ids survive, so every instance in every consumer file keeps its bindings. New components and variants are created. Anything the release no longer lists is <b>retired</b>: a variable or style is renamed with a <code>⌫</code> prefix and hidden from publishing; a variant is moved to the <b>Retired</b> page. Nothing is deleted unless <b>purge retired</b> is ticked.</li>
+        <li><b>A release that renames tokens</b> carries <code>build/figma_renames.json</code> (<code>{"c.button.primary-fill": "old/name/in/figma"}</code>, from <code>audit/RENAME-MAP.json</code>): the plugin renames the variable instead of creating a new one, and bindings survive.</li>
+        <li><b>A partial apply:</b> type component ids in <b>only</b> (<code>button card</code>) to rebuild just those sets. Variables, styles and icons are still applied in full so the components have something to bind to.</li>
+        <li><b>The canvas is re-laid, every time:</b> each set's table, its ground sheet and dark panels, the section's size, and the order of sections down the page. A section that grew moves the ones below it instead of covering them. Anything moved by hand in the library file goes back on the next apply — arrange instances in your own files, not the library.</li>
+      </ul>
+      <p>Apply per release tag, never between two. The render is the slow step; run it where Playwright’s Chromium is installed (the container, like <code>check_lead.py</code>) and copy <code>dist/figma/</code> across.</p>
+    </div>
+    <details class="f-plain">
+      <summary>What actually happens when I press Apply? <span class="f-tag">Learn more</span></summary>
+      <div class="f-body">
+        <h4>What</h4>
+        <p>“Apply release” is a <b>reconcile</b>, not a paste. The plugin walks through everything the release describes — every variable, text style, icon and component variant — and for each one asks the file: <i>do you already have this?</i> It finds things by a <b>key</b> it wrote onto them the first time (a hidden label such as <code>comp:card::Emphasis=4, …</code>), never by position or by what they look like. If the thing exists it is updated where it stands; if it does not, it is created; if the file has something the release no longer mentions, it is set aside, not thrown away.</p>
+        <h4>Why</h4>
+        <p>Designers build pages out of <b>instances</b> of the library’s components. An instance is a link back to the component; if the component were deleted and re-created, every page using it would lose the link and turn into a loose drawing. Updating in place keeps those links, so a page made last month picks up this month’s fix automatically. Retiring instead of deleting means a mistake in a release can never silently destroy someone’s work.</p>
+        <h4>How</h4>
+        <ol>
+          <li>Ask whoever runs the build for the release — or run the five commands yourself if you have the source repository and a Chromium for the renderer.</li>
+          <li>Open the library file in Figma desktop (not a copy, not a branch).</li>
+          <li>Plugins → Development → AODS · apply release.</li>
+          <li>Check the release card says the version you expect and “1347 of 1347 variants rendered”.</li>
+          <li>Apply. Watch the progress bar; a full release takes a few minutes.</li>
+          <li>Read the summary, then publish the library so everyone gets the update.</li>
+        </ol>
+        <div class="f-analogy"><b>Analogy</b> — Updating a contact card in your phone rather than deleting the contact and making a new one: everyone who saved that person keeps working, and the number is simply the new number now.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================ 3 -->
+  <section class="g-section" id="read">
+    <p class="g-eyebrow">Section 3 of 5</p>
+    <div class="g-rule"></div>
+    <h2 class="g-heading">Read what the apply did</h2>
+    <div class="f-tech">
+      <span class="f-tag">Technical</span>
+      <p>The plugin ends with a summary in four groups — <b>created · updated · retired · problems</b> — counted by kind: collection, mode, variable, text style, page, section, component set, variant, icon, text property, instance-swap property, doc frame, cover. Two reference points for release 2.1.0:</p>
+      <div class="f-scroll"><table class="f-table">
+        <tr><th>Run</th><th>Created</th><th>Updated</th></tr>
+        <tr><td>first apply, empty file</td><td>3 collections · 3 modes · 2,229 variables · 73 text styles · 9 pages · 73 sections · 41 icons · 68 doc frames · 85 component sets · 1,347 variants · 118 text properties · 13 instance-swap properties · 1 cover</td><td>—</td></tr>
+        <tr><td>the same release again</td><td>nothing</td><td>3 collections · 73 text styles · 41 icons · 85 sets · 1,347 variants</td></tr>
+      </table></div>
+      <p>A “created” count on a second run of the same release is a bug report, not a result — file it with the summary.</p>
+      <h3>Problems, and what each means</h3>
+      <ul>
+        <li><code>… no rendered tree for &lt;variant&gt;</code> — <code>nodes.json</code> lacks that variant. Re-run <code>render_figma.py</code> (for one component: <code>python3 build/render_figma.py card</code>), then <code>gen_figma.py</code>, then apply.</li>
+        <li><code>fonts not available in this file, Inter used instead: …</code> — a face Figma could not load; the text was built in Inter so the run could finish. The system’s faces are Outfit, Newsreader, Lato, IBM Plex Sans, IBM Plex Mono and Geist Mono. Install the missing one (Figma desktop reads local fonts) and apply again.</li>
+        <li><code>&lt;set&gt;: text property &lt;Name&gt; — …</code> — Figma refused a component property; the message is Figma’s own.</li>
+      </ul>
+      <h3>The three reports that ride with a release</h3>
+      <ul>
+        <li><code>dist/figma/report.md</code> — from the planner: every place the two worlds do not map one to one (errors, warnings, notes).</li>
+        <li><code>dist/figma/render-report.md</code> — from the renderer: findings per component, the <b>observed text styles</b> (a text the browser set in a tuple no planned style names, e.g. <code>ui/md/regular/~24-0.1</code>: a role whose leading or tracking inherits the page’s rather than naming a token), and the absolute-position fallbacks (a layout the renderer could not express as auto-layout, drawn at measured positions).</li>
+        <li><code>dist/figma/audit.json</code> — binding coverage over the drawings. At 2.1.0: fills 99.7 %, text fills 100 %, padding 99.8 %, gaps 99.2 %, stroke colors 94.6 %, stroke widths 99.6 %. Radius (35.5 %) and size (52.8 %) are low by design: radius is 0 almost everywhere by rule, and most sizes are hug or fill.</li>
+      </ul>
+      <p>The file itself remembers: the plugin’s file card reads <code>aods / version</code> and the ledger from the document root, which is how it knows what is already applied before you press anything.</p>
+    </div>
+    <details class="f-plain">
+      <summary>How do I know the update worked, and what do the numbers mean? <span class="f-tag">Learn more</span></summary>
+      <div class="f-body">
+        <h4>What</h4>
+        <p>The summary is a receipt. <b>Created</b> is what the file did not have and now does. <b>Updated</b> is what it had and which was refreshed. <b>Retired</b> is what the release dropped and the plugin set aside (renamed with a <code>⌫</code> mark or moved to a page called Retired). <b>Problems</b> is anything it could not do, in plain words. Alongside the receipt come three written reports from the build itself, listing every place the code and Figma could not be made identical.</p>
+        <h4>Why</h4>
+        <p>Without the receipt you would have to hunt through 1,347 variants to see whether anything changed. With it, a healthy update reads at a glance — a new release shows updates and a few creations; the same release twice shows no creations at all. The reports matter because they are where the <b>next</b> improvements come from: an “observed text style” is the build telling you a text role is missing a token, before any designer notices the wrong leading.</p>
+        <h4>How</h4>
+        <ol>
+          <li>After Apply, read the four groups. Zero problems is the goal.</li>
+          <li>If a problem names a font, install that font and apply again.</li>
+          <li>If a problem names a variant with no drawing, the renderer has to run again — pass the message to whoever runs the build.</li>
+          <li>Open the Retired page occasionally: it should be empty or contain only things you expected to disappear.</li>
+          <li>Skim <code>render-report.md</code> once per release; anything under “observed text styles” is a token decision waiting to be made.</li>
+        </ol>
+        <div class="f-analogy"><b>Analogy</b> — A delivery slip: what was dropped off, what was swapped for a newer model, what was taken back, and a note about the parcel that would not fit through the door.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================ 4 -->
+  <section class="g-section" id="correct">
+    <p class="g-eyebrow">Section 4 of 5</p>
+    <div class="g-rule"></div>
+    <h2 class="g-heading">When a Figma component does not match the real component</h2>
+    <div class="f-tech">
+      <span class="f-tag">Technical</span>
+      <p><b>Never correct a generated component in Figma.</b> On every apply the plugin removes each variant’s children and paints them again from <code>nodes.json</code>; a hand edit lives until the next release and then vanishes without a trace. Variable and style names are reconciled by key, so a hand rename is reverted too. The library is an output. Fix the input, rebuild, apply, and Figma follows — that is the whole method, and it is why a fix made once is a fix made everywhere.</p>
+      <p>First establish which of two things is true: <b>Figma differs from the browser</b>, or <b>Figma and the browser agree, and both differ from the intent</b>. The browser’s own render of any variant is one command away and lands in <code>dist/figma/ref/</code>:</p>
+<pre class="f-cmd">python3 build/render_figma.py card --ref --limit 4    <span class="c"># the browser's PNG per variant → dist/figma/ref/comp-card-….png; the rest of nodes.json is carried over</span></pre>
+      <p>Put that PNG beside a screenshot of the Figma variant (select it → Export, or the MCP’s <code>get_screenshot</code>). Then triage:</p>
+      <div class="f-scroll"><table class="f-table">
+        <tr><th>Symptom</th><th>Where the truth is</th><th>Fix</th><th>Then</th></tr>
+        <tr><td>Figma differs from the browser; the running component is right</td><td>the translation — <code>build/render_figma.py</code> (a CSS feature it does not yet carry: a clip-path, a grid, a transform, a shadow) or <code>figma-plugin/code.js</code> (a Plugin API rule)</td><td>a renderer or plugin change; add the case to the mock test if Figma threw</td><td>re-render the component with <code>--ref</code>, compare again, apply with <b>only</b></td></tr>
+        <tr><td>Both agree, both wrong: the look itself is off</td><td>the component — <code>components/aods.css</code> (structure, states) or <code>tokens/c.json</code> (a value)</td><td>the normal system change; never a Figma value</td><td>build → gen → render → apply</td></tr>
+        <tr><td>Right in light, wrong in dark (or the reverse)</td><td><code>tokens/s.json</code> <code>$dark</code> for a semantic color; the c-tier’s dark scope for a component one (R9)</td><td>the token’s Dark leg</td><td>build → gen → apply; the variable updates in place, every binding follows</td></tr>
+        <tr><td>A prop or state is missing as a variant — or a variant exists that should not</td><td><code>build/figma_plan.json</code>: which props are axes, which values mean “attribute absent”, state recipes, part sets, splits, specimen overrides</td><td>the policy, not a drawing</td><td>gen → render → apply; new variants are created, dropped ones retired</td></tr>
+        <tr><td>A text uses a style with <code>~</code> in its name</td><td>a role with no leading or tracking token — see <code>render-report.md</code></td><td>add the token in <code>tokens/c.json</code></td><td>build → gen → render → apply; the observed style retires and the planned one takes over</td></tr>
+        <tr><td>A hover, pressed or focus state is missing</td><td>the ruling: pointer states are documented, not built</td><td>none — the wash tokens exist as variables for a state built by hand in a consumer file</td><td>read the set’s description and doc frame</td></tr>
+        <tr><td>A part sits at fixed coordinates instead of auto-layout</td><td>a renderer fallback, listed in <code>render-report.md</code> → Fallbacks</td><td>a finding to file against the renderer</td><td>never re-lay it out by hand</td></tr>
+      </table></div>
+      <h3>How to report one</h3>
+      <p>Record the variant’s key (it is the variant’s name inside the set, and the <code>aods / key</code> on the node), the two images, and which row of the table you think it is. Findings the renderer already knows about are in <code>render-report.md</code>; a human-found mismatch goes to the hit list in <code>audit/</code> like any other system finding. The recent precedent: the card’s chamfered feature edge (<code>clip-path: polygon</code>) rendered in Figma as a straight bar — the fix was one function in the renderer, verified with <code>--ref</code>, and re-applied to the one set as a delta.</p>
+      <h3>What is safe to do in Figma</h3>
+      <p>Everything a consumer does: place instances, set the text and swap properties, override an instance in your own file, detach an instance in your own file. Nothing an author does: no edits to the library’s components, no renaming of variables, styles or sets, no new variants by hand, no rearranging of sets or sections (the apply puts them back). The ground sheets under the sets are locked rectangles the apply redraws; they are not part of any component and never travel with an instance. A component that needs to exist and does not is a request against <code>registry.json</code> or <code>figma_plan.json</code>.</p>
+    </div>
+    <details class="f-plain">
+      <summary>Why can’t I just fix it in Figma — and where do I fix it instead? <span class="f-tag">Learn more</span></summary>
+      <div class="f-body">
+        <h4>What</h4>
+        <p>Every component in the library is <b>regenerated on every update</b>: the plugin empties it and draws it again from the measurements. So a change made by hand in Figma is not wrong, exactly — it is temporary. It disappears the next time anyone applies a release, and nobody will know it was there. The place a correction lasts is upstream: in the token (a value), in the component’s CSS (its shape and behavior), in the plan (which variants exist), or — when Figma alone is wrong — in the translator that draws Figma from the code.</p>
+        <h4>Why</h4>
+        <p>Because the whole point of generating the library is that there is one truth. A fix upstream reaches the website, the documentation and Figma at the same time; a fix in Figma reaches only Figma, and only until the next release. It is also how the small things get caught: when the translator mis-draws a chamfer once, fixing the translator fixes it for every card, every release, forever.</p>
+        <h4>How</h4>
+        <ol>
+          <li>Open the real component beside the Figma one. The style guide and the component reference on this site show the running thing; the build can also write a picture of any single variant for you.</li>
+          <li>Decide: does Figma look different from the browser? Or do they look the same, and both look wrong to you?</li>
+          <li>If Figma is the odd one out, the translator is at fault — report it with the variant’s name and the two pictures. That is a build fix, and a quick one.</li>
+          <li>If both are wrong, the design itself needs to change — a token value or the component’s CSS. That is a normal design-system change, made once, and Figma follows on the next update.</li>
+          <li>If a variant is missing (say, a state you need), that is a request against the plan, not something to draw by hand.</li>
+          <li>Never edit the library’s components directly, and never rename a variable or a style — the next update puts the old name back.</li>
+        </ol>
+        <div class="f-analogy"><b>Analogy</b> — A thermostat and a furnace. If the room is cold, taping a new number over the thermostat display changes nothing but the display. Fix the furnace (the code) and the display (Figma) reads right on its own.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================ 5 -->
+  <section class="g-section" id="verify">
+    <p class="g-eyebrow">Section 5 of 5</p>
+    <div class="g-rule"></div>
+    <h2 class="g-heading">Verify a fix before you publish</h2>
+    <div class="f-tech">
+      <span class="f-tag">Technical</span>
+      <p>Three checks, in this order, before a corrected release goes to the library — each is seconds except the render:</p>
+<pre class="f-cmd">python3 build/build.py --check                        <span class="c"># the system's own lint: errors 0</span>
+python3 build/render_figma.py card --ref --limit 4    <span class="c"># the browser's PNGs for the component you touched</span>
+node figma-plugin/test/run.js card                    <span class="c"># the mock: applies twice, must say "idempotent: YES"</span></pre>
+      <p>Then apply with <b>only</b> set to that component and compare a Figma screenshot of each changed variant to its PNG in <code>dist/figma/ref/</code>. The mock catches API misuse — a FILL outside auto-layout, a color without alpha, an alias to nothing, a variant name that is not <code>Prop=Value</code>, a negative radius or stroke weight, an opacity outside 0–1, a plugin-data entry over 100 kB, removing the current page, a layout property on a rectangle or a text, a min or max size on a node outside auto-layout, the synchronous accessors the plugin’s dynamic-page mode forbids — but it does not render; the picture comparison is the visual check and the only one.</p>
+      <h3>Find the drift by the numbers</h3>
+      <p>Screenshots find the drift you already suspect; the check finds the rest. <code>build/drift_figma.py</code> writes a script for <code>use_figma</code> that carries the expected geometry of a batch of variants and compares it against the file inside Figma — size, position, visibility, the frame’s layout mode, each child’s sizing modes, a text’s auto-resize — and returns only the disagreements, grouped by set with the recurring shapes first. It is what the auto-layout faults show up as: a frame that hugs nothing, a fill where the browser drew a hug, an indicator on the wrong edge.</p>
+<pre class="f-cmd">python3 build/drift_figma.py script Wayfinding         <span class="c"># a use_figma script for the whole page (a set is sent as its axes + one drawing index per combination)</span>
+python3 build/drift_figma.py save Wayfinding r0.json   <span class="c"># what the script returned</span>
+python3 build/drift_figma.py report Wayfinding         <span class="c"># dist/figma/drift/Wayfinding.md — sets ranked by worst disagreement</span></pre>
+      <p>Tolerance is 1 px (3 px for text, for frames that hug text and for a hugging root, whose advance Figma and Chromium measure a pixel apart). A finding is a class, not an opinion — <code>root</code>, <code>size</code>, <code>pos</code>, <code>missing</code>, <code>hidden</code>, <code>layout</code>, <code>sizing</code>, <code>autoresize</code>, and for a container <code>gap</code>, <code>padding</code>, <code>align</code> — and the container is judged first: when a frame’s own auto-layout settings disagree, its children’s positions are its finding, not theirs. Every finding so far has had its cause in the renderer or the plugin, never in the file. Run it after every apply; a clean page is the proof the release matches its drawings.</p>
+      <p>The plugin ends every run with the same reading of its own work: <code>settleAll</code> walks each variant against its drawing once every size is final — it re-asserts any child sizing Figma has changed since it was set, puts every absolutely positioned child back at its drawn box and only then pins it as its insets say, and locks each ratio box at its final width. Constraints and ratios set while a frame is still being built are measured against the frame’s size of the moment (a hugging card is 50 px taller for the instant its accent bar is a flow child), which is how a 170 px bar came out 120 and a 16:9 media 14 532 px tall (2026-09-14). The summary says how many settings it put back and where, how many children it pinned, and whether a flipped sizing was already off right after its variant was painted.</p>
+      <p>The third run’s other lesson is definiteness: a FILL child fills only a definite size. Under a hugging parent, or a FILL that hangs off one, a main-axis FILL contributes nothing to the hug and Figma squeezes it — the hero’s two <code>flex: 1</code> buttons came out 69 px in a 147 px row. The renderer decides this once, from the root down, so a row that only becomes a hug because of its own parent still gets hugging children; across the main axis a FILL frame stays FILL, since Figma stretches it to the widest sibling exactly as CSS stretches a block.</p>
+      <p>The fourth run refined that with two facts probed in Figma itself. Figma shares FILL space between siblings’ <em>content</em> boxes — a padded FILL child gets its share plus its padding, where a <code>1fr 1fr</code> grid gives equal border boxes — so where FILL siblings differ in padding the renderer hands each one’s padding to a paint-less FILL wrapper inside it (the hero’s <code>inner padding</code>) and the row splits as the browser split it. And Figma measures a FILL wrapping row at min-content when a parent hugs it, its widest single item, where CSS measures the row end to end: a FILL frame across the main axis whose max-content reaches its parent’s content width hugs, and a narrower one stays FILL and is definite after all, because a sibling settles the hug. The same run taught that a one-line text whose glyphs reach its block’s edges sized that block and hugs (as a FILL, Figma’s wider Lato wrapped it), that a definite <code>flex-basis</code> with no grow is the item’s width, and that a child a negative margin pulls above its container leaves its siblings a margin wrapper and takes the overlap out of the previous sibling’s trailing padding.</p>
+      <p>The file is a library only once it is published, and a publish is a round’s last step, not its first: run the plugin, sweep every page with the drift checker, fix upstream and re-run until the sweep is clean, then publish once. Every run consumers should see needs its publish; a round the sweep still faults is not one of them, however many unpublished changes the Assets panel counts.</p>
+      <h3>The other runner, for one set at a time</h3>
+      <p>The same reconciler can be driven through Figma’s MCP (<code>use_figma</code>) when a delta is small and the plugin is not at hand. <code>build/mcp_figma.js</code> cuts a release, a component, or one set into scripts that fit the tool’s 50,000-character limit, and <code>--staged</code> delivers the data in hash-checked segments parked in the file until the run script assembles them:</p>
+<pre class="f-cmd">node build/mcp_figma.js card --sets=4 --staged       <span class="c"># one set: dist/figma/mcp/NNN-….stageK.js + .run.js, in index.json order</span>
+node figma-plugin/test/run-chunks.js                 <span class="c"># the slices, then the plugin on top, on the mock: it must create nothing</span></pre>
+      <p>Validated 2026-09-04 in <code>AODS_FigGen_4_1.0</code>: button, badge and card applied through the MCP, the card’s chamfer fix re-applied as a delta (4 variants updated, nothing created), screenshots matching the browser. For a whole release the plugin is one click; the MCP is 74 scripts — use it for the delta, not the release.</p>
+      <h3>Publishing</h3>
+      <p>Publish only a release, never a half-applied one. Figma’s publish dialog lists every changed style, variable and component; that list should read like the apply summary. Write the version and source hash into the description so a consumer file’s “update available” can be traced to a build.</p>
+    </div>
+    <details class="f-plain">
+      <summary>How do I know it’s right before everyone sees it? <span class="f-tag">Learn more</span></summary>
+      <div class="f-body">
+        <h4>What</h4>
+        <p>A fix passes through three gates. The <b>lint</b> proves the system itself is still consistent. The <b>reference pictures</b> are the browser’s own rendering of the exact variants you touched, saved as images, so you can put them beside Figma’s. The <b>mock</b> is a pretend Figma that the plugin runs against in a second; it throws on the same mistakes the real Figma throws on, and it proves that applying the same release twice changes nothing. Only then does the release go to the real file, and only a whole release gets published.</p>
+        <h4>Why</h4>
+        <p>Publishing a library pushes the change to every file that uses it. A wrong publish is not one wrong drawing; it is a wrong drawing in every page across the team, with an “update available” prompt inviting everyone to take it. Checking one component in pictures and one apply on the mock costs minutes and stops that.</p>
+        <h4>How</h4>
+        <ol>
+          <li>Run the lint; it must report zero errors.</li>
+          <li>Render the component you changed with <code>--ref</code>; look at the PNGs.</li>
+          <li>Run the mock test for that component; it must say idempotent: YES.</li>
+          <li>Apply to the library with <b>only</b> naming the component; screenshot the variants; compare to the PNGs.</li>
+          <li>If it matches, apply the whole release (so the ledger and version are current) and publish with the version in the note.</li>
+        </ol>
+        <div class="f-analogy"><b>Analogy</b> — A print shop pulls one proof sheet and checks it under the light before running ten thousand copies. The reference PNG is the proof; publishing is the run.</div>
+      </div>
+    </details>
+  </section>
+
+  <footer class="g-foot f-foot">
+    <p>Generated 2026-09-04 · written against AODS release 2.1.0 (source 70b3c573b58b4020) · the Figma library <code>AODS_FigGen_4_1.0</code>.</p>
+    <p>Related: <a href="../FIGMA.md">FIGMA.md</a> (the mapping, the IR, what does not map) · <a href="../figma-plugin/README.md">figma-plugin/README.md</a> (the plugin) · <a href="../dist/figma/report.md">dist/figma/report.md</a> · <a href="../dist/figma/render-report.md">dist/figma/render-report.md</a> · <a href="metadata.html">What the machine reads</a>.</p>
+  </footer>
+</main>
+</body>
+</html>
