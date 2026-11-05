@@ -57,6 +57,7 @@ html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruli
 /* The cover band is a real .aods-hero carrying data-surface="dark" — the guide opens by
    using the system rather than describing it, and the --s-* below flip inside that scope. */
 .g-cover { padding-block: var(--s-space-5xl); }
+.g-cover > .g-wrap { min-width: 0; max-width: min(1280px, 100%); box-sizing: border-box; overflow-wrap: break-word; }
 .g-cover .g-title { margin: var(--s-space-xl) 0 0; font-family: var(--s-font-family-doc), system-ui, sans-serif;
   font-size: var(--s-type-display-lg-size); line-height: var(--s-type-display-lg-line-height);
   font-weight: var(--s-font-weight-bold); color: var(--s-color-text-primary); }
@@ -93,7 +94,7 @@ html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruli
   font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
   font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
 
-.g-specimen { min-width: 0; }
+.g-specimen { min-width: 0; overflow-wrap: break-word; }  /* PB2: a display step holds one word wider than a phone */
 .g-token { margin: var(--s-space-md) 0 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
   font-size: var(--s-type-code-sm-size); color: var(--s-color-accent-base); word-break: break-all; }
 .g-note { margin: var(--s-space-sm) 0 0; font-size: var(--s-type-ui-sm-size);
@@ -111,9 +112,9 @@ html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruli
   border: var(--s-border-width-hairline) solid var(--s-color-border-on-page); }
 
 /* ---------- do / dont ---------- */
-.g-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--s-space-xl);
+.g-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: var(--s-space-xl);
   margin-top: var(--s-space-base); }
-.g-case { padding: var(--s-space-base); background: var(--s-color-surface-raised);
+.g-case { min-width: 0; overflow-wrap: break-word; padding: var(--s-space-base); background: var(--s-color-surface-raised);
   border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
 .g-case .g-kicker { margin: 0 0 var(--s-space-sm); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
   font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; }
@@ -150,7 +151,7 @@ html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruli
    CSS, not a system value the specimen is claiming. */
 .g-demo > * + * { margin-top: var(--s-space-base); }
 .g-demo > .cap, .g-demo .cap { margin-bottom: 0; }
-.g-props { margin: var(--s-space-base) 0 0; width: 100%; border-collapse: collapse;
+.g-props { margin: var(--s-space-base) 0 0; width: 100%; border-collapse: collapse; overflow-wrap: break-word;
   font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); }
 .g-props th, .g-props td { text-align: left; vertical-align: top; padding: var(--s-space-sm) var(--s-space-md) var(--s-space-sm) 0;
   border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-divider-soft); }
@@ -236,8 +237,8 @@ html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruli
 .g-lay-read { margin: var(--s-space-2xs) 0 0; font-family: var(--s-font-family-doc-mono);
   font-size: var(--s-type-code-sm-size); color: var(--s-color-text-secondary); }
 
-.g-lay-trunc { display: grid; gap: var(--s-space-2xs); max-width: 34ch; }
-.g-lay-trunc p { margin: 0; padding: var(--s-space-2xs) var(--s-space-xs);
+.g-lay-trunc { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-space-2xs); max-width: min(34ch, 100%); }
+.g-lay-trunc p { margin: 0; overflow-wrap: break-word; padding: var(--s-space-2xs) var(--s-space-xs);
   background: var(--s-color-surface-raised); box-shadow: 0 0 0 1px var(--s-color-border-on-raised); }
 /* the truncate rule itself, character for character what .aods-tabs__fold-label ships */
 .g-lay-clip { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
@@ -261,4 +262,4 @@ html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruli
 /* the element grammar is one unbroken token - .aods-prose > (h1|h2|h3|p|ul|ol|table|figure...) -
    with no spaces to break at, so it pushed components.html 142px at 901. It is prose, not a
    value, so it wraps rather than truncates. */
-.g-note, .g-id { overflow-wrap: anywhere; }
+.g-note, .g-id { overflow-wrap: break-word; }

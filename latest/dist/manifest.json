@@ -1,6 +1,6 @@
 {
  "name": "AODS",
- "version": "1.0.0-alpha.4",
+ "version": "1.0.0-alpha.5",
  "parent": {
   "version": "2.1.0",
   "frozen": "2026-11-04"
@@ -46,6 +46,7 @@
    "gov-banner",
    "breadcrumb",
    "in-page-nav",
+   "segmented",
    "text",
    "icon",
    "eyebrow",
@@ -57,6 +58,7 @@
    "header",
    "hero",
    "modal",
+   "bottom-sheet",
    "footer"
   ],
   "lightOnly": [
@@ -189,7 +191,7 @@
   {
    "id": "region-sunken",
    "class": "aods-page__region",
-   "prop": "data-surface=sunken",
+   "prop": "data-level=sunken",
    "fill": "#f7f5f5",
    "bleed": "contained",
    "inset": "32px",
@@ -199,7 +201,7 @@
   {
    "id": "region-raised",
    "class": "aods-page__region",
-   "prop": "data-surface=raised",
+   "prop": "data-level=raised",
    "fill": "#ffffff",
    "bleed": "contained",
    "inset": "32px",
@@ -481,6 +483,9 @@
    "toast": "6000ms"
   },
   "keyframes": {
+   "aods-bottom-sheet-in": [
+    "bottom-sheet"
+   ],
    "aods-conv-pulse": [
     "conv-step",
     "conv-typing"
@@ -506,9 +511,9 @@
     "disclosure"
    ]
   },
-  "reducedMotionBlocks": 8,
+  "reducedMotionBlocks": 9,
   "transitions": 14,
-  "animations": 17,
+  "animations": 19,
   "binders": [
    "accordion",
    "disclosure",
@@ -556,8 +561,7 @@
    },
    {
     "id": "layers",
-    "gloss": "What a layer may add beside the core, and what it may never touch.",
-    "since": "1.0.0-alpha.4"
+    "gloss": "What a layer may add beside the core, and what it may never touch."
    }
   ],
   "laws": [
@@ -1426,7 +1430,7 @@
     "law": "A component two layers need belongs in the core.",
     "applies": "layers",
     "kind": "structural",
-    "gate": "R49"
+    "gate": "R49 (warning)"
    }
   ]
  },
@@ -1473,6 +1477,14 @@
    "modal": {
     "selector": "<dialog>",
     "spec": "NAME      aria-labelledby := __title's id at bind, unless aria-labelledby is  #modal.name\n          present\nOPEN      remember the opener \u2192 showModal() \u2192 focus [autofocus], else\n          __close, else the first focusable \u2192 fire `aods:open`       #modal.open\n  click a [data-modal-open=<id>] button\n                                 \u2192 open that dialog\n  click a [data-modal-close] inside\n                                 \u2192 close\n  `cancel` (Escape)              \u2192 close\n  click the backdrop             \u2192 close, only when data-modal-light is\n                                   present\nCLOSE     fade out over --c-page-motion-state on the exit curve \u2192 focus\n          returns to the opener \u2192 fire `aods:close`                  #modal.focus-return"
+   },
+   "bottom-sheet": {
+    "selector": "<dialog>",
+    "spec": "NAME      aria-labelledby := __title's id at bind, unless aria-labelledby is  #bottom-sheet.name\n          present\nOPEN      remember the opener \u2192 showModal() with data-modal or from 48em, which\n          makes the page behind inert; show() otherwise \u2192 focus [autofocus],\n          else __grabber, else the first focusable \u2192 fire `aods:open`   #bottom-sheet.open\n  click a [data-sheet-open=<id>] button\n                                 \u2192 open that dialog\n  click a [data-sheet-close] inside\n                                 \u2192 close\n  key Escape, `cancel`           \u2192 close                            #bottom-sheet.escape\n  click __grabber                \u2192 toggle data-expanded and aria-expanded\nCLOSE     slide out on the exit curve \u2192 focus returns to the opener \u2192\n          fire `aods:close`                                         #bottom-sheet.focus-return\n\u00ac         Reduced motion: no slide in either direction."
+   },
+   "segmented": {
+    "selector": "div[role=radiogroup|tablist]",
+    "spec": "BIND      one tab stop: the selected option, else the first that is not\n          disabled\n  click an option                \u2192 select it, fire `aods:change`, or\n                                   `aods:tabchange` in a tablist\n  key ArrowRight ArrowDown       \u2192 the next option, wrapping        #segmented.arrows\n  key ArrowLeft ArrowUp          \u2192 the previous one, wrapping\n  key Home End                   \u2192 the first or last\n\u00ac         Arrows skip a disabled option. role=tablist also shows the panel\n          each option's aria-controls names and hides the others."
    },
    "toast": {
     "selector": "AODS.toast(message, opts)",
@@ -1699,6 +1711,26 @@
    "modal.focus-return": {
     "block": "modal",
     "text": "CLOSE fade out over --c-page-motion-state on the exit curve \u2192 focus returns to the opener \u2192 fire `aods:close`"
+   },
+   "bottom-sheet.name": {
+    "block": "bottom-sheet",
+    "text": "NAME aria-labelledby := __title's id at bind, unless aria-labelledby is present"
+   },
+   "bottom-sheet.open": {
+    "block": "bottom-sheet",
+    "text": "OPEN remember the opener \u2192 showModal() with data-modal or from 48em, which makes the page behind inert; show() otherwise \u2192 focus [autofocus], else __grabber, else the first focusable \u2192 fire `aods:open`"
+   },
+   "bottom-sheet.escape": {
+    "block": "bottom-sheet",
+    "text": "key Escape, `cancel` \u2192 close"
+   },
+   "bottom-sheet.focus-return": {
+    "block": "bottom-sheet",
+    "text": "CLOSE slide out on the exit curve \u2192 focus returns to the opener \u2192 fire `aods:close`"
+   },
+   "segmented.arrows": {
+    "block": "segmented",
+    "text": "key ArrowRight ArrowDown \u2192 the next option, wrapping"
    },
    "toast.stay": {
     "block": "toast",
@@ -2035,7 +2067,8 @@
     "radio",
     "switch",
     "selection-card",
-    "search"
+    "search",
+    "segmented"
    ],
    "actions": [
     "button",
@@ -2049,7 +2082,8 @@
     "badge",
     "error-summary",
     "steps",
-    "modal"
+    "modal",
+    "bottom-sheet"
    ],
    "wayfinding": [
     "link",
@@ -2134,7 +2168,7 @@
     "region"
    ],
    "props": {
-    "__region[data-surface]": [
+    "__region[data-level]": [
      "raised",
      "sunken"
     ]
@@ -2222,8 +2256,8 @@
     ".aods-page:focus-visible",
     ".aods-page__prose",
     ".aods-page__region",
-    ".aods-page__region[data-surface=\"raised\"]",
-    ".aods-page__region[data-surface=\"sunken\"]"
+    ".aods-page__region[data-level=\"raised\"]",
+    ".aods-page__region[data-level=\"sunken\"]"
    ],
    "bindsOnly": "c"
   },
@@ -2807,7 +2841,7 @@
    "element": "div",
    "parts": [],
    "props": {
-    "data-surface": [
+    "data-level": [
      "sunken",
      "elevated",
      "raised"
@@ -2828,7 +2862,7 @@
    "states": [
     "rest"
    ],
-   "html": "<div class=\"aods-paper\" data-surface=\"raised\"></div>",
+   "html": "<div class=\"aods-paper\" data-level=\"raised\"></div>",
    "a11y": [],
    "font": "none",
    "tokens": [
@@ -2864,9 +2898,9 @@
     ".aods-paper[data-container]:where(:has(> :nth-child(7)",
     ".aods-paper[data-container]:where(:has(> :nth-child(8)",
     ".aods-paper[data-container]:where(:has(> :nth-child(9)",
-    ".aods-paper[data-surface=\"elevated\"]",
-    ".aods-paper[data-surface=\"raised\"]",
-    ".aods-paper[data-surface=\"sunken\"]"
+    ".aods-paper[data-level=\"elevated\"]",
+    ".aods-paper[data-level=\"raised\"]",
+    ".aods-paper[data-level=\"sunken\"]"
    ],
    "bindsOnly": "c",
    "patterns": [
@@ -4305,6 +4339,9 @@
      "gray-70",
      "gray-80",
      "gray-90"
+    ],
+    "data-state": [
+     "empty"
     ]
    },
    "picks": {
@@ -4333,7 +4370,9 @@
    "states": [
     "rest",
     "hover (interactive)",
-    "focus-visible (interactive)"
+    "focus-visible (interactive)",
+    "loading (aria-busy)",
+    "empty (data-state=\"empty\")"
    ],
    "html": "<article class=\"aods-card\" data-emphasis=\"2\"><p class=\"aods-card__eyebrow\">Eyebrow</p><h3 class=\"aods-card__title\">Title</h3><p class=\"aods-card__body\">Body set in Newsreader.</p><p class=\"aods-card__meta\">Meta</p></article>",
    "a11y": [
@@ -4403,6 +4442,7 @@
    ],
    "selectors": [
     ".aods-card",
+    ".aods-card[aria-busy=\"true\"]",
     ".aods-card[data-density=\"compact\"]",
     ".aods-card[data-emphasis=\"1\"]",
     ".aods-card[data-emphasis=\"2\"]",
@@ -4417,6 +4457,7 @@
     ".aods-card[data-interactive]:active",
     ".aods-card[data-interactive]:focus-visible",
     ".aods-card[data-interactive]:hover",
+    ".aods-card[data-state=\"empty\"]",
     ".aods-card[data-surface=\"dark\"]",
     ".aods-card[data-variant=\"accent\"]",
     ".aods-card__actions",
@@ -5688,7 +5729,7 @@
     "pressed",
     "focus-visible"
    ],
-   "html": "<section class=\"aods-gov-banner\" aria-label=\"Site identity band\"><details class=\"aods-gov-banner__disclosure\"><summary class=\"aods-gov-banner__line\"><span class=\"aods-gov-banner__inner\"><span>An official site of Example Agency</span><span class=\"aods-gov-banner__how\">About this site</span></span></summary><div class=\"aods-gov-banner__panel\"><div class=\"aods-gov-banner__grid\"><div class=\"aods-gov-banner__item\"><p><b class=\"aods-gov-banner__title\">Who runs this site</b>This site is run by Example Agency.</p></div><div class=\"aods-gov-banner__item\"><p><b class=\"aods-gov-banner__title\">Check the connection</b>A <strong>lock</strong> (<svg class=\"aods-gov-banner__lock\" viewBox=\"0 0 16 16\" role=\"img\" aria-label=\"Locked padlock icon\" focusable=\"false\"><path d=\"M8 1a3.7 3.7 0 0 0-3.7 3.7v1.9h1.8V4.7a1.9 1.9 0 0 1 3.8 0v1.9h1.8V4.7A3.7 3.7 0 0 0 8 1z\"/><path d=\"M3.2 6.6h9.6V15H3.2z\"/></svg>) or <strong>https://</strong> means your connection to this site is secure. Share sensitive information only on pages you trust.</p></div></div></div></details></section>",
+   "html": "<section class=\"aods-gov-banner\" aria-label=\"Site identity band\"><details class=\"aods-gov-banner__disclosure\"><summary class=\"aods-gov-banner__line\"><span class=\"aods-gov-banner__inner\"><span>An official site of <span data-identity=\"wordmark\">Site name</span></span><span class=\"aods-gov-banner__how\">About this site</span></span></summary><div class=\"aods-gov-banner__panel\"><div class=\"aods-gov-banner__grid\"><div class=\"aods-gov-banner__item\"><p><b class=\"aods-gov-banner__title\">Who runs this site</b>This site is run by the organization named in the wordmark.</p></div><div class=\"aods-gov-banner__item\"><p><b class=\"aods-gov-banner__title\">Check the connection</b>A <strong>lock</strong> (<svg class=\"aods-gov-banner__lock\" viewBox=\"0 0 16 16\" role=\"img\" aria-label=\"Locked padlock icon\" focusable=\"false\"><path d=\"M8 1a3.7 3.7 0 0 0-3.7 3.7v1.9h1.8V4.7a1.9 1.9 0 0 1 3.8 0v1.9h1.8V4.7A3.7 3.7 0 0 0 8 1z\"/><path d=\"M3.2 6.6h9.6V15H3.2z\"/></svg>) or <strong>https://</strong> means your connection to this site is secure. Share sensitive information only on pages you trust.</p></div></div></div></details></section>",
    "a11y": [
     {
      "check": "[aria-label]",
@@ -5764,11 +5805,11 @@
     "$comment": "Use it identically on every page, once, as the first band under the skip link. Replace the agency name with your own.",
     "aria-label": "Site identity band",
     "lock": "Locked padlock icon",
-    "line": "An official site of Example Agency",
+    "line": "An official site of the organization named in the wordmark",
     "action": "About this site",
     "identity": [
      "Who runs this site",
-     "This site is run by Example Agency.",
+     "This site is run by the organization named in the wordmark.",
      "Check the connection",
      "A lock ( ) or https:// means your connection to this site is secure. Share sensitive information only on pages you trust."
     ],
@@ -6185,6 +6226,9 @@
    "props": {
     "data-width": [
      "full"
+    ],
+    "data-state": [
+     "empty"
     ]
    },
    "never": [
@@ -6193,9 +6237,11 @@
    "states": [
     "rest",
     "focus-within",
-    "has value (clear shows)"
+    "has value (clear shows)",
+    "loading (aria-busy)",
+    "empty (data-state=\"empty\": no query, no clear)"
    ],
-   "html": "<form class=\"aods-search\" role=\"search\"><input class=\"aods-input\" type=\"search\" aria-label=\"Search\" placeholder=\"Begin typing to search\"><button class=\"aods-search__clear\" type=\"button\" aria-label=\"Clear\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M5 5l10 10M15 5L5 15\"/></svg></button><button class=\"aods-button\" data-variant=\"primary\" data-icon=\"only\" aria-label=\"Search\" type=\"submit\"><svg class=\"aods-button__icon\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><circle cx=\"8.5\" cy=\"8.5\" r=\"5.5\" stroke=\"currentColor\" stroke-width=\"2\" fill=\"none\"/><path d=\"M13 13l4.5 4.5\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></button></form>",
+   "html": "<form class=\"aods-search\" role=\"search\"><input class=\"aods-input\" type=\"search\" aria-label=\"Search this site\" placeholder=\"Begin typing to search\"><button class=\"aods-search__clear\" type=\"button\" aria-label=\"Clear\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M5 5l10 10M15 5L5 15\"/></svg></button><button class=\"aods-button\" data-variant=\"primary\" data-icon=\"only\" aria-label=\"Search\" type=\"submit\"><svg class=\"aods-button__icon\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><circle cx=\"8.5\" cy=\"8.5\" r=\"5.5\" stroke=\"currentColor\" stroke-width=\"2\" fill=\"none\"/><path d=\"M13 13l4.5 4.5\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></button></form>",
    "a11y": [
     {
      "check": "[role=search]",
@@ -6233,6 +6279,8 @@
    "selectors": [
     ".aods-search",
     ".aods-search:not([data-has-value])",
+    ".aods-search[aria-busy=\"true\"]",
+    ".aods-search[data-state=\"empty\"]",
     ".aods-search[data-width=\"full\"]",
     ".aods-search__clear",
     ".aods-search__clear:active",
@@ -6245,6 +6293,84 @@
     "submit": "Search",
     "clear": "Clear"
    }
+  },
+  "segmented": {
+   "id": "segmented",
+   "family": "fields",
+   "class": "aods-segmented",
+   "summary": "One choice among two to five options, side by side: role=radiogroup when it sets a value, role=tablist when it switches panels.",
+   "ground": [
+    "light",
+    "dark"
+   ],
+   "element": "div[role=radiogroup|tablist][aria-label] > button.__option[role=radio|tab][aria-checked|aria-selected]",
+   "parts": [
+    "option"
+   ],
+   "props": {
+    "data-variant": [
+     "equal",
+     "hug"
+    ],
+    "data-surface": [
+     "dark"
+    ],
+    "__option[disabled]": [
+     "(present)"
+    ]
+   },
+   "propDefaults": {
+    "data-variant": "equal"
+   },
+   "never": [
+    "__option[tabindex]"
+   ],
+   "states": [
+    "rest",
+    "hover",
+    "focus-visible",
+    "selected (aria-checked, or aria-selected in a tablist)",
+    "disabled"
+   ],
+   "html": "<div class=\"aods-segmented\" role=\"radiogroup\" aria-label=\"View\"><button class=\"aods-segmented__option\" type=\"button\" role=\"radio\" aria-checked=\"true\">List</button><button class=\"aods-segmented__option\" type=\"button\" role=\"radio\" aria-checked=\"false\">Grid</button></div>",
+   "a11y": [
+    {
+     "behavior": "segmented.arrows",
+     "wcag": "2.1.1"
+    },
+    {
+     "check": "[aria-label]",
+     "wcag": "4.1.2"
+    }
+   ],
+   "font": "ui (option)",
+   "tokens": [
+    "--c-segmented-surface",
+    "--c-segmented-border",
+    "--c-segmented-gap",
+    "--c-segmented-inset",
+    "--c-segmented-option-inset-inline",
+    "--c-segmented-option-font-family",
+    "--c-segmented-option-font-size",
+    "--c-segmented-option-line-height",
+    "--c-segmented-option-tracking",
+    "--c-segmented-option-weight",
+    "--c-segmented-option-ink",
+    "--c-segmented-option-ink-selected",
+    "--c-segmented-option-surface-selected",
+    "--c-segmented-option-ink-disabled"
+   ],
+   "selectors": [
+    ".aods-segmented",
+    ".aods-segmented[data-variant=\"hug\"]",
+    ".aods-segmented__option",
+    ".aods-segmented__option:focus-visible",
+    ".aods-segmented__option:hover",
+    ".aods-segmented__option:is(:disabled, [aria-disabled=\"true\"])",
+    ".aods-segmented__option:is([aria-checked=\"true\"], [aria-selected=\"true\"])"
+   ],
+   "bindsOnly": "c",
+   "wide": false
   },
   "toast": {
    "id": "toast",
@@ -7558,7 +7684,7 @@
     "shelf: nav on the strip",
     "gated: drawer closed / open"
    ],
-   "html": "<header class=\"aods-header\"><div class=\"aods-header__utility\" data-surface=\"dark\"><div class=\"aods-header__content\"><ul class=\"aods-header__utility-links\"><li><a class=\"aods-header__utility-link\" href=\"#\">Help</a></li><li><a class=\"aods-header__utility-link\" href=\"#\">Contact</a></li><li><a class=\"aods-header__utility-link\" href=\"#\">Sign in</a></li></ul></div></div><div class=\"aods-header__bar\"><div class=\"aods-header__content\"><a class=\"aods-header__lockup\" href=\"#\"><svg class=\"aods-header__logo\" data-identity=\"mark\" viewBox=\"0 0 48 48\" aria-hidden=\"true\"><path d=\"M2 2H12L46 36V46H36L2 12Z\"/><path d=\"M10 28L20 38L12 46H2V36Z\"/><path d=\"M28 10L36 2H46V12L38 20Z\"/></svg><span class=\"aods-header__brand\" data-identity=\"wordmark\">Example Agency</span></a><button class=\"aods-header__menu\" type=\"button\" aria-label=\"Menu\" aria-expanded=\"false\"><svg class=\"aods-icon aods-header__menu-open\" aria-hidden=\"true\"><use href=\"#aods-menu\"></use></svg><svg class=\"aods-icon aods-header__menu-close\" aria-hidden=\"true\"><use href=\"#aods-close\"></use></svg></button><div class=\"aods-header__drawer\"><nav aria-label=\"Primary\"><ul class=\"aods-header__nav\"><li><a class=\"aods-header__nav-item\" href=\"#\" aria-current=\"page\">About</a></li><li><button class=\"aods-header__nav-item\" type=\"button\" aria-expanded=\"false\" aria-controls=\"mega-programs\">Programs</button></li><li><a class=\"aods-header__nav-item\" href=\"#\">Newsroom</a></li><li><a class=\"aods-header__nav-item\" href=\"#\">Resources</a></li></ul></nav><form class=\"aods-header__search\" role=\"search\"><input class=\"aods-input\" type=\"search\" aria-label=\"Search\" placeholder=\"Begin typing to search\"><button class=\"aods-button\" data-variant=\"primary\" data-icon=\"only\" aria-label=\"Search\"><svg class=\"aods-icon aods-button__icon\" aria-hidden=\"true\"><use href=\"#aods-search\"></use></svg></button></form></div></div></div><div class=\"aods-header__mega\" id=\"mega-programs\" hidden><div class=\"aods-header__content\"><div class=\"aods-header__mega-column\"><p class=\"aods-header__mega-heading\">Aviation</p><ul class=\"aods-header__mega-list\"><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Programs</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Air travel consumer protection</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Aircraft registration</a></li></ul></div><div class=\"aods-header__mega-column\"><p class=\"aods-header__mega-heading\">Highways and roads</p><ul class=\"aods-header__mega-list\"><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Operations</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Bridge inspection</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Road safety</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Road network</a></li></ul></div><div class=\"aods-header__mega-column\"><p class=\"aods-header__mega-heading\">Maritime and rail</p><ul class=\"aods-header__mega-list\"><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Grants</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Research</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Pipeline and hazmat</a></li></ul></div></div></div></header>",
+   "html": "<header class=\"aods-header\"><div class=\"aods-header__utility\" data-surface=\"dark\"><div class=\"aods-header__content\"><ul class=\"aods-header__utility-links\"><li><a class=\"aods-header__utility-link\" href=\"#\">Help</a></li><li><a class=\"aods-header__utility-link\" href=\"#\">Contact</a></li><li><a class=\"aods-header__utility-link\" href=\"#\">Sign in</a></li></ul></div></div><div class=\"aods-header__bar\"><div class=\"aods-header__content\"><a class=\"aods-header__lockup\" href=\"#\"><svg class=\"aods-header__logo\" data-identity=\"mark\" viewBox=\"0 0 48 48\" aria-hidden=\"true\"><path d=\"M2 2H12L46 36V46H36L2 12Z\"/><path d=\"M10 28L20 38L12 46H2V36Z\"/><path d=\"M28 10L36 2H46V12L38 20Z\"/></svg><span class=\"aods-header__brand\" data-identity=\"wordmark\">Site name</span></a><button class=\"aods-header__menu\" type=\"button\" aria-label=\"Menu\" aria-expanded=\"false\"><svg class=\"aods-icon aods-header__menu-open\" aria-hidden=\"true\"><use href=\"#aods-menu\"></use></svg><svg class=\"aods-icon aods-header__menu-close\" aria-hidden=\"true\"><use href=\"#aods-close\"></use></svg></button><div class=\"aods-header__drawer\"><nav aria-label=\"Primary\"><ul class=\"aods-header__nav\"><li><a class=\"aods-header__nav-item\" href=\"#\" aria-current=\"page\">About</a></li><li><button class=\"aods-header__nav-item\" type=\"button\" aria-expanded=\"false\" aria-controls=\"mega-programs\">Programs</button></li><li><a class=\"aods-header__nav-item\" href=\"#\">Newsroom</a></li><li><a class=\"aods-header__nav-item\" href=\"#\">Resources</a></li></ul></nav><form class=\"aods-header__search\" role=\"search\"><input class=\"aods-input\" type=\"search\" aria-label=\"Search\" placeholder=\"Begin typing to search\"><button class=\"aods-button\" data-variant=\"primary\" data-icon=\"only\" aria-label=\"Search\"><svg class=\"aods-icon aods-button__icon\" aria-hidden=\"true\"><use href=\"#aods-search\"></use></svg></button></form></div></div></div><div class=\"aods-header__mega\" id=\"mega-programs\" hidden><div class=\"aods-header__content\"><div class=\"aods-header__mega-column\"><p class=\"aods-header__mega-heading\">Aviation</p><ul class=\"aods-header__mega-list\"><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Programs</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Air travel consumer protection</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Aircraft registration</a></li></ul></div><div class=\"aods-header__mega-column\"><p class=\"aods-header__mega-heading\">Highways and roads</p><ul class=\"aods-header__mega-list\"><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Operations</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Bridge inspection</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Road safety</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Road network</a></li></ul></div><div class=\"aods-header__mega-column\"><p class=\"aods-header__mega-heading\">Maritime and rail</p><ul class=\"aods-header__mega-list\"><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Grants</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Office of Research</a></li><li><a class=\"aods-header__mega-link\" href=\"#\">Pipeline and hazmat</a></li></ul></div></div></div></header>",
    "a11y": [
     {
      "check": "__mega => has __nav-item[aria-expanded][aria-controls]",
@@ -8246,7 +8372,7 @@
     "stacked (data-stacked under the narrow breakpoint)",
     "empty (tbody[data-empty])",
     "wrap focus-visible (when the table overflows)",
-    "busy (aria-busy)"
+    "loading (aria-busy)"
    ],
    "html": "<div class=\"aods-table-wrap\"><table class=\"aods-table\" data-stacked><caption>Highway fatalities by state, 2024</caption><thead><tr><th scope=\"col\" aria-sort=\"none\"><button class=\"aods-table__sort\" type=\"button\">State</button></th><th scope=\"col\" data-align=\"numeric\" aria-sort=\"none\"><button class=\"aods-table__sort\" type=\"button\">Fatalities</button></th></tr></thead><tbody><tr><th scope=\"row\">Texas</th><td data-align=\"numeric\">4,283</td></tr><tr><th scope=\"row\">Ohio</th><td data-align=\"numeric\">1,197</td></tr></tbody></table></div>\n<!-- empty --> <div class=\"aods-table-wrap\"><table class=\"aods-table\"><caption>Routes</caption><thead><tr><th scope=\"col\" aria-sort=\"none\"><button class=\"aods-table__sort\" type=\"button\">Route</button></th><th scope=\"col\" data-align=\"numeric\" aria-sort=\"none\"><button class=\"aods-table__sort\" type=\"button\">Miles</button></th></tr></thead><tbody data-empty><tr><td colspan=\"2\">No routes match these filters.</td></tr></tbody></table></div>",
    "a11y": [
@@ -8483,6 +8609,125 @@
    "bindsOnly": "c",
    "wide": true
   },
+  "bottom-sheet": {
+   "id": "bottom-sheet",
+   "family": "messages",
+   "class": "aods-bottom-sheet",
+   "summary": "A panel anchored to the bottom edge at small widths, with a grabber, a title, scrolling content and an action row; the same markup is the modal's shape from 48em.",
+   "ground": [
+    "light",
+    "dark"
+   ],
+   "element": "dialog[aria-labelledby] > button.__grabber + h2.title + div.content + div.actions",
+   "parts": [
+    "actions",
+    "content",
+    "grabber",
+    "title"
+   ],
+   "composes": [
+    "button"
+   ],
+   "props": {
+    "data-surface": [
+     "dark"
+    ],
+    "data-modal": [
+     "(present)"
+    ],
+    "aria-busy": [
+     "true"
+    ],
+    "__opener[data-sheet-open]": [
+     "(id)"
+    ],
+    "__any[data-sheet-close]": [
+     "(present)"
+    ],
+    "__content[data-state]": [
+     "empty"
+    ]
+   },
+   "never": [
+    "[open]",
+    "[data-expanded]"
+   ],
+   "states": [
+    "closed",
+    "open (slides up)",
+    "expanded (the grabber, data-expanded, to the full height)",
+    "busy (aria-busy)",
+    "loading (aria-busy on the sheet)",
+    "empty (data-state=\"empty\" on __content)"
+   ],
+   "html": "<dialog class=\"aods-bottom-sheet\" id=\"sheet-sample\" data-modal><button class=\"aods-bottom-sheet__grabber\" type=\"button\" aria-label=\"Expand\" aria-expanded=\"false\"></button><h2 class=\"aods-bottom-sheet__title\">Title</h2><div class=\"aods-bottom-sheet__content\"><p>Body.</p></div><div class=\"aods-bottom-sheet__actions\"><button class=\"aods-button\" data-variant=\"secondary\" data-sheet-close type=\"button\">Cancel</button><button class=\"aods-button\" data-variant=\"primary\" type=\"button\">Confirm</button></div></dialog>",
+   "a11y": [
+    {
+     "behavior": "bottom-sheet.open",
+     "wcag": "2.4.3"
+    },
+    {
+     "behavior": "bottom-sheet.escape",
+     "wcag": "2.1.2"
+    },
+    {
+     "check": "has __title",
+     "wcag": "4.1.2"
+    },
+    {
+     "behavior": "bottom-sheet.name",
+     "wcag": "4.1.2"
+    },
+    {
+     "check": "__grabber[aria-label]",
+     "wcag": "4.1.2"
+    },
+    {
+     "behavior": "bottom-sheet.focus-return",
+     "wcag": "2.4.3"
+    }
+   ],
+   "font": "heading (title) \u00b7 body (content)",
+   "tokens": [
+    "--c-bottom-sheet-scrim",
+    "--c-bottom-sheet-surface",
+    "--c-bottom-sheet-border",
+    "--c-bottom-sheet-width",
+    "--c-bottom-sheet-inset",
+    "--c-bottom-sheet-gap",
+    "--c-bottom-sheet-title-font-family",
+    "--c-bottom-sheet-title-font-size",
+    "--c-bottom-sheet-title-line-height",
+    "--c-bottom-sheet-title-tracking",
+    "--c-bottom-sheet-title-weight",
+    "--c-bottom-sheet-title-ink",
+    "--c-bottom-sheet-body-ink",
+    "--c-bottom-sheet-actions-gap",
+    "--c-bottom-sheet-elevation",
+    "--c-bottom-sheet-shadow",
+    "--c-bottom-sheet-body-font-family",
+    "--c-bottom-sheet-body-font-size",
+    "--c-bottom-sheet-body-line-height",
+    "--c-bottom-sheet-body-tracking",
+    "--c-bottom-sheet-grabber-width",
+    "--c-bottom-sheet-grabber-height",
+    "--c-bottom-sheet-grabber-ink"
+   ],
+   "selectors": [
+    ".aods-bottom-sheet",
+    ".aods-bottom-sheet[aria-busy=\"true\"]",
+    ".aods-bottom-sheet[data-expanded]",
+    ".aods-bottom-sheet[open]",
+    ".aods-bottom-sheet__actions",
+    ".aods-bottom-sheet__content",
+    ".aods-bottom-sheet__content[data-state=\"empty\"]",
+    ".aods-bottom-sheet__grabber",
+    ".aods-bottom-sheet__grabber:focus-visible",
+    ".aods-bottom-sheet__title"
+   ],
+   "bindsOnly": "c",
+   "wide": true
+  },
   "footer": {
    "id": "footer",
    "family": "chrome",
@@ -8543,7 +8788,7 @@
    "states": [
     "rest"
    ],
-   "html": "<footer class=\"aods-footer\" data-surface=\"dark\"><div class=\"aods-footer__band\" data-band=\"top\"><div class=\"aods-footer__content\"><div class=\"aods-footer__agency\"><div class=\"aods-footer__lockup\"><svg class=\"aods-footer__logo\" data-identity=\"mark\" viewBox=\"0 0 48 48\" aria-hidden=\"true\"><path d=\"M2 2H12L46 36V46H36L2 12Z\"/><path d=\"M10 28L20 38L12 46H2V36Z\"/><path d=\"M28 10L36 2H46V12L38 20Z\"/></svg><p class=\"aods-footer__brand\" data-identity=\"wordmark\">Example Agency</p></div><address class=\"aods-footer__address\">100 Example Street<br>Anytown, ST 00000<br>555-010-4100</address></div><form class=\"aods-footer__newsletter\"><p class=\"aods-footer__heading\">Stay connected</p><p class=\"aods-footer__description\">Get news and updates by email.</p><div class=\"aods-footer__subscribe\"><input class=\"aods-input\" type=\"email\" aria-label=\"Email address\" placeholder=\"Email address\"><button class=\"aods-button\" data-variant=\"primary\">Subscribe</button></div></form></div></div><details class=\"aods-footer__band\" data-band=\"nav\" open><summary class=\"aods-footer__sitemap\">Site map</summary><nav class=\"aods-footer__content\" aria-label=\"Footer\"><div class=\"aods-footer__columns\"><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">About the Agency</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Mission</a></li><li><a class=\"aods-footer__link\" href=\"#\">Leadership</a></li><li><a class=\"aods-footer__link\" href=\"#\">Careers</a></li></ul></div><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">Programs</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Aviation</a></li><li><a class=\"aods-footer__link\" href=\"#\">Highway</a></li><li><a class=\"aods-footer__link\" href=\"#\">Maritime</a></li></ul></div><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">Connect</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Newsroom</a></li><li><a class=\"aods-footer__link\" href=\"#\">Subscribe</a></li><li><a class=\"aods-footer__link\" href=\"#\">Public engagement</a></li></ul></div><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">Resources</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Forms</a></li><li><a class=\"aods-footer__link\" href=\"#\">Reports</a></li><li><a class=\"aods-footer__link\" href=\"#\">Data catalog</a></li></ul></div></div></nav></details><div class=\"aods-footer__band\" data-band=\"social\"><div class=\"aods-footer__content\"><p class=\"aods-footer__social-label\">Connect with us:</p><ul class=\"aods-footer__socials\"><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"Facebook\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-facebook\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"Instagram\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-instagram\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"LinkedIn\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-linkedin\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"YouTube\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-youtube\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"X\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-x\"></use></svg></a></li></ul></div></div><div class=\"aods-footer__band\" data-band=\"compliance\"><nav class=\"aods-footer__content\" aria-label=\"Policies\"><ul class=\"aods-footer__compliance\"><li><a class=\"aods-footer__link\" href=\"#\">Privacy policy</a></li><li><a class=\"aods-footer__link\" href=\"#\">Records requests</a></li><li><a class=\"aods-footer__link\" href=\"#\">Accessibility</a></li><li><a class=\"aods-footer__link\" href=\"#\">Workplace rights</a></li><li><a class=\"aods-footer__link\" href=\"#\">Information quality</a></li><li><a class=\"aods-footer__link\" href=\"#\">Help center</a></li><li><a class=\"aods-footer__link\" href=\"#\">Plain writing</a></li><li><a class=\"aods-footer__link\" href=\"#\">Web policies</a></li></ul></nav></div><div class=\"aods-footer__band\" data-band=\"copyright\"><div class=\"aods-footer__content\"><p class=\"aods-footer__legal\">Example Agency \u00b7 100 Example Street \u00b7 Anytown, ST 00000</p></div></div></footer>",
+   "html": "<footer class=\"aods-footer\" data-surface=\"dark\"><div class=\"aods-footer__band\" data-band=\"top\"><div class=\"aods-footer__content\"><div class=\"aods-footer__agency\"><div class=\"aods-footer__lockup\"><svg class=\"aods-footer__logo\" data-identity=\"mark\" viewBox=\"0 0 48 48\" aria-hidden=\"true\"><path d=\"M2 2H12L46 36V46H36L2 12Z\"/><path d=\"M10 28L20 38L12 46H2V36Z\"/><path d=\"M28 10L36 2H46V12L38 20Z\"/></svg><p class=\"aods-footer__brand\" data-identity=\"wordmark\">Site name</p></div><address class=\"aods-footer__address\">Street address<br>City, region, postal code<br>Phone number</address></div><form class=\"aods-footer__newsletter\"><p class=\"aods-footer__heading\">Stay connected</p><p class=\"aods-footer__description\">Get news and updates by email.</p><div class=\"aods-footer__subscribe\"><input class=\"aods-input\" type=\"email\" aria-label=\"Email address\" placeholder=\"Email address\"><button class=\"aods-button\" data-variant=\"primary\">Subscribe</button></div></form></div></div><details class=\"aods-footer__band\" data-band=\"nav\" open><summary class=\"aods-footer__sitemap\">Site map</summary><nav class=\"aods-footer__content\" aria-label=\"Footer\"><div class=\"aods-footer__columns\"><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">About the Agency</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Mission</a></li><li><a class=\"aods-footer__link\" href=\"#\">Leadership</a></li><li><a class=\"aods-footer__link\" href=\"#\">Careers</a></li></ul></div><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">Programs</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Aviation</a></li><li><a class=\"aods-footer__link\" href=\"#\">Highway</a></li><li><a class=\"aods-footer__link\" href=\"#\">Maritime</a></li></ul></div><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">Connect</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Newsroom</a></li><li><a class=\"aods-footer__link\" href=\"#\">Subscribe</a></li><li><a class=\"aods-footer__link\" href=\"#\">Public engagement</a></li></ul></div><div class=\"aods-footer__column\"><p class=\"aods-footer__heading\">Resources</p><ul class=\"aods-footer__list\"><li><a class=\"aods-footer__link\" href=\"#\">Forms</a></li><li><a class=\"aods-footer__link\" href=\"#\">Reports</a></li><li><a class=\"aods-footer__link\" href=\"#\">Data catalog</a></li></ul></div></div></nav></details><div class=\"aods-footer__band\" data-band=\"social\"><div class=\"aods-footer__content\"><p class=\"aods-footer__social-label\">Connect with us:</p><ul class=\"aods-footer__socials\"><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"Facebook\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-facebook\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"Instagram\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-instagram\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"LinkedIn\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-linkedin\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"YouTube\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-youtube\"></use></svg></a></li><li><a class=\"aods-footer__social\" href=\"#\" aria-label=\"X\"><svg class=\"aods-icon\" aria-hidden=\"true\"><use href=\"#aods-social-x\"></use></svg></a></li></ul></div></div><div class=\"aods-footer__band\" data-band=\"compliance\"><nav class=\"aods-footer__content\" aria-label=\"Policies\"><ul class=\"aods-footer__compliance\"><li><a class=\"aods-footer__link\" href=\"#\">Privacy policy</a></li><li><a class=\"aods-footer__link\" href=\"#\">Records requests</a></li><li><a class=\"aods-footer__link\" href=\"#\">Accessibility</a></li><li><a class=\"aods-footer__link\" href=\"#\">Workplace rights</a></li><li><a class=\"aods-footer__link\" href=\"#\">Information quality</a></li><li><a class=\"aods-footer__link\" href=\"#\">Help center</a></li><li><a class=\"aods-footer__link\" href=\"#\">Plain writing</a></li><li><a class=\"aods-footer__link\" href=\"#\">Web policies</a></li></ul></nav></div><div class=\"aods-footer__band\" data-band=\"copyright\"><div class=\"aods-footer__content\"><p class=\"aods-footer__legal\"><span data-identity=\"wordmark\">Site name</span> \u00b7 Street address \u00b7 City, region, postal code</p></div></div></footer>",
    "a11y": [
     {
      "check": "__social[aria-label]",
@@ -8694,12 +8939,18 @@
    ],
    "element": "section[aria-label]",
    "parts": [],
-   "props": {},
+   "props": {
+    "data-state": [
+     "empty"
+    ]
+   },
    "never": [
     "[aria-live]"
    ],
    "states": [
-    "rest"
+    "rest",
+    "loading (aria-busy)",
+    "empty (data-state=\"empty\")"
    ],
    "html": "<section class=\"aods-conv-thread\" aria-label=\"Conversation\">\u2026messages\u2026</section>",
    "a11y": [
@@ -8720,7 +8971,9 @@
     "--c-conv-thread-inset"
    ],
    "selectors": [
-    ".aods-conv-thread"
+    ".aods-conv-thread",
+    ".aods-conv-thread[aria-busy=\"true\"]",
+    ".aods-conv-thread[data-state=\"empty\"]"
    ],
    "bindsOnly": "c",
    "patterns": [
@@ -9575,6 +9828,9 @@
    "props": {
     "data-media": [
      "(present)"
+    ],
+    "data-state": [
+     "empty"
     ]
    },
    "picks": {
@@ -9585,7 +9841,9 @@
    "states": [
     "rest",
     "title hover (the link's)",
-    "title focus-visible (the link's)"
+    "title focus-visible (the link's)",
+    "loading (aria-busy)",
+    "empty (data-state=\"empty\")"
    ],
    "html": "<div class=\"aods-collection\"><ul><li class=\"aods-collection__item\"><div class=\"aods-collection__body\"><h3 class=\"aods-collection__heading\"><a class=\"aods-link aods-collection__title\" href=\"#\">Agency announces $1.2 billion for rural bridges</a></h3><p class=\"aods-collection__summary\">Grants to 43 states for bridges in poor condition.</p><p class=\"aods-collection__meta\"><time datetime=\"\">August 18, 2026</time> \u00b7 Operations Office</p><div class=\"aods-collection__tags\"><span class=\"aods-badge\" data-status=\"info\">Press release</span></div></div></li></ul></div>",
    "a11y": [
@@ -9647,7 +9905,9 @@
    ],
    "selectors": [
     ".aods-collection",
+    ".aods-collection[aria-busy=\"true\"]",
     ".aods-collection[data-media]",
+    ".aods-collection[data-state=\"empty\"]",
     ".aods-collection__body",
     ".aods-collection__heading",
     ".aods-collection__item",
@@ -10263,7 +10523,6 @@
    "file": "shell.html",
    "order": [
     "skip-link",
-    "gov-banner",
     "site-alert",
     "header",
     "layout",
@@ -10271,7 +10530,7 @@
     "prose",
     "footer"
    ],
-   "purpose": "The canonical order every page starts from: skip-link, gov-banner, site-alert, header, main, footer."
+   "purpose": "The canonical order every page starts from: skip-link, site-alert, header, main, footer."
   },
   {
    "id": "landing",
@@ -10279,7 +10538,6 @@
    "file": "landing.html",
    "order": [
     "skip-link",
-    "gov-banner",
     "site-alert",
     "header",
     "hero",
@@ -10294,71 +10552,19 @@
     "summary-box",
     "footer"
    ],
-   "purpose": "A front door: hero with search and a call to action, a stat band, program tiles, a numbered section opener, a row of cards and a summary."
-  },
-  {
-   "id": "agency-home",
-   "title": "Agency homepage",
-   "file": "agency-home.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "site-alert",
-    "header",
-    "hero",
-    "search",
-    "button",
-    "section-heading",
-    "layout",
-    "stat",
-    "section-opener",
-    "card",
-    "field",
-    "collection",
-    "summary-box",
-    "footer"
-   ],
-   "purpose": "The department's front door, reimagined: a 16:9 hero with search, a stat band, the priorities as numbered openers, a full-bleed dark identity band (gold cards and an updates field), the newsroom and a summary."
-  },
-  {
-   "id": "program",
-   "title": "Program page",
-   "file": "program.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "site-alert",
-    "header",
-    "breadcrumb",
-    "section-heading",
-    "layout",
-    "in-page-nav",
-    "prose",
-    "accordion",
-    "reference-list",
-    "footer"
-   ],
-   "purpose": "A long reading page: breadcrumb, title, a sticky in-page nav beside long prose, an FAQ accordion and a dark reference list that blends into the footer."
-  },
-  {
-   "id": "office",
-   "title": "Program office",
-   "file": "office.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "header",
-    "hero",
-    "breadcrumb",
-    "layout",
-    "in-page-nav",
-    "prose",
-    "section-heading",
-    "tile",
-    "reference-list",
-    "footer"
-   ],
-   "purpose": "A program office's page, aviation-flavored: a dark 16:9 masthead as the office's identity, light reading in the middle (in-page nav beside long prose), then a dark interstitial band that blends through the references into the footer."
+   "purpose": "A front door: hero with search and a call to action, a stat band, topic tiles, a numbered section opener, a row of cards and a summary.",
+   "variants": [
+    {
+     "id": "search",
+     "title": "With search",
+     "file": "landing.html"
+    },
+    {
+     "id": "plain",
+     "title": "Plain",
+     "file": "landing-plain.html"
+    }
+   ]
   },
   {
    "id": "article",
@@ -10366,74 +10572,33 @@
    "file": "article.html",
    "order": [
     "skip-link",
-    "gov-banner",
     "site-alert",
     "header",
     "breadcrumb",
     "eyebrow",
+    "layout",
     "prose",
     "dl",
+    "in-page-nav",
     "pull-quote",
     "section-heading",
     "collection",
     "pagination",
     "footer"
    ],
-   "purpose": "A news article: breadcrumb, eyebrow and title, a metadata row, prose with a pull-quote, related items and pagination."
-  },
-  {
-   "id": "newsroom",
-   "title": "Newsroom",
-   "file": "newsroom.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "header",
-    "breadcrumb",
-    "section-heading",
-    "chip",
-    "collection",
-    "pagination",
-    "dl",
-    "footer"
-   ],
-   "purpose": "A press index: the display heading, toggle-chip filters, a six-item collection with mixed thumbnails, pagination, and the media contacts on a raised band."
-  },
-  {
-   "id": "press-release",
-   "title": "Press release",
-   "file": "press-release.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "header",
-    "breadcrumb",
-    "eyebrow",
-    "prose",
-    "dl",
-    "document-link",
-    "footer"
-   ],
-   "purpose": "A press release: eyebrow, heading, the contact and release-number block, the body, and the documents that go with it."
-  },
-  {
-   "id": "data",
-   "title": "Data page",
-   "file": "data.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "header",
-    "breadcrumb",
-    "section-heading",
-    "layout",
-    "stat",
-    "table",
-    "document-link",
-    "reference-list",
-    "footer"
-   ],
-   "purpose": "A statistics page: headline numbers, a sortable table that stacks on narrow screens, the downloads, and the sources."
+   "purpose": "A long read: breadcrumb, eyebrow and title, a metadata row, contents rail, prose with a pull-quote, related items and pagination.",
+   "variants": [
+    {
+     "id": "toc",
+     "title": "With contents",
+     "file": "article.html"
+    },
+    {
+     "id": "plain",
+     "title": "Plain",
+     "file": "article-plain.html"
+    }
+   ]
   },
   {
    "id": "form",
@@ -10441,7 +10606,6 @@
    "file": "form.html",
    "order": [
     "skip-link",
-    "gov-banner",
     "header",
     "breadcrumb",
     "section-heading",
@@ -10460,35 +10624,19 @@
     "toast",
     "footer"
    ],
-   "purpose": "One page of a journey: the step indicator, an error summary, the form laid out by the form pattern rules, the journey actions, a confirm dialog and a toast."
-  },
-  {
-   "id": "grant",
-   "title": "Grant application",
-   "file": "grant.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "header",
-    "breadcrumb",
-    "section-heading",
-    "steps",
-    "error-summary",
-    "form",
-    "field",
-    "label",
-    "input",
-    "select",
-    "checkbox",
-    "document-link",
-    "dl",
-    "disclosure",
-    "button",
-    "modal",
-    "toast",
-    "footer"
-   ],
-   "purpose": "Multi-page application journey \u2014 steps, sectioned form, error flow, review, confirm."
+   "purpose": "One page of a journey: the step indicator, an error summary, the form laid out by the form pattern rules, the journey actions, a confirm dialog and a toast.",
+   "variants": [
+    {
+     "id": "single",
+     "title": "Single page",
+     "file": "form-single.html"
+    },
+    {
+     "id": "stepped",
+     "title": "Stepped",
+     "file": "form.html"
+    }
+   ]
   },
   {
    "id": "search",
@@ -10496,35 +10644,59 @@
    "file": "search.html",
    "order": [
     "skip-link",
-    "gov-banner",
     "header",
     "section-heading",
     "search",
     "chip",
+    "segmented",
     "collection",
     "pagination",
     "summary-box",
     "footer"
    ],
-   "purpose": "Site search: the full-width field, filter chips, a results collection and pagination; then the empty state the same page shows when nothing matches."
+   "purpose": "Site search: the full-width field, filters, a segmented type filter, a results collection and pagination; then the empty and loading states the same page shows.",
+   "variants": [
+    {
+     "id": "list",
+     "title": "List",
+     "file": "search.html"
+    },
+    {
+     "id": "grid",
+     "title": "Grid",
+     "file": "search-grid.html"
+    }
+   ]
   },
   {
-   "id": "emergency",
-   "title": "Emergency notice",
-   "file": "emergency.html",
+   "id": "data",
+   "title": "Data page",
+   "file": "data.html",
    "order": [
     "skip-link",
-    "gov-banner",
-    "site-alert",
     "header",
+    "breadcrumb",
     "section-heading",
-    "alert",
-    "summary-box",
-    "steps",
-    "prose",
+    "layout",
+    "stat",
+    "table",
+    "document-link",
+    "reference-list",
     "footer"
    ],
-   "purpose": "A page that leads with an emergency: the one role=alert band above the header, the list of current alerts, the summary and the steps to take."
+   "purpose": "A statistics page: headline numbers, a sortable table that stacks on narrow screens, its empty and loading states, the downloads, and the sources.",
+   "variants": [
+    {
+     "id": "table",
+     "title": "Table",
+     "file": "data.html"
+    },
+    {
+     "id": "cards",
+     "title": "Cards",
+     "file": "data-cards.html"
+    }
+   ]
   },
   {
    "id": "assistant",
@@ -10532,7 +10704,6 @@
    "file": "assistant.html",
    "order": [
     "skip-link",
-    "gov-banner",
     "header",
     "section-heading",
     "conv-thread",
@@ -10547,41 +10718,26 @@
     "conv-composer",
     "footer"
    ],
-   "purpose": "An AI assistant page: the header, a title, and the whole conversational exchange in a container."
-  },
-  {
-   "id": "program-assistant",
-   "title": "Program + assistant",
-   "file": "program-assistant.html",
-   "order": [
-    "skip-link",
-    "gov-banner",
-    "header",
-    "breadcrumb",
-    "section-heading",
-    "layout",
-    "in-page-nav",
-    "prose",
-    "page",
-    "conv-thread",
-    "conv-message",
-    "conv-avatar",
-    "conv-step",
-    "conv-source",
-    "conv-actions",
-    "conv-chip",
-    "conv-composer",
-    "accordion",
-    "footer"
-   ],
-   "purpose": "The assistant embedded in a page type: a program reading page with the conversational exchange scoped into a labeled sunken region between the prose and the FAQ \u2014 the same components as the Assistant page, owned by the page instead of owning it."
+   "purpose": "An AI assistant page: the header, a title, and the whole conversational exchange in a container, or in a bottom sheet in the sheet variant.",
+   "variants": [
+    {
+     "id": "panel",
+     "title": "Panel",
+     "file": "assistant.html"
+    },
+    {
+     "id": "sheet",
+     "title": "Sheet",
+     "file": "assistant-sheet.html"
+    }
+   ]
   }
  ],
  "counts": {
-  "tokens": 2370,
-  "components": 69,
+  "tokens": 2407,
+  "components": 71,
   "faces": 14,
-  "pages": 15,
+  "pages": 7,
   "notes": 237
  },
  "lint": {
@@ -10592,9 +10748,6 @@
    "R8 s.border-width.none: unconsumed",
    "R8 s.elevation.flat: unconsumed",
    "R8 s.elevation.raised: unconsumed",
-   "R7b --_icon-mask-chevron-up: set and consumed by nothing",
-   "R7b --_icon-mask-chevrons-left: set and consumed by nothing",
-   "R7b --_icon-mask-chevrons-right: set and consumed by nothing",
    "R25 c.header.drawer-edge is named 'edge' but binds {s.color.surface.sunken} - a container fill used as a stroke color"
   ]
  }

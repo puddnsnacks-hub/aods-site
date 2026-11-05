@@ -1,4 +1,4 @@
-/* GENERATED for AODS 1.0.0-alpha.4. */
+/* GENERATED for AODS 1.0.0-alpha.5. */
 window.AODS_PALETTE = {
  "doc": {
   "ground": "#a4262c"

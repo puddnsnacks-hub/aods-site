@@ -1,5 +1,5 @@
 {
- "latest": "1.0.0-alpha.4",
+ "latest": "1.0.0-alpha.5",
  "versions": [
   {
    "version": "1.0.0-alpha.3",
@@ -11,6 +11,12 @@
    "version": "1.0.0-alpha.4",
    "tag": "v1.0.0-alpha.4",
    "commit": "02c2e80",
+   "date": "2026-11-05"
+  },
+  {
+   "version": "1.0.0-alpha.5",
+   "tag": "v1.0.0-alpha.5",
+   "commit": "3066efa",
    "date": "2026-11-05"
   }
  ]

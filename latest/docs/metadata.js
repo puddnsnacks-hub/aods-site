@@ -574,7 +574,7 @@ const COMPONENT_GENERATED = [
   dl.innerHTML = `
     <dt>data-variant: ["primary", "secondary", …]</dt><dd>An attribute on the <b>root</b>. The array is the complete legal set of values.</dd>
     <dt>__item[aria-current]: ["page"]</dt><dd>An attribute on the <b>part</b> <code>.aods-&lt;id&gt;__item</code>. The double underscore names the part; the brackets name the attribute it takes.</dd>
-    <dt>__region[data-surface]: ["raised", "sunken"]</dt><dd>Same shape. Read it as: the region part may carry <code>data-surface</code>, and these are the only two values that do anything.</dd>`;
+    <dt>__region[data-level]: ["raised", "sunken"]</dt><dd>Same shape. Read it as: the region part may carry <code>data-level</code>, and these are the only two values that do anything.</dd>`;
   s.append(dl);
 
   /* the self-check: any field in the data with no entry above, any documented field the record order

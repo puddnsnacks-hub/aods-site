@@ -140,7 +140,7 @@ build/figma_plan.json                   <span class="c"># what the registry cann
         <tr><td>the canvas</td><td>a page per tier; a section per component (doc frame, then its sets); each set a table on a <b>ground sheet</b></td><td>rows and columns come from the axes that vary inside the set (Size down, Surface × State across), cells sized to what the variants paint; dark panels sit under the <code>Surface=dark</code> cells; sections stack in release order — all re-laid on every apply</td></tr>
       </table></div>
       <p>Identity is what makes the update in place possible. Every node the plugin makes carries its key in shared plugin data (<code>aods / key</code>, e.g. <code>comp:card::Emphasis=4, Density=comfortable, Interactive=false, Variant=default, Surface=light</code>); the file root carries the <b>ledger</b> (<code>aods / ledger</code>, in parts) and the release <code>version</code> + <code>sourceHash</code> (sha256 of the inputs, first 16 hex). Variables are named by token path (<code>button/primary-fill</code>) and <code>codeSyntax.WEB</code> is the real <code>var(--c-button-primary-fill)</code>, so Dev Mode shows the name a builder writes.</p>
-      <p>The long form — the IR schema, the mapping in full, what does not map — is <a href="../FIGMA.md">FIGMA.md</a>.</p>
+      <p>The long form — the IR schema, the mapping in full, what does not map — is <code>FIGMA.md</code>.</p>
     </div>
     <details class="f-plain">
       <summary>Why can’t we just draw the components in Figma and keep them there? <span class="f-tag">Learn more</span></summary>
@@ -360,7 +360,7 @@ node figma-plugin/test/run-chunks.js                 <span class="c"># the slice
 
   <footer class="g-foot f-foot">
     <p>Generated 2026-09-04 · written against AODS release 2.1.0 (source 70b3c573b58b4020) · the Figma library <code>AODS_FigGen_4_1.0</code>.</p>
-    <p>Related: <a href="../FIGMA.md">FIGMA.md</a> (the mapping, the IR, what does not map) · <a href="../figma-plugin/README.md">figma-plugin/README.md</a> (the plugin) · <a href="../dist/figma/report.md">dist/figma/report.md</a> · <a href="../dist/figma/render-report.md">dist/figma/render-report.md</a> · <a href="metadata.html">What the machine reads</a>.</p>
+    <p>Related: <code>FIGMA.md</code> (the mapping, the IR, what does not map) · <code>figma-plugin/README.md</code> (the plugin) · <code>dist/figma/report.md</code> · <code>dist/figma/render-report.md</code> · <a href="metadata.html">What the machine reads</a>.</p>
   </footer>
 </main>
 </body>

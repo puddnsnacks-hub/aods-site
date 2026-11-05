@@ -16,13 +16,14 @@
 | blocks | content contained | | |
 
 ## FIELDS — the user gives
-Members: `input` `label` `field` `form` `select` `checkbox` `radio` `switch` `selection-card` `search`
+Members: `input` `label` `field` `form` `select` `checkbox` `radio` `switch` `selection-card` `search` `segmented`
 
 ### What does the user give?
 - A search query → search
 - Any other free text → input
 - One value from a long list → select
 - One value from a short list → radio
+- One of two to five short options, all in view → segmented
 - Any number of values, or a single yes or no → checkbox
 - A setting that takes effect at once → switch
 - A choice among options that each need a title and a description → selection-card
@@ -41,7 +42,7 @@ Members: `button` `button-group` `chip`
 - A filter or a toggle over a set of results → chip
 
 ## MESSAGES — the user receives
-Members: `alert` `site-alert` `toast` `badge` `error-summary` `steps` `modal`
+Members: `alert` `site-alert` `toast` `badge` `error-summary` `steps` `modal` `bottom-sheet`
 
 ### What is the object of the message?
 - The field above → field.parts[error, help]
@@ -50,6 +51,7 @@ Members: `alert` `site-alert` `toast` `badge` `error-summary` `steps` `modal`
 - A submitted form → error-summary
 - The whole site → site-alert
 - A mandatory decision → modal
+- A short task over the page, on a phone → bottom-sheet
 
 ## WAYFINDING — the user goes
 Members: `link` `breadcrumb` `menu` `in-page-nav` `tabs` `pagination` `document-link` `explorer`

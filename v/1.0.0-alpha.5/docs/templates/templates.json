@@ -1,0 +1,217 @@
+[
+  {
+    "id": "shell",
+    "title": "Page shell",
+    "file": "shell.html",
+    "order": [
+      "skip-link",
+      "site-alert",
+      "header",
+      "layout",
+      "section-heading",
+      "prose",
+      "footer"
+    ],
+    "purpose": "The canonical order every page starts from: skip-link, site-alert, header, main, footer."
+  },
+  {
+    "id": "landing",
+    "title": "Landing page",
+    "file": "landing.html",
+    "order": [
+      "skip-link",
+      "site-alert",
+      "header",
+      "hero",
+      "search",
+      "button",
+      "section-heading",
+      "layout",
+      "stat",
+      "tile",
+      "section-opener",
+      "card",
+      "summary-box",
+      "footer"
+    ],
+    "purpose": "A front door: hero with search and a call to action, a stat band, topic tiles, a numbered section opener, a row of cards and a summary.",
+    "variants": [
+      {
+        "id": "search",
+        "title": "With search",
+        "file": "landing.html"
+      },
+      {
+        "id": "plain",
+        "title": "Plain",
+        "file": "landing-plain.html"
+      }
+    ]
+  },
+  {
+    "id": "article",
+    "title": "Article",
+    "file": "article.html",
+    "order": [
+      "skip-link",
+      "site-alert",
+      "header",
+      "breadcrumb",
+      "eyebrow",
+      "layout",
+      "prose",
+      "dl",
+      "in-page-nav",
+      "pull-quote",
+      "section-heading",
+      "collection",
+      "pagination",
+      "footer"
+    ],
+    "purpose": "A long read: breadcrumb, eyebrow and title, a metadata row, contents rail, prose with a pull-quote, related items and pagination.",
+    "variants": [
+      {
+        "id": "toc",
+        "title": "With contents",
+        "file": "article.html"
+      },
+      {
+        "id": "plain",
+        "title": "Plain",
+        "file": "article-plain.html"
+      }
+    ]
+  },
+  {
+    "id": "form",
+    "title": "Multi-page form",
+    "file": "form.html",
+    "order": [
+      "skip-link",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "steps",
+      "error-summary",
+      "form",
+      "field",
+      "label",
+      "input",
+      "select",
+      "checkbox",
+      "radio",
+      "disclosure",
+      "button",
+      "modal",
+      "toast",
+      "footer"
+    ],
+    "purpose": "One page of a journey: the step indicator, an error summary, the form laid out by the form pattern rules, the journey actions, a confirm dialog and a toast.",
+    "variants": [
+      {
+        "id": "single",
+        "title": "Single page",
+        "file": "form-single.html"
+      },
+      {
+        "id": "stepped",
+        "title": "Stepped",
+        "file": "form.html"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "title": "Search results",
+    "file": "search.html",
+    "order": [
+      "skip-link",
+      "header",
+      "section-heading",
+      "search",
+      "chip",
+      "segmented",
+      "collection",
+      "pagination",
+      "summary-box",
+      "footer"
+    ],
+    "purpose": "Site search: the full-width field, filters, a segmented type filter, a results collection and pagination; then the empty and loading states the same page shows.",
+    "variants": [
+      {
+        "id": "list",
+        "title": "List",
+        "file": "search.html"
+      },
+      {
+        "id": "grid",
+        "title": "Grid",
+        "file": "search-grid.html"
+      }
+    ]
+  },
+  {
+    "id": "data",
+    "title": "Data page",
+    "file": "data.html",
+    "order": [
+      "skip-link",
+      "header",
+      "breadcrumb",
+      "section-heading",
+      "layout",
+      "stat",
+      "table",
+      "document-link",
+      "reference-list",
+      "footer"
+    ],
+    "purpose": "A statistics page: headline numbers, a sortable table that stacks on narrow screens, its empty and loading states, the downloads, and the sources.",
+    "variants": [
+      {
+        "id": "table",
+        "title": "Table",
+        "file": "data.html"
+      },
+      {
+        "id": "cards",
+        "title": "Cards",
+        "file": "data-cards.html"
+      }
+    ]
+  },
+  {
+    "id": "assistant",
+    "title": "Assistant",
+    "file": "assistant.html",
+    "order": [
+      "skip-link",
+      "header",
+      "section-heading",
+      "conv-thread",
+      "conv-notice",
+      "conv-message",
+      "conv-avatar",
+      "conv-step",
+      "conv-source",
+      "conv-actions",
+      "conv-typing",
+      "conv-chip",
+      "conv-composer",
+      "footer"
+    ],
+    "purpose": "An AI assistant page: the header, a title, and the whole conversational exchange in a container, or in a bottom sheet in the sheet variant.",
+    "variants": [
+      {
+        "id": "panel",
+        "title": "Panel",
+        "file": "assistant.html"
+      },
+      {
+        "id": "sheet",
+        "title": "Sheet",
+        "file": "assistant-sheet.html"
+      }
+    ]
+  }
+]

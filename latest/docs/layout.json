@@ -64,7 +64,7 @@
     {
       "id": "region-sunken",
       "class": "aods-page__region",
-      "prop": "data-surface=sunken",
+      "prop": "data-level=sunken",
       "fill": "{s.color.surface.sunken}",
       "bleed": "contained",
       "inset": "{c.page.inset}",
@@ -74,7 +74,7 @@
     {
       "id": "region-raised",
       "class": "aods-page__region",
-      "prop": "data-surface=raised",
+      "prop": "data-level=raised",
       "fill": "{s.color.surface.raised}",
       "bleed": "contained",
       "inset": "{c.page.inset}",

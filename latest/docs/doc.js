@@ -51,7 +51,7 @@ for (const t of M.laws.topics) {
   rules.append(h("li", { class: "law-topic", id: "law-" + t.id, ...since }, `<b>${esc(t.id)}</b><div><span>${esc(t.gloss)}</span></div>`));
   for (const l of rows) {
     const g = [].concat(l.gate || []).join(" ");
-    rules.append(h("li", { id: "law-" + l.id, ...since }, `<b>${esc(g || "unchecked")}</b><div><span>${esc(l.law)}</span>
+    rules.append(h("li", { id: "law-" + l.id, "data-law": l.id, ...(l.changedSince ? { "data-changed-since": l.changedSince } : {}), ...since }, `<b>${esc(g || "unchecked")}</b><div><span>${esc(l.law)}</span>
   ${l.ok ? `<pre class="ex ok"><span class="ex-tag">passes</span>${esc(l.ok)}</pre>` : ""}${l.bad ? `<pre class="ex bad"><span class="ex-tag">fails</span>${esc(l.bad)}</pre>` : ""}</div>`));
   }
 }
@@ -651,10 +651,10 @@ for (const part of PARTS) {
   /* ---- layers: only the layers this build included. Each one's manifest.js loads here, so the core's page carries no layer. ---- */
   const included = M.layers || [];
   if (included.length) {
-    const sec = h("section", { class: "doc-section", id: "layers", "data-since": "1.0.0-alpha.4" },
+    const sec = h("section", { class: "doc-section", id: "layers", "data-layer-block": "" },
       `<h2>Layers</h2><p class="blurb">The layers this build included. A layer adds components, templates and semantic names beside the core and changes nothing of the core's. Its files are under <code>dist/layers/</code>.</p>`);
     document.querySelector("#main .doc-foot").before(sec);
-    const nav = document.querySelector(".doc-nav"); nav.append(h("a", { href: "#layers", "data-since": "1.0.0-alpha.4" }, "Layers"));
+    const nav = document.querySelector(".doc-nav"); nav.append(h("a", { href: "#layers", "data-layer-block": "" }, "Layers"));
     for (const l of included) {
       const sc = document.createElement("script"); sc.src = "../" + l.path + "manifest.js";
       sc.onload = () => {

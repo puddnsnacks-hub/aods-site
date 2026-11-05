@@ -33,9 +33,12 @@ const usedByNote = n => {
 };
 
 /* section opener — eyebrow · rule · heading · body, the shape the guide uses everywhere */
+/* a count in running text carries data-count, so a page's words can be compared across releases apart from its numbers */
+const counted = n => `<span data-count>${n}</span>`, raw = html => ({ html });
+const lawRow = (l, node) => { node.setAttribute("data-law", l.id); if (l.changedSince) node.setAttribute("data-changed-since", l.changedSince); return node; };
 function opener(eyebrow, heading, bodies) {
   const s = el("section", "g-section");
-  s.append(el("p", "g-eyebrow", esc(eyebrow)), el("div", "g-rule"), el("h2", "g-heading", esc(heading)));
+  s.append(el("p", "g-eyebrow", esc(eyebrow)), el("div", "g-rule"), el("h2", "g-heading", heading.html ?? esc(heading)));
   for (const b of [].concat(bodies || [])) if (b) s.append(el("p", "g-body", esc(b)));
   return s;
 }
@@ -63,7 +66,7 @@ const PAGES = [
   ["components.html", "Components", "Every component, its props, its states, and a live instance."],
   ["conversational.html", "Conversational", "The assistant family — thread, message, steps, sources, composer."],
   ["rules.html",      "Rules",      "The lint rules as passes/fails, plus every standing ruling."],
-  ["layers.html",     "Layers",     "What a layer is and is not: the core, layers, themes, sites.", "1.0.0-alpha.4"]
+  ["layers.html",     "Layers",     "What a layer is and is not: the core, layers, themes, sites."]
 ];
 function bar() {
   const here = (location.pathname.split("/").pop() || "index.html");
@@ -104,7 +107,7 @@ function pageCover(main) {
   cover.append(cw); main.append(cover);
 
   const page = el("div", "g-wrap"); main.append(page);
-  const s = opener("CONTENTS", `${PAGES.length - 1} pages`, null);
+  const s = opener("CONTENTS", raw(`${counted(PAGES.length - 1)} pages`), null);
   const cards = el("div", "g-cards");
   const counts = {
     "typography.html": `${grp("s.type.").length} type tokens · ${grp("s.font.").length} font tokens`,
@@ -117,7 +120,7 @@ function pageCover(main) {
   };
   for (const [href, label, blurb, since] of PAGES) {
     if (href === "index.html") continue;
-    const a = el("a", "g-card", `<h3>${esc(label)}</h3><p>${esc(blurb)}</p><span class="g-count">${esc(counts[href] || "")}</span>`);
+    const a = el("a", "g-card", `<h3>${esc(label)}</h3><p>${esc(blurb)}</p><span class="g-count" data-count>${esc(counts[href] || "")}</span>`);
     a.href = href; if (since) a.setAttribute("data-since", since); cards.append(a);
   }
   s.append(cards); page.append(s);
@@ -216,7 +219,7 @@ function pageColor(main) {
   const CL = M.color || {};
   {
     const list = lawsOf("color", "dark");
-    const cl = opener("THE LAWS", `${list.length} laws the color system reduces to`,
+    const cl = opener("THE LAWS", raw(`${counted(list.length)} laws the color system reduces to`),
       "Each is one sentence from manifest.laws, labeled with the gate that checks it.");
     cl.append(lawRows(list));
     main.append(cl);
@@ -434,14 +437,14 @@ function pageConversational(main) {
 /* ================= RULES ================= */
 function pageRules(main) {
   const all = (M.laws && M.laws.laws) || [];
-  main.append(opener("LAWS", `${all.length} laws, ${all.filter(l => l.gate).length} of them gated`, [
+  main.append(opener("LAWS", raw(`${counted(all.length)} laws, ${counted(all.filter(l => l.gate).length)} of them gated`), [
     "One sentence each, grouped by kind, then by topic. A gated law is not style advice: build.py (R) or lint_pages.py (P) fails on a violation. A rule about one component lives on that component's record."
   ]));
   const KINDS = [["structural", "STRUCTURAL", "Core: tiers, binding, semantics, polarity, surfaces, accessibility, behavior. Every theme keeps these."],
                  ["look", "LOOK", "A value the theme owns: each law names the theme as the source, and the build checks the theme's value."]];
   for (const [kind, title, gloss] of KINDS) {
     const of = all.filter(l => l.kind === kind);
-    main.append(opener(title, `${of.length} laws`, gloss));
+    main.append(opener(title, raw(`${counted(of.length)} laws`), gloss));
     for (const t of (M.laws && M.laws.topics) || []) {
       const list = of.filter(l => l.topic === t.id);
       if (!list.length) continue;
@@ -452,7 +455,7 @@ function pageRules(main) {
         const pair = el("div", "g-pair");
         if (l.ok)  { const c = el("div", "g-case", `<p class="g-kicker">passes</p><pre>${esc(l.ok)}</pre>`); c.setAttribute("data-case", "ok");  pair.append(c); }
         if (l.bad) { const c = el("div", "g-case", `<p class="g-kicker">fails</p><pre>${esc(l.bad)}</pre>`);  c.setAttribute("data-case", "bad"); pair.append(c); }
-        rl.append(row(lawGate(l), l.kind, `<p class="g-body" style="margin:0">${esc(l.law)}</p>` + (pair.children.length ? pair.outerHTML : ""), null, null));
+        rl.append(lawRow(l, row(lawGate(l), l.kind, `<p class="g-body" style="margin:0">${esc(l.law)}</p>` + (pair.children.length ? pair.outerHTML : ""), null, null)));
       }
       sec.append(rl); main.append(sec);
     }
@@ -469,7 +472,7 @@ function pageRules(main) {
   ]));
   main.append(sf);
 
-  const li = opener("LINT", `${M.lint.errors.length} errors · ${M.lint.warnings.length} warnings`, null);
+  const li = opener("LINT", raw(`${counted(M.lint.errors.length)} errors · ${counted(M.lint.warnings.length)} warnings`), null);
   const lw = el("div", "g-rows");
   if (!M.lint.errors.length && !M.lint.warnings.length)
     lw.append(row("clean", null, `<p class="g-body" style="margin:0">The build passes with nothing outstanding.</p>`, null, null));
@@ -726,7 +729,7 @@ function pageLayout(main) {
   /* ---- the laws ---- */
   {
     const list = lawsOf("layout", "space");
-    const lw = opener("THE LAWS", `${list.length} laws the model reduces to`,
+    const lw = opener("THE LAWS", raw(`${counted(list.length)} laws the model reduces to`),
       "Everything else in this guide is a consequence of one of these. Each is one sentence from manifest.laws, labeled with the gate that checks it.");
     lw.append(lawRows(list));
     main.append(lw);
@@ -888,7 +891,7 @@ function pageLayers(main) {
   main.append(isnt);
   const incl = opener("THE LAWS", "What the build refuses", null);
   const list = el("div", "g-rows");
-  for (const l of lawsOf("layers")) list.append(row(lawGate(l), l.kind, `<p class="g-body" style="margin:0">${esc(l.law)}</p>`, null, null));
+  for (const l of lawsOf("layers")) list.append(lawRow(l, row(lawGate(l), l.kind, `<p class="g-body" style="margin:0">${esc(l.law)}</p>`, null, null)));
   incl.append(list); main.append(incl);
   const siteOpener = opener("A SITE", "A site pins one version", [
     "A site lists itself in site.json: its name, the AODS version it pins, the layers and the theme it uses, and its pages, each with its template and its component order. Its pages link the pinned path and nothing else from AODS."

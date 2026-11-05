@@ -426,6 +426,37 @@ CLOSE     fade out over --c-page-motion-state on the exit curve → focus
           returns to the opener → fire `aods:close`                  #modal.focus-return
 
 ══════════════════════════════════════════════════════════════════════════════
+bottom-sheet                                              <dialog>
+══════════════════════════════════════════════════════════════════════════════
+NAME      aria-labelledby := __title's id at bind, unless aria-labelledby is  #bottom-sheet.name
+          present
+OPEN      remember the opener → showModal() with data-modal or from 48em, which
+          makes the page behind inert; show() otherwise → focus [autofocus],
+          else __grabber, else the first focusable → fire `aods:open`   #bottom-sheet.open
+  click a [data-sheet-open=<id>] button
+                                 → open that dialog
+  click a [data-sheet-close] inside
+                                 → close
+  key Escape, `cancel`           → close                            #bottom-sheet.escape
+  click __grabber                → toggle data-expanded and aria-expanded
+CLOSE     slide out on the exit curve → focus returns to the opener →
+          fire `aods:close`                                         #bottom-sheet.focus-return
+¬         Reduced motion: no slide in either direction.
+
+══════════════════════════════════════════════════════════════════════════════
+segmented                              div[role=radiogroup|tablist]
+══════════════════════════════════════════════════════════════════════════════
+BIND      one tab stop: the selected option, else the first that is not
+          disabled
+  click an option                → select it, fire `aods:change`, or
+                                   `aods:tabchange` in a tablist
+  key ArrowRight ArrowDown       → the next option, wrapping        #segmented.arrows
+  key ArrowLeft ArrowUp          → the previous one, wrapping
+  key Home End                   → the first or last
+¬         Arrows skip a disabled option. role=tablist also shows the panel
+          each option's aria-controls names and hides the others.
+
+══════════════════════════════════════════════════════════════════════════════
 toast                                        AODS.toast(message, opts)
 ══════════════════════════════════════════════════════════════════════════════
 REGION    .aods-toast-region is created on first use and appended to the body.

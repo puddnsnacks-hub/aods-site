@@ -144,9 +144,6 @@ html[data-rail-closed] .t-rail-open { display: block; }
   font-weight: var(--s-font-weight-bold); color: var(--s-color-accent-deep); min-height: calc(2 * var(--s-type-display-xs-line-height)); text-wrap: balance; }
 .t-triad .t-triad__hint { font-size: var(--s-type-ui-xs-size); line-height: var(--s-type-ui-xs-line-height); color: var(--s-color-text-tertiary); font-family: var(--s-font-family-ui), system-ui, sans-serif; }
 /* POUR — the four words as dark display-scale reveals */
-.t-pour .aods-accordion__title { font-family: var(--s-font-family-display), system-ui, sans-serif;
-  font-size: var(--s-type-display-xs-size); line-height: var(--s-type-display-xs-line-height); letter-spacing: var(--s-type-display-xs-tracking); font-weight: var(--s-font-weight-bold); }
-.t-pour .t-pour__tag { display: block; font-family: var(--s-font-family-ui), system-ui, sans-serif; font-size: var(--s-type-ui-sm-size); line-height: var(--s-type-ui-sm-line-height); font-weight: var(--s-font-weight-regular); letter-spacing: var(--s-font-tracking-caps); text-transform: uppercase; color: var(--s-color-pinned-ink-dark); margin-block-start: var(--s-space-xs); }
 /* the contrast proof strip — real pairs, real ratios, flip the ground */
 .t-swatches { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--s-space-md); }
 @media (max-width: 56.25em) { .t-swatches { grid-template-columns: repeat(2, minmax(0,1fr)); } }
@@ -221,7 +218,6 @@ html[data-rail-closed] .t-rail-open { display: block; }
 .t-stick { position: sticky; top: var(--_stick, 33vh); width: min(100%, 30rem); min-width: 0; margin-inline: auto; display: grid; gap: var(--s-space-xl); }
 .t-stick .t-kicker { margin: 0; }
 /* the two-column passage ends with the quote spanning BOTH columns */
-.t-area .t-quote-span.aods-pull-quote { max-width: none; margin-inline: 0; }
 /* closing copy and the summary box line up with the quote's TEXT edge (rule + inset) */
 .t-align-quote { margin-inline-start: calc(var(--s-space-2xl) + var(--s-emphasis-edge-4)); }
 @media (max-width: 56.25em) {
@@ -265,15 +261,12 @@ html[data-rail-closed] .t-rail-open { display: block; }
    rather than deleted - see the friendly/choice rule above, which is the one that mattered. */
 /* the shelf intro band: darker blue, centered (hit list 42) */
 .t-shelf-intro { background: var(--s-color-pinned-surface-elevated-dark); padding-block: var(--s-space-4xl) var(--s-space-lg); }   /* hit list 52 + 2026-08-24: intro and shelf are ONE SECTION — the same primary/60 surface as the reference band */
-.t-shelf-columns .aods-reference-list__columns { max-width: var(--s-size-measure-feature); margin-inline: auto; }
-.t-shelf-columns .aods-reference-list__head { max-width: var(--s-size-measure-feature); margin-inline: auto; }
 /* ch5 chooser, designed (hit list 38): a 2×2 with tall stages */
 .t-choices[data-big] { grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-space-lg); }
 @media (max-width: 56.25em) { .t-choices[data-big] { grid-template-columns: minmax(0,1fr); } }
 .t-choices[data-big] .t-choice__stage { padding: var(--s-space-3xl); }
 .t-choices[data-big] .t-choice { padding: var(--s-space-2xl); gap: var(--s-space-md); }
 /* practice links never wrap under a ring (hit list 39) */
-.t-nowrap-links .aods-link { white-space: nowrap; }
 
 /* the key reference (accessibility ch6): the keys nobody told you about */
 .t-keys { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-space-lg) var(--s-space-3xl); }
