@@ -47,10 +47,11 @@ const rules = $("#rule-list");
 for (const t of M.laws.topics) {
   const rows = M.laws.laws.filter(l => l.topic === t.id);
   if (!rows.length) continue;
-  rules.append(h("li", { class: "law-topic", id: "law-" + t.id }, `<b>${esc(t.id)}</b><div><span>${esc(t.gloss)}</span></div>`));
+  const since = t.since ? { "data-since": t.since } : {};
+  rules.append(h("li", { class: "law-topic", id: "law-" + t.id, ...since }, `<b>${esc(t.id)}</b><div><span>${esc(t.gloss)}</span></div>`));
   for (const l of rows) {
     const g = [].concat(l.gate || []).join(" ");
-    rules.append(h("li", { id: "law-" + l.id }, `<b>${esc(g || "unchecked")}</b><div><span>${esc(l.law)}</span>
+    rules.append(h("li", { id: "law-" + l.id, ...since }, `<b>${esc(g || "unchecked")}</b><div><span>${esc(l.law)}</span>
   ${l.ok ? `<pre class="ex ok"><span class="ex-tag">passes</span>${esc(l.ok)}</pre>` : ""}${l.bad ? `<pre class="ex bad"><span class="ex-tag">fails</span>${esc(l.bad)}</pre>` : ""}</div>`));
   }
 }
@@ -647,5 +648,25 @@ for (const part of PARTS) {
   addEventListener("hashchange", () => jumpTo(location.hash));
   if (location.hash) jumpTo(location.hash);
 
-
+  /* ---- layers: only the layers this build included. Each one's manifest.js loads here, so the core's page carries no layer. ---- */
+  const included = M.layers || [];
+  if (included.length) {
+    const sec = h("section", { class: "doc-section", id: "layers", "data-since": "1.0.0-alpha.4" },
+      `<h2>Layers</h2><p class="blurb">The layers this build included. A layer adds components, templates and semantic names beside the core and changes nothing of the core's. Its files are under <code>dist/layers/</code>.</p>`);
+    document.querySelector("#main .doc-foot").before(sec);
+    const nav = document.querySelector(".doc-nav"); nav.append(h("a", { href: "#layers", "data-since": "1.0.0-alpha.4" }, "Layers"));
+    for (const l of included) {
+      const sc = document.createElement("script"); sc.src = "../" + l.path + "manifest.js";
+      sc.onload = () => {
+        const m = window.AODS_LAYERS[l.id];
+        const list = rows => rows.length ? "<ul>" + rows.map(r => `<li>${r}</li>`).join("") + "</ul>" : "<p>None.</p>";
+        const overlay = Object.keys(m.tokens).filter(n => n.startsWith("s."));
+        sec.append(h("article", { class: "entry", id: "layer-" + esc(l.id) }, `<h3>${esc(m.name)} <code>${esc(l.id)} ${esc(m.version)}</code></h3><p>${esc(m.purpose)} Requires AODS <code>${esc(m.requires)}</code>.</p>
+          <h4>Components</h4>${list(Object.values(m.components).map(c => `<code>${esc(c.id)}</code>: ${esc(c.summary)}`))}
+          <h4>Templates</h4>${list(m.templates.map(t => `<a class="aods-link" href="../templates/${esc(t.id)}.html">${esc(t.title)}</a>: ${esc(t.purpose)}`))}
+          <h4>Overlay tokens</h4>${list(overlay.map(n => `<code>${esc(n)}</code>: <code>${esc(m.tokens[n].raw)}</code>${m.tokens[n].rawDark ? `, dark <code>${esc(m.tokens[n].rawDark)}</code>` : ""}`))}`));
+      };
+      document.body.append(sc);
+    }
+  }
 })();

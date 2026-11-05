@@ -1,0 +1,184 @@
+{
+  "$comment": "Grounds and page geometry, and THE LAYOUT MODEL as data - the three components, the width settings, the border pairs and the truncate declarations. The laws they obey are in index/laws.json. build.py validates every class against the shipped CSS and every token against dist/tokens.json, then emits this as manifest.grounds, manifest.layout and manifest.color. R23.",
+  "grounds": [
+    {
+      "id": "page",
+      "class": null,
+      "fill": "{s.color.surface.page}",
+      "bleed": "contained",
+      "dark": false
+    },
+    {
+      "id": "sunken",
+      "class": "aods-ground",
+      "fill": "{s.color.surface.sunken}",
+      "bleed": "contained",
+      "dark": false,
+      "attr": "data-ground=\"sunken\""
+    },
+    {
+      "id": "elevated",
+      "class": "aods-ground",
+      "fill": "{s.color.surface.elevated}",
+      "bleed": "contained",
+      "dark": false,
+      "attr": "data-ground=\"elevated\""
+    },
+    {
+      "id": "friendly",
+      "class": "aods-ground",
+      "fill": "{s.color.surface.tint-vivid}",
+      "bleed": "contained",
+      "dark": false,
+      "attr": "data-ground=\"friendly\""
+    },
+    {
+      "id": "fade",
+      "class": "aods-ground",
+      "fill": "{s.color.surface.page} to {s.color.surface.sunken}",
+      "bleed": "contained",
+      "dark": false,
+      "attr": "data-ground=\"fade\""
+    },
+    {
+      "id": "dark",
+      "class": "aods-ground",
+      "fill": "{s.color.pinned.surface-dark}",
+      "bleed": "contained",
+      "dark": true,
+      "attr": "data-ground=\"dark\""
+    },
+    {
+      "id": "band",
+      "class": "aods-ground",
+      "fill": "{s.color.pinned.surface-dark}",
+      "bleed": "full",
+      "padBlock": "{s.space.5xl}",
+      "dark": true,
+      "notInside": [
+        "layout[data-kind=sidebar]"
+      ],
+      "attr": "data-ground=\"dark\"",
+      "note": "The full-bleed dark band. Same ground as 'dark'; what makes it a band is the bleed, which is layout rather than color."
+    },
+    {
+      "id": "region-sunken",
+      "class": "aods-page__region",
+      "prop": "data-surface=sunken",
+      "fill": "{s.color.surface.sunken}",
+      "bleed": "contained",
+      "inset": "{c.page.inset}",
+      "edge": "border-block",
+      "dark": false
+    },
+    {
+      "id": "region-raised",
+      "class": "aods-page__region",
+      "prop": "data-surface=raised",
+      "fill": "{s.color.surface.raised}",
+      "bleed": "contained",
+      "inset": "{c.page.inset}",
+      "edge": "border-block",
+      "dark": false
+    }
+  ],
+  "layout": {
+    "maxWidth": {
+      "page": "{s.size.measure-page}",
+      "content": "{s.size.measure-feature}",
+      "prose": "{s.size.measure-prose}",
+      "aside": "{s.size.measure-aside}",
+      "ui": "{s.size.measure-ui}"
+    },
+    "gutter": {
+      "wide": "{c.layout.gutter}",
+      "compact": "{c.page.compact-gutter}"
+    },
+    "regionInset": "{c.page.inset}",
+    "asideWidth": "{c.layout.aside-width}",
+    "breakpoint": {
+      "compact": "{s.breakpoint.compact}",
+      "narrow": "{s.breakpoint.narrow}"
+    },
+    "model": {
+      "ground": {
+        "carries": "the color",
+        "inset": "{s.space.2xl}",
+        "insetFrom": "the window's side edges",
+        "verticalPadding": "none",
+        "shipsAs": ".aods-ground"
+      },
+      "container": {
+        "carries": "the content",
+        "fill": "none",
+        "margin": "none",
+        "inset": "{s.space.xl}",
+        "insetFrom": "the color",
+        "padBlock": "1.5 x its own largest line-height",
+        "shipsAs": ".aods-layout[data-kind=\"container\"]"
+      },
+      "paper": {
+        "is": "a component that carries a fill, a stroke and other components",
+        "inset": "{s.space.xl}",
+        "insetFrom": "its own fill",
+        "placedBy": "a container, like any other component - never directly on a ground (P22)",
+        "border": "always, 1px, excluded from the layout",
+        "shipsAs": ".aods-paper"
+      }
+    },
+    "width": {
+      "settings": {
+        "fill": {
+          "takes": "whatever is left",
+          "css": "minmax(0, 1fr)"
+        },
+        "hug": {
+          "takes": "what its content needs and no more",
+          "css": "max-content",
+          "minimum": "none - the escape hatch is set, not a parameter on hug"
+        },
+        "set": {
+          "takes": "a width from the maxWidth ladder",
+          "css": "a declared width, border-box",
+          "note": "The declared number is the CONTAINER's width, its own inset already inside it on both edges, so the text measure is the name minus 48."
+        }
+      },
+      "variants": {
+        "equal": "fill + fill",
+        "hug-left": "hug + fill",
+        "hug-right": "fill + hug"
+      },
+      "namedFor": "the container that is NOT set to fill, and which side it is on - which extends to set-left / set-right for free, and folds the one-container case in as fill and set.",
+      "shipsAs": "data-container on the ground (equal / hug-left / hug-right / set-left / set-right); data-width and data-set on a single container; data-lead names the type role of the largest line, which the container pads 1.5 x."
+    },
+    "borderPairing": {
+      "pairs": {
+        "s.color.surface.page": "s.color.border.on-page",
+        "s.color.surface.sunken": "s.color.border.on-sunken",
+        "s.color.surface.elevated": "s.color.border.on-elevated",
+        "s.color.surface.raised": "s.color.border.on-raised",
+        "s.color.pinned.surface-dark": "s.color.border.on-page"
+      },
+      "band": "1.21 to 1.56 - this system's working definition of a visible edge that is not a line you notice. Measured on the light half; the dark half does not hold it, and rebalancing it is an open operator decision.",
+      "tints": "No on-tint-* token exists, so a paper in a tint has no stroke the system can name. Candidate on the table: step 20 of the fill's own ramp."
+    },
+    "truncate": {
+      "declarations": "min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis",
+      "shippedBy": [
+        ".aods-tabs__fold-label",
+        ".aods-in-page-nav__fold-label"
+      ],
+      "loadBearing": "min-width: 0 - a grid or flex item takes an automatic minimum of its own content, and without the override it never clips.",
+      "shipsAs": ".aods-truncate"
+    }
+  },
+  "color": {
+    "vocabulary": {
+      "ink": "The color of a mark: text, and marks that read as text - icons, bullets, glyphs.",
+      "fill": "The color of a painted area. surface and action are families of fills.",
+      "border": "A stroke that surrounds a fill, and pairs to that fill.",
+      "divider": "A stroke that separates two things and belongs to neither, so it takes a divider color rather than a pairing.",
+      "edge": "A one-sided stroke that carries state: severity, emphasis level, selection."
+    }
+  }
+}

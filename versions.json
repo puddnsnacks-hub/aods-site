@@ -1,11 +1,17 @@
 {
- "latest": "1.0.0-alpha.3",
+ "latest": "1.0.0-alpha.4",
  "versions": [
   {
    "version": "1.0.0-alpha.3",
    "tag": "v1.0.0-alpha.3",
    "commit": "58e68bb",
    "date": "2026-11-04"
+  },
+  {
+   "version": "1.0.0-alpha.4",
+   "tag": "v1.0.0-alpha.4",
+   "commit": "02c2e80",
+   "date": "2026-11-05"
   }
  ]
 }

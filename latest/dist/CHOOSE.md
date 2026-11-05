@@ -244,3 +244,8 @@ Note: the system has none of these; say so rather than build one.
 - The assistant's tool call → conv-step
 - A table still loading → table[aria-busy]
 - A spinner or a percentage bar → none
+
+### Looking for a component only one use case needs?
+Note: it goes in a layer. When two layers need one component, the build warns and it belongs in the core.
+- A component for one use case → none
+- A component two layers need → none

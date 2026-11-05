@@ -166,10 +166,10 @@
 
     var GUIDE = [["index.html", "Cover"], ["typography.html", "Typography"], ["color.html", "Color"],
       ["space.html", "Measure"], ["components.html", "Components"],
-      ["conversational.html", "Conversational"], ["rules.html", "Rules"]];
+      ["conversational.html", "Conversational"], ["rules.html", "Rules"], ["layers.html", "Layers"]];
     var megaGuide =
       '<div class="aods-header__mega" id="xdh-g" hidden><div class="aods-header__content">' +
-      column("The style guide · 7", GUIDE.map(function (p) { return [p[1], G + p[0]]; }), G + "index.html") +
+      column("The style guide · " + GUIDE.length, GUIDE.map(function (p) { return [p[1], G + p[0]]; }), G + "index.html") +
       "</div></div>";
     /* REFERENCE GREW A SECOND PAGE (2026-09-04): the metadata reference and the Figma how-to. Two pages is a
        column, not a link, so it takes the same mega as the guide. */

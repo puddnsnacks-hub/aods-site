@@ -62,7 +62,8 @@ const PAGES = [
   ["motion.html",     "Motion",     "The curves, the durations, the six keyframes, and what stops them."],
   ["components.html", "Components", "Every component, its props, its states, and a live instance."],
   ["conversational.html", "Conversational", "The assistant family — thread, message, steps, sources, composer."],
-  ["rules.html",      "Rules",      "The lint rules as passes/fails, plus every standing ruling."]
+  ["rules.html",      "Rules",      "The lint rules as passes/fails, plus every standing ruling."],
+  ["layers.html",     "Layers",     "What a layer is and is not: the core, layers, themes, sites.", "1.0.0-alpha.4"]
 ];
 function bar() {
   const here = (location.pathname.split("/").pop() || "index.html");
@@ -72,8 +73,9 @@ function bar() {
   const back = el("a", "g-back", "\u2190 AODS"); back.href = "../../index.html";
   w.append(back);
   const brand = el("a", "g-brand", esc(M.name)); brand.href = "index.html"; w.append(brand);
-  for (const [href, label] of PAGES) {
+  for (const [href, label, , since] of PAGES) {
     const a = el("a", null, esc(label)); a.href = href;
+    if (since) a.setAttribute("data-since", since);
     if (href === here) a.setAttribute("aria-current", "page");
     w.append(a);
   }
@@ -113,10 +115,10 @@ function pageCover(main) {
     "rules.html":      `${M.laws.laws.length} laws · ${M.laws.laws.filter(l => l.gate).length} gated`,
     "index.html":      `v${M.version}`
   };
-  for (const [href, label, blurb] of PAGES) {
+  for (const [href, label, blurb, since] of PAGES) {
     if (href === "index.html") continue;
     const a = el("a", "g-card", `<h3>${esc(label)}</h3><p>${esc(blurb)}</p><span class="g-count">${esc(counts[href] || "")}</span>`);
-    a.href = href; cards.append(a);
+    a.href = href; if (since) a.setAttribute("data-since", since); cards.append(a);
   }
   s.append(cards); page.append(s);
 
@@ -444,6 +446,7 @@ function pageRules(main) {
       const list = of.filter(l => l.topic === t.id);
       if (!list.length) continue;
       const sec = opener(`${title} · ${t.id.toUpperCase()}`, t.gloss, null);
+      if (t.since) sec.setAttribute("data-since", t.since);
       const rl = el("div", "g-rows");
       for (const l of list) {
         const pair = el("div", "g-pair");
@@ -867,7 +870,34 @@ function layMeasure() {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 }
 
-const RENDER = { cover: pageCover, typography: pageTypography, color: pageColor, space: pageSpace, layout: pageLayout, motion: pageMotion, components: pageComponents, conversational: pageConversational, rules: pageRules };
+/* ================= LAYERS ================= */
+function pageLayers(main) {
+  main.append(opener("LAYERS", "The core, layers, themes, sites", [
+    "The core holds what every site needs: tokens, components, templates, laws and gates. A layer adds what one use case needs. A theme sets the look. A site picks one version of the core, its layers and one theme.",
+    "Each level sits on the one before it and changes nothing there, which is what lets a site stay on a version it has tested."
+  ]));
+  const is = opener("WHAT A LAYER IS", "A folder with the core's own shape", [
+    "A layer holds components, templates and a semantic overlay: new names for meanings its use case has, each an alias of a value the core already owns. The build includes it beside the core, and its files land in their own folder.",
+    "Everything in a layer carries the layer's id as a prefix, so a page can tell what came from where."
+  ]);
+  main.append(is);
+  const isnt = opener("WHAT A LAYER IS NOT", "It never changes the core and never carries a look", [
+    "A layer holds no literal value: color, size and type stay in the tokens and themes. It does not restyle a core component, redefine a core token or drop a part of the page shell.",
+    "A component two layers need belongs in the core. The build says so with a warning when it sees one."
+  ]);
+  main.append(isnt);
+  const incl = opener("THE LAWS", "What the build refuses", null);
+  const list = el("div", "g-rows");
+  for (const l of lawsOf("layers")) list.append(row(lawGate(l), l.kind, `<p class="g-body" style="margin:0">${esc(l.law)}</p>`, null, null));
+  incl.append(list); main.append(incl);
+  const siteOpener = opener("A SITE", "A site pins one version", [
+    "A site lists itself in site.json: its name, the AODS version it pins, the layers and the theme it uses, and its pages, each with its template and its component order. Its pages link the pinned path and nothing else from AODS."
+  ]);
+  siteOpener.append(el("pre", "g-token", esc(JSON.stringify({ name: "…", aods: { version: M.version, base: `/v/${M.version}/` }, layers: [{ id: "…", version: "…" }], theme: M.themes.default, pages: [{ id: "…", template: "shell", title: "…", path: "/", order: ["…"] }] }, null, 2))));
+  main.append(siteOpener);
+}
+
+const RENDER = { layers: pageLayers, cover: pageCover, typography: pageTypography, color: pageColor, space: pageSpace, layout: pageLayout, motion: pageMotion, components: pageComponents, conversational: pageConversational, rules: pageRules };
 document.addEventListener("DOMContentLoaded", () => {
   const which = document.body.dataset.guide;
   /* THE MASTHEAD COMES FIRST (2026-08-25). doc-header.js mounts the documentation header at the top of
