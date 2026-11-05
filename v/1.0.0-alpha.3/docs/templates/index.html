@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>AODS — page templates</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Documentation CSS (templates.css binds --s-* only). The list below is read from dist/manifest.js → pages at load; nothing here is typed twice. -->
+<link rel="stylesheet" href="../../dist/tokens.css">
+<link rel="stylesheet" href="../../dist/aods.css">
+<link rel="stylesheet" href="templates.css">
+<script src="../../dist/manifest.js"></script>
+<script src="../../dist/aods.js" defer></script>
+<script src="../doc-header.js" defer></script>
+
+<body class="t-index">
+<main>
+  <!-- THE WAY OUT (2026-08-25): this page offered ZERO links out — see docs/index.html for the audit. -->
+  <p class="t-back"><a href="../../index.html">&larr; AODS</a></p>
+  <p class="eyebrow">AODS · page templates</p>
+  <h1>Whole pages, made only of system components</h1>
+  <p class="lede">Ten source pages that link <code>dist/</code> and carry nothing but <code>aods-</code> markup copied from the registry, in the canonical order: skip-link, gov-banner, site-alert, header, <code>main#main</code>, footer. Each has a self-contained <code>.bundle.html</code> twin with <code>dist/</code> inlined. The order of components on every page is <code>manifest.pages[].order</code>, read here at load.</p>
+  <ol class="t-list" id="pages"></ol>
+  <p class="note">What the pages needed that the system does not yet have: a block inset for <code>main</code> (the pages bind <code>--s-space-4xl</code> in <code>templates.css</code>; there is no <code>c.page</code> rhythm token), a description slot on a vertical step, and a narrower aside than <code>s.size.measure-aside</code> (480px) for an in-page nav. Everything else composed without a line of page CSS.</p>
+</main>
+<script>
+  const pages = (window.AODS_MANIFEST && window.AODS_MANIFEST.pages) || [];
+  const ol = document.getElementById("pages");
+  const h = (tag, attrs, ...kids) => { const el = document.createElement(tag); for (const k in attrs) el.setAttribute(k, attrs[k]); for (const c of kids) el.append(c); return el; };
+  pages.forEach((p, i) => {
+    const bundle = p.file.replace(".html", ".bundle.html");
+    ol.append(h("li", {},
+      h("span", { class: "n" }, String(i + 1).padStart(2, "0")),
+      h("div", {},
+        h("h2", {}, h("a", { href: p.file }, p.title)),
+        h("p", { class: "purpose" }, p.purpose),
+        h("p", { class: "links" }, h("a", { href: p.file }, "source · " + p.file), h("a", { href: bundle }, "bundled · " + bundle)),
+        h("p", { class: "order" }, p.order.join(" → ")))));
+  });
+  if (!pages.length) ol.append(h("li", {}, h("span", { class: "n" }, "—"), h("p", { class: "purpose" }, "manifest.pages is empty — run python3 build/build.py.")));
+</script>
+</body>
+</html>

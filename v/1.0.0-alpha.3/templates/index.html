@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Templates · AODS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Fifteen full page templates built from AODS components, at desktop and phone widths.">
+<link rel="stylesheet" href="../dist/tokens.css">
+<link rel="stylesheet" href="../dist/aods.css">
+<link rel="stylesheet" href="../dist/doc.css">
+<link rel="stylesheet" href="templates.css">
+<script src="../dist/manifest.js"></script>
+<script src="../dist/aods.js"></script>
+<script src="../docs/doc-header.js" defer></script>
+<script src="templates.js" defer></script>
+
+<body class="doc aods-page" data-anchor-travel="off">
+<a class="aods-skip-link" href="#main">Skip to main content</a>
+<div class="doc-bar">
+  <button class="doc-menu" type="button" aria-expanded="false" aria-controls="doc-nav" aria-label="Contents">
+    <span class="doc-menu__glyph" aria-hidden="true"></span><span class="doc-menu__text">Contents</span>
+  </button>
+  <span class="doc-bar__title">Templates</span>
+</div>
+<div class="doc-scrim" hidden></div>
+<div class="doc-shell">
+  <nav class="doc-nav" id="doc-nav" aria-label="Contents">
+    <h2 class="nav-solo"><a href="../index.html">&larr; AODS</a></h2>
+    <h1>Templates</h1>
+    <p class="ver">15 page templates</p>
+    <h2 data-section="g-foundations">Foundations</h2><a href="#t-shell">Page shell</a><a href="#t-landing">Landing page</a><h2 data-section="g-organizations">Organizations and programs</h2><a href="#t-agency-home">Agency homepage</a><a href="#t-office">Program office</a><a href="#t-program">Program page</a><a href="#t-program-assistant">Program + assistant</a><h2 data-section="g-publishing">News and publishing</h2><a href="#t-article">Article</a><a href="#t-newsroom">Newsroom</a><a href="#t-press-release">Press release</a><h2 data-section="g-services">Services, data and alerts</h2><a href="#t-form">Multi-page form</a><a href="#t-grant">Grant application</a><a href="#t-search">Search results</a><a href="#t-data">Data page</a><a href="#t-assistant">Assistant</a><a href="#t-emergency">Emergency notice</a>
+  </nav>
+
+  <main class="doc-main" id="main" tabindex="-1">
+    <header class="doc-head">
+      <p class="eyebrow">AODS · Templates</p>
+      <h1>Page templates</h1>
+      <p class="lede">Every full page the system ships, built only from its components. Each one is a real page: open a
+        template to see it at desktop and phone widths, then view it live, resize it, and take its markup.</p>
+      <p class="lede sub">For designers starting a page and engineers who want a working composition to copy. Open a
+        template below, or use the chips to go straight to one. A template opens in a new tab; its Close template
+        button brings you back here.</p>
+      <p class="lede mono counts">15 templates · 4 groups · each drawn at 1440 and adapting down to 320</p>
+    </header>
+    
+    <section class="doc-section" id="g-foundations">
+      <h2>Foundations</h2>
+      <p class="blurb">The frame every page shares, and the front door built on it.</p>
+      <div class="aods-chip-group sec-chips" aria-label="Foundations, by template"><a class="aods-chip" href="#t-shell">Page shell</a><a class="aods-chip" href="#t-landing">Landing page</a></div>
+      
+      <article class="entry" id="t-shell" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Page shell</h3><span class="tier-tag">templates/shell.html</span></div>
+          <div><p>The canonical order every page starts from: skip-link, site-alert, header, main, footer.</p>
+            <p class="font-line">7 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/shell-desktop.webp" alt="Page shell template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/shell-phone.webp" alt="Page shell template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="shell.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Page shell template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-site-alert">site-alert</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-layout">layout</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-prose">prose</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-landing" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Landing page</h3><span class="tier-tag">templates/landing.html</span></div>
+          <div><p>A front door: hero with search and a call to action, a stat band, program tiles, a numbered section opener, a row of cards and a summary.</p>
+            <p class="font-line">14 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/landing-desktop.webp" alt="Landing page template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/landing-phone.webp" alt="Landing page template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="landing.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Landing page template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-site-alert">site-alert</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-hero">hero</a> <a class="aods-chip" href="../docs/index.html#c-search">search</a> <a class="aods-chip" href="../docs/index.html#c-button">button</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-layout">layout</a> <a class="aods-chip" href="../docs/index.html#c-stat">stat</a> <a class="aods-chip" href="../docs/index.html#c-tile">tile</a> <a class="aods-chip" href="../docs/index.html#c-section-opener">section-opener</a> <a class="aods-chip" href="../docs/index.html#c-card">card</a> <a class="aods-chip" href="../docs/index.html#c-summary-box">summary-box</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+    </section>
+    <section class="doc-section" id="g-organizations">
+      <h2>Organizations and programs</h2>
+      <p class="blurb">Homes for the department, its offices and the programs they run.</p>
+      <div class="aods-chip-group sec-chips" aria-label="Organizations and programs, by template"><a class="aods-chip" href="#t-agency-home">Agency homepage</a><a class="aods-chip" href="#t-office">Program office</a><a class="aods-chip" href="#t-program">Program page</a><a class="aods-chip" href="#t-program-assistant">Program + assistant</a></div>
+      
+      <article class="entry" id="t-agency-home" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Agency homepage</h3><span class="tier-tag">templates/agency-home.html</span></div>
+          <div><p>The department&#x27;s front door, reimagined: a 16:9 hero with search, a stat band, the priorities as numbered openers, a full-bleed dark identity band (gold cards and an updates field), the newsroom and a summary.</p>
+            <p class="font-line">15 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/agency-home-desktop.webp" alt="Agency homepage template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/agency-home-phone.webp" alt="Agency homepage template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="agency-home.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Agency homepage template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-site-alert">site-alert</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-hero">hero</a> <a class="aods-chip" href="../docs/index.html#c-search">search</a> <a class="aods-chip" href="../docs/index.html#c-button">button</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-layout">layout</a> <a class="aods-chip" href="../docs/index.html#c-stat">stat</a> <a class="aods-chip" href="../docs/index.html#c-section-opener">section-opener</a> <a class="aods-chip" href="../docs/index.html#c-card">card</a> <a class="aods-chip" href="../docs/index.html#c-field">field</a> <a class="aods-chip" href="../docs/index.html#c-collection">collection</a> <a class="aods-chip" href="../docs/index.html#c-summary-box">summary-box</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-office" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Program office</h3><span class="tier-tag">templates/office.html</span></div>
+          <div><p>A program office&#x27;s page, aviation-flavored: a dark 16:9 masthead as the office&#x27;s identity, light reading in the middle (in-page nav beside long prose), then a dark interstitial band that blends through the references into the footer.</p>
+            <p class="font-line">11 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/office-desktop.webp" alt="Program office template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/office-phone.webp" alt="Program office template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="office.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Program office template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-hero">hero</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-layout">layout</a> <a class="aods-chip" href="../docs/index.html#c-in-page-nav">in-page-nav</a> <a class="aods-chip" href="../docs/index.html#c-prose">prose</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-tile">tile</a> <a class="aods-chip" href="../docs/index.html#c-reference-list">reference-list</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-program" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Program page</h3><span class="tier-tag">templates/program.html</span></div>
+          <div><p>A long reading page: breadcrumb, title, a sticky in-page nav beside long prose, an FAQ accordion and a dark reference list that blends into the footer.</p>
+            <p class="font-line">11 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/program-desktop.webp" alt="Program page template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/program-phone.webp" alt="Program page template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="program.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Program page template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-site-alert">site-alert</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-layout">layout</a> <a class="aods-chip" href="../docs/index.html#c-in-page-nav">in-page-nav</a> <a class="aods-chip" href="../docs/index.html#c-prose">prose</a> <a class="aods-chip" href="../docs/index.html#c-accordion">accordion</a> <a class="aods-chip" href="../docs/index.html#c-reference-list">reference-list</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-program-assistant" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Program + assistant</h3><span class="tier-tag">templates/program-assistant.html</span></div>
+          <div><p>The assistant embedded in a page type: a program reading page with the conversational exchange scoped into a labeled sunken region between the prose and the FAQ — the same components as the Assistant page, owned by the page instead of owning it.</p>
+            <p class="font-line">18 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/program-assistant-desktop.webp" alt="Program + assistant template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/program-assistant-phone.webp" alt="Program + assistant template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="program-assistant.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Program + assistant template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-layout">layout</a> <a class="aods-chip" href="../docs/index.html#c-in-page-nav">in-page-nav</a> <a class="aods-chip" href="../docs/index.html#c-prose">prose</a> <a class="aods-chip" href="../docs/index.html#c-page">page</a> <a class="aods-chip" href="../docs/index.html#c-conv-thread">conv-thread</a> <a class="aods-chip" href="../docs/index.html#c-conv-message">conv-message</a> <a class="aods-chip" href="../docs/index.html#c-conv-avatar">conv-avatar</a> <a class="aods-chip" href="../docs/index.html#c-conv-step">conv-step</a> <a class="aods-chip" href="../docs/index.html#c-conv-source">conv-source</a> <a class="aods-chip" href="../docs/index.html#c-conv-actions">conv-actions</a> <a class="aods-chip" href="../docs/index.html#c-conv-chip">conv-chip</a> <a class="aods-chip" href="../docs/index.html#c-conv-composer">conv-composer</a> <a class="aods-chip" href="../docs/index.html#c-accordion">accordion</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+    </section>
+    <section class="doc-section" id="g-publishing">
+      <h2>News and publishing</h2>
+      <p class="blurb">Long reads, the news index and the release.</p>
+      <div class="aods-chip-group sec-chips" aria-label="News and publishing, by template"><a class="aods-chip" href="#t-article">Article</a><a class="aods-chip" href="#t-newsroom">Newsroom</a><a class="aods-chip" href="#t-press-release">Press release</a></div>
+      
+      <article class="entry" id="t-article" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Article</h3><span class="tier-tag">templates/article.html</span></div>
+          <div><p>A news article: breadcrumb, eyebrow and title, a metadata row, prose with a pull-quote, related items and pagination.</p>
+            <p class="font-line">12 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/article-desktop.webp" alt="Article template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/article-phone.webp" alt="Article template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="article.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Article template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-site-alert">site-alert</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-eyebrow">eyebrow</a> <a class="aods-chip" href="../docs/index.html#c-prose">prose</a> <a class="aods-chip" href="../docs/index.html#c-dl">dl</a> <a class="aods-chip" href="../docs/index.html#c-pull-quote">pull-quote</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-collection">collection</a> <a class="aods-chip" href="../docs/index.html#c-pagination">pagination</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-newsroom" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Newsroom</h3><span class="tier-tag">templates/newsroom.html</span></div>
+          <div><p>A press index: the display heading, toggle-chip filters, a six-item collection with mixed thumbnails, pagination, and the media contacts on a raised band.</p>
+            <p class="font-line">9 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/newsroom-desktop.webp" alt="Newsroom template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/newsroom-phone.webp" alt="Newsroom template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="newsroom.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Newsroom template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-chip">chip</a> <a class="aods-chip" href="../docs/index.html#c-collection">collection</a> <a class="aods-chip" href="../docs/index.html#c-pagination">pagination</a> <a class="aods-chip" href="../docs/index.html#c-dl">dl</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-press-release" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Press release</h3><span class="tier-tag">templates/press-release.html</span></div>
+          <div><p>A press release: eyebrow, heading, the contact and release-number block, the body, and the documents that go with it.</p>
+            <p class="font-line">8 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/press-release-desktop.webp" alt="Press release template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/press-release-phone.webp" alt="Press release template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="press-release.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Press release template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-eyebrow">eyebrow</a> <a class="aods-chip" href="../docs/index.html#c-prose">prose</a> <a class="aods-chip" href="../docs/index.html#c-dl">dl</a> <a class="aods-chip" href="../docs/index.html#c-document-link">document-link</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+    </section>
+    <section class="doc-section" id="g-services">
+      <h2>Services, data and alerts</h2>
+      <p class="blurb">Pages where the user does something: applies, searches, reads the numbers, gets help.</p>
+      <div class="aods-chip-group sec-chips" aria-label="Services, data and alerts, by template"><a class="aods-chip" href="#t-form">Multi-page form</a><a class="aods-chip" href="#t-grant">Grant application</a><a class="aods-chip" href="#t-search">Search results</a><a class="aods-chip" href="#t-data">Data page</a><a class="aods-chip" href="#t-assistant">Assistant</a><a class="aods-chip" href="#t-emergency">Emergency notice</a></div>
+      
+      <article class="entry" id="t-form" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Multi-page form</h3><span class="tier-tag">templates/form.html</span></div>
+          <div><p>One page of a journey: the step indicator, an error summary, the form laid out by the form pattern rules, the journey actions, a confirm dialog and a toast.</p>
+            <p class="font-line">18 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/form-desktop.webp" alt="Multi-page form template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/form-phone.webp" alt="Multi-page form template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="form.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Multi-page form template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-steps">steps</a> <a class="aods-chip" href="../docs/index.html#c-error-summary">error-summary</a> <a class="aods-chip" href="../docs/index.html#c-form">form</a> <a class="aods-chip" href="../docs/index.html#c-field">field</a> <a class="aods-chip" href="../docs/index.html#c-label">label</a> <a class="aods-chip" href="../docs/index.html#c-input">input</a> <a class="aods-chip" href="../docs/index.html#c-select">select</a> <a class="aods-chip" href="../docs/index.html#c-checkbox">checkbox</a> <a class="aods-chip" href="../docs/index.html#c-radio">radio</a> <a class="aods-chip" href="../docs/index.html#c-disclosure">disclosure</a> <a class="aods-chip" href="../docs/index.html#c-button">button</a> <a class="aods-chip" href="../docs/index.html#c-modal">modal</a> <a class="aods-chip" href="../docs/index.html#c-toast">toast</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-grant" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Grant application</h3><span class="tier-tag">templates/grant.html</span></div>
+          <div><p>Multi-page application journey — steps, sectioned form, error flow, review, confirm.</p>
+            <p class="font-line">19 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/grant-desktop.webp" alt="Grant application template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/grant-phone.webp" alt="Grant application template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="grant.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Grant application template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-steps">steps</a> <a class="aods-chip" href="../docs/index.html#c-error-summary">error-summary</a> <a class="aods-chip" href="../docs/index.html#c-form">form</a> <a class="aods-chip" href="../docs/index.html#c-field">field</a> <a class="aods-chip" href="../docs/index.html#c-label">label</a> <a class="aods-chip" href="../docs/index.html#c-input">input</a> <a class="aods-chip" href="../docs/index.html#c-select">select</a> <a class="aods-chip" href="../docs/index.html#c-checkbox">checkbox</a> <a class="aods-chip" href="../docs/index.html#c-document-link">document-link</a> <a class="aods-chip" href="../docs/index.html#c-dl">dl</a> <a class="aods-chip" href="../docs/index.html#c-disclosure">disclosure</a> <a class="aods-chip" href="../docs/index.html#c-button">button</a> <a class="aods-chip" href="../docs/index.html#c-modal">modal</a> <a class="aods-chip" href="../docs/index.html#c-toast">toast</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-search" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Search results</h3><span class="tier-tag">templates/search.html</span></div>
+          <div><p>Site search: the full-width field, filter chips, a results collection and pagination; then the empty state the same page shows when nothing matches.</p>
+            <p class="font-line">9 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/search-desktop.webp" alt="Search results template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/search-phone.webp" alt="Search results template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="search.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Search results template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-search">search</a> <a class="aods-chip" href="../docs/index.html#c-chip">chip</a> <a class="aods-chip" href="../docs/index.html#c-collection">collection</a> <a class="aods-chip" href="../docs/index.html#c-pagination">pagination</a> <a class="aods-chip" href="../docs/index.html#c-summary-box">summary-box</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-data" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Data page</h3><span class="tier-tag">templates/data.html</span></div>
+          <div><p>A statistics page: headline numbers, a sortable table that stacks on narrow screens, the downloads, and the sources.</p>
+            <p class="font-line">10 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/data-desktop.webp" alt="Data page template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/data-phone.webp" alt="Data page template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="data.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Data page template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-breadcrumb">breadcrumb</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-layout">layout</a> <a class="aods-chip" href="../docs/index.html#c-stat">stat</a> <a class="aods-chip" href="../docs/index.html#c-table">table</a> <a class="aods-chip" href="../docs/index.html#c-document-link">document-link</a> <a class="aods-chip" href="../docs/index.html#c-reference-list">reference-list</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-assistant" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Assistant</h3><span class="tier-tag">templates/assistant.html</span></div>
+          <div><p>An AI assistant page: the header, a title, and the whole conversational exchange in a container.</p>
+            <p class="font-line">14 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/assistant-desktop.webp" alt="Assistant template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/assistant-phone.webp" alt="Assistant template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="assistant.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Assistant template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-conv-thread">conv-thread</a> <a class="aods-chip" href="../docs/index.html#c-conv-notice">conv-notice</a> <a class="aods-chip" href="../docs/index.html#c-conv-message">conv-message</a> <a class="aods-chip" href="../docs/index.html#c-conv-avatar">conv-avatar</a> <a class="aods-chip" href="../docs/index.html#c-conv-step">conv-step</a> <a class="aods-chip" href="../docs/index.html#c-conv-source">conv-source</a> <a class="aods-chip" href="../docs/index.html#c-conv-actions">conv-actions</a> <a class="aods-chip" href="../docs/index.html#c-conv-typing">conv-typing</a> <a class="aods-chip" href="../docs/index.html#c-conv-chip">conv-chip</a> <a class="aods-chip" href="../docs/index.html#c-conv-composer">conv-composer</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+      <article class="entry" id="t-emergency" tabindex="-1">
+        <div class="entry-head">
+          <div><h3>Emergency notice</h3><span class="tier-tag">templates/emergency.html</span></div>
+          <div><p>A page that leads with an emergency: the one role=alert band above the header, the list of current alerts, the summary and the steps to take.</p>
+            <p class="font-line">9 components · drawn at 1440 · adapts to phones</p></div>
+        </div>
+        <div class="tpl-previews">
+          <figure class="tpl-shot tpl-shot--desktop">
+            <img src="previews/emergency-desktop.webp" alt="Emergency notice template at desktop width, first screen" width="1440" height="1080" loading="lazy" decoding="async">
+            <figcaption>Desktop · 1440px</figcaption>
+          </figure>
+          <figure class="tpl-shot tpl-shot--phone">
+            <img src="previews/emergency-phone.webp" alt="Emergency notice template at phone width, first screen" width="390" height="844" loading="lazy" decoding="async">
+            <figcaption>Phone · 390px</figcaption>
+          </figure>
+        </div>
+        <div class="tpl-actions">
+          <a class="aods-button" data-variant="primary" href="emergency.html" target="_blank" data-tpl-open>View template<span class="aods-sr-only"> (opens in a new tab)</span>
+            <svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-external"></use></svg></a>
+        </div>
+        <div class="panel tpl-parts"><h4>composition, in page order</h4>
+          <div class="aods-chip-group" aria-label="Components on the Emergency notice template"><a class="aods-chip" href="../docs/index.html#c-skip-link">skip-link</a> <a class="aods-chip" href="../docs/index.html#c-site-alert">site-alert</a> <a class="aods-chip" href="../docs/index.html#c-header">header</a> <a class="aods-chip" href="../docs/index.html#c-section-heading">section-heading</a> <a class="aods-chip" href="../docs/index.html#c-alert">alert</a> <a class="aods-chip" href="../docs/index.html#c-summary-box">summary-box</a> <a class="aods-chip" href="../docs/index.html#c-steps">steps</a> <a class="aods-chip" href="../docs/index.html#c-prose">prose</a> <a class="aods-chip" href="../docs/index.html#c-footer">footer</a></div></div>
+      </article>
+    </section>
+    <footer class="doc-foot">Generated from the templates in <code>docs/templates/</code> by
+      <code>tools/build_template_pages.py</code>; previews by <code>tools/shoot_templates.py</code>.</footer>
+  </main>
+</div>
+</body>
+</html>

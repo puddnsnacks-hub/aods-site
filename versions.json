@@ -1,0 +1,11 @@
+{
+ "latest": "1.0.0-alpha.3",
+ "versions": [
+  {
+   "version": "1.0.0-alpha.3",
+   "tag": "v1.0.0-alpha.3",
+   "commit": "58e68bb",
+   "date": "2026-11-04"
+  }
+ ]
+}

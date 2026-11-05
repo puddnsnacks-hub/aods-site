@@ -1,0 +1,264 @@
+/* AODS — style guide CSS.
+   Binds --s-* ONLY (never --c-*, never --g-*), same contract as docs/doc.css.
+
+   FONT RULE — all documentation copy is set in the two documentation faces:
+     --s-font-family-doc       (IBM Plex Sans)  · running doc copy, titles, headings
+     --s-font-family-doc-mono  (IBM Plex Mono)  · eyebrows, token names, specs, code
+   The system faces (ui / body / heading / display / code) appear ONLY inside a
+   specimen, where they are an example of DS content rather than the guide speaking.
+   Nothing in this file may set a system face.
+   Every value on these pages is read from dist/ at load; nothing here states a fact
+   about the system. IBM Plex is the documentation voice and never appears in a component. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--s-color-surface-page);
+  color: var(--s-color-text-primary);
+  font-family: var(--s-font-family-doc), system-ui, sans-serif;
+  font-size: var(--s-type-body-xs-size);
+  line-height: var(--s-type-body-xs-line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+.g-mono, code { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; }
+
+/* ---------- shell ---------- */
+.g-wrap { max-width: 1280px; margin: 0 auto; padding-inline: var(--s-space-3xl); }
+@media (max-width: 800px) { .g-wrap { padding-inline: var(--s-space-base); } }
+
+.g-skip { position: absolute; left: -9999px; }
+.g-skip:focus { left: var(--s-space-base); top: var(--s-space-base); z-index: 10; padding: var(--s-space-md) var(--s-space-xl);
+  background: var(--s-color-action-base); color: var(--s-color-text-on-action); }
+
+/* ---------- top bar: the guide's own navigation ---------- */
+/* Sticky: the guide is long enough that losing the page switcher on the way down
+   is the difference between a document and a reference. Opaque page ground so the
+   content scrolling beneath it does not read through. */
+.g-bar { position: sticky; top: 0; z-index: 20;
+  background: var(--s-color-surface-page);
+  border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-on-page); }
+.g-section, .g-row, .g-cover { scroll-margin-top: 4rem; }
+html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruling as the docs page */
+.g-bar .g-wrap { display: flex; align-items: center; gap: var(--s-space-xl); flex-wrap: wrap;
+  padding-block: var(--s-space-md); }
+.g-bar a { color: var(--s-color-text-secondary); text-decoration: none;
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; }
+.g-bar a:hover { color: var(--s-color-text-primary); text-decoration: underline; }
+.g-bar a[aria-current="page"] { color: var(--s-color-text-primary);
+  box-shadow: inset 0 calc(-1 * var(--s-emphasis-edge-2)) 0 0 var(--s-color-text-primary); }
+.g-bar .g-brand { font-weight: 600; color: var(--s-color-text-primary); letter-spacing: 0; text-transform: none; }
+.g-bar .g-ver { margin-left: auto; color: var(--s-color-text-tertiary);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); }
+
+/* ---------- cover ---------- */
+/* The cover band is a real .aods-hero carrying data-surface="dark" — the guide opens by
+   using the system rather than describing it, and the --s-* below flip inside that scope. */
+.g-cover { padding-block: var(--s-space-5xl); }
+.g-cover .g-title { margin: var(--s-space-xl) 0 0; font-family: var(--s-font-family-doc), system-ui, sans-serif;
+  font-size: var(--s-type-display-lg-size); line-height: var(--s-type-display-lg-line-height);
+  font-weight: var(--s-font-weight-bold); color: var(--s-color-text-primary); }
+.g-cover .g-lede { margin: var(--s-space-xl) 0 0; max-width: var(--s-size-measure-prose);
+  font-size: var(--s-type-body-sm-size); line-height: var(--s-type-body-sm-line-height);
+  color: var(--s-color-text-secondary); }
+
+/* ---------- section opener: eyebrow · rule · heading · body ---------- */
+.g-section { padding-block: var(--s-space-5xl); border-top: var(--s-border-width-hairline) solid var(--s-color-border-on-page); }
+.g-section:first-of-type { border-top: 0; }
+.g-eyebrow { margin: 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--s-color-text-tertiary); }
+.g-rule { width: var(--s-space-5xl); height: var(--s-emphasis-edge-2); margin: var(--s-space-base) 0 var(--s-space-xl);
+  background: var(--s-color-accent-divider); }
+.g-heading { margin: 0; font-family: var(--s-font-family-doc), system-ui, sans-serif;
+  font-size: var(--s-type-heading-lg-size); line-height: var(--s-type-heading-lg-line-height);
+  font-weight: var(--s-font-weight-bold); color: var(--s-color-text-primary); }
+.g-body { margin: var(--s-space-base) 0 0; max-width: var(--s-size-measure-prose);
+  color: var(--s-color-text-secondary); }
+.g-body + .g-body { margin-top: var(--s-space-md); }
+
+/* ---------- the row primitive: id column + specimen + token + notes ---------- */
+.g-rows { margin-top: var(--s-space-3xl); }
+.g-row { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: var(--s-space-3xl);
+  padding-block: var(--s-space-xl);
+  border-top: var(--s-border-width-hairline) solid var(--s-color-border-divider-soft); }
+.g-row:first-child { border-top: 0; }
+@media (max-width: 800px) { .g-row { grid-template-columns: minmax(0, 1fr); gap: var(--s-space-md); } }
+
+.g-id b { display: block; font-size: var(--s-type-ui-md-size); letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--s-color-text-primary); }
+.g-id .g-sub { display: block; margin-top: var(--s-space-2xs);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+
+.g-specimen { min-width: 0; }
+.g-token { margin: var(--s-space-md) 0 0; font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); color: var(--s-color-accent-base); word-break: break-all; }
+.g-note { margin: var(--s-space-sm) 0 0; font-size: var(--s-type-ui-sm-size);
+  line-height: var(--s-type-ui-sm-line-height); color: var(--s-color-text-secondary); }
+.g-note b { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  color: var(--s-color-text-tertiary); font-weight: 400; }
+.g-note [data-resolve] { display: block; }
+.g-used { display: block; margin-top: var(--s-space-2xs);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); line-height: var(--s-type-code-md-line-height);
+  color: var(--s-color-text-tertiary); }
+.g-flip { display: inline-block; margin-left: var(--s-space-sm); padding: 0 var(--s-space-xs);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size);
+  color: var(--s-color-text-tertiary);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-page); }
+
+/* ---------- do / dont ---------- */
+.g-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--s-space-xl);
+  margin-top: var(--s-space-base); }
+.g-case { padding: var(--s-space-base); background: var(--s-color-surface-raised);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.g-case .g-kicker { margin: 0 0 var(--s-space-sm); font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); letter-spacing: 0.06em; text-transform: uppercase; }
+.g-case[data-case="ok"]  { box-shadow: calc(-1 * var(--s-emphasis-edge-2)) 0 0 0 var(--s-color-status-success-base); }
+.g-case[data-case="ok"]  .g-kicker { color: var(--s-color-status-success-text); }
+.g-case[data-case="bad"] { box-shadow: calc(-1 * var(--s-emphasis-edge-2)) 0 0 0 var(--s-color-status-error-base); }
+.g-case[data-case="bad"] .g-kicker { color: var(--s-color-status-error-text); }
+.g-case pre { margin: 0; white-space: pre-wrap; word-break: break-word;
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); line-height: var(--s-type-code-sm-line-height);
+  color: var(--s-color-text-primary); }
+
+/* ---------- swatches ---------- */
+.g-ramp { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
+.g-swatch { min-height: 88px; padding: var(--s-space-sm); display: flex; flex-direction: column; justify-content: flex-end;
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); }
+.g-swatch span { display: block; }
+.g-duo { display: grid; grid-template-columns: 1fr 1fr; min-height: 64px; }
+.g-duo > div { padding: var(--s-space-sm); display: flex; align-items: flex-end;
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); }
+
+/* ---------- measure bars ---------- */
+.g-bar-viz { height: var(--s-space-md); background: var(--s-color-accent-divider); }
+
+/* ---------- component entries ---------- */
+.g-demo { margin: var(--s-space-base) 0 0; padding: var(--s-space-xl);
+  background: var(--s-color-surface-raised);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.g-demo .row { display: flex; flex-wrap: wrap; column-gap: var(--s-space-md); row-gap: var(--s-space-md); align-items: center; }
+.g-demo .stack { display: flex; flex-direction: column; gap: var(--s-space-md); }
+/* Specimens ship as a sequence of sibling .row / .stack blocks with no margins of
+   their own. Without this the rows butt together and a 48px control in one row
+   collides with a 40px control in the next. The separation is documentation
+   CSS, not a system value the specimen is claiming. */
+.g-demo > * + * { margin-top: var(--s-space-base); }
+.g-demo > .cap, .g-demo .cap { margin-bottom: 0; }
+.g-props { margin: var(--s-space-base) 0 0; width: 100%; border-collapse: collapse;
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace; font-size: var(--s-type-code-sm-size); }
+.g-props th, .g-props td { text-align: left; vertical-align: top; padding: var(--s-space-sm) var(--s-space-md) var(--s-space-sm) 0;
+  border-bottom: var(--s-border-width-hairline) solid var(--s-color-border-divider-soft); }
+.g-props th { width: 1%; color: var(--s-color-text-tertiary); font-weight: 400; white-space: nowrap; padding-right: var(--s-space-2xl); }
+.g-props td { color: var(--s-color-text-primary); }
+
+/* ---------- contents cards ---------- */
+.g-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--s-space-xl);
+  margin-top: var(--s-space-3xl); }
+.g-card { display: block; padding: var(--s-space-xl); text-decoration: none;
+  background: var(--s-color-surface-raised);
+  border: var(--s-border-width-hairline) solid var(--s-color-border-on-raised); }
+.g-card:hover { box-shadow: calc(-1 * var(--s-emphasis-edge-2)) 0 0 0 var(--s-color-emphasis-edge); }
+.g-card h3 { margin: 0; font-family: var(--s-font-family-doc), system-ui, sans-serif;
+  font-size: var(--s-type-heading-xs-size); color: var(--s-color-text-primary); }
+.g-card p { margin: var(--s-space-sm) 0 0; color: var(--s-color-text-secondary); }
+.g-card .g-count { display: block; margin-top: var(--s-space-md);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+
+/* ---------- foot ---------- */
+.g-foot { padding-block: var(--s-space-3xl); border-top: var(--s-border-width-hairline) solid var(--s-color-border-on-page);
+  font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+  font-size: var(--s-type-code-sm-size); color: var(--s-color-text-tertiary); }
+
+@media print { .g-bar, .g-skip { display: none; } .g-section { break-inside: avoid; } }
+
+/* the way out (2026-08-25) — see guide.js bar() */
+.g-bar .g-back { color: var(--s-color-action-link); font-weight: 600; letter-spacing: 0; text-transform: none; }
+
+/* ---------------------------------------------------------------- MOTION (M46, 2026-08-30) */
+/* The guide's own CSS, so it binds --s-* and not --c-*: this is documentation, not a component.
+   Nothing here animates on load. Every move is started by a control, and the whole page goes
+   still under prefers-reduced-motion - a motion page that ignores that contract is the worst
+   possible place to ignore it. */
+.g-num { font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+         font-size: var(--s-type-heading-sm-size, 20px);
+         line-height: var(--s-type-heading-sm-line-height, 24px);
+         font-variant-numeric: tabular-nums; }
+.g-play { appearance: none; cursor: pointer; margin-left: var(--s-space-md, 12px);
+          padding: var(--s-space-xs, 4px) var(--s-space-md, 12px);
+          font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+          font-size: var(--s-type-ui-xs-size, 11px); text-transform: uppercase; letter-spacing: .06em;
+          color: var(--s-color-text-primary, #262321);
+          background: var(--s-color-surface-raised, #fff);
+          border: var(--s-border-width-hairline, 1px) solid var(--s-color-border-on-page, #d4ceca); }
+.g-play:hover { background: var(--s-color-surface-sunken, #f7f5f5); }
+.g-play:focus-visible { outline: var(--s-focus-width, 2px) solid var(--s-color-focus-ring, #017097);
+                        outline-offset: var(--s-focus-gap, 2px); }
+.g-ease { display: flex; align-items: center; gap: var(--s-space-base, 16px); }
+.g-ease-track { position: relative; flex: 1 1 auto; min-width: 0; height: var(--s-space-xl, 24px);
+                background: var(--s-color-surface-sunken, #f7f5f5); }
+.g-ease-dot { position: absolute; inset-block: var(--s-space-xs, 4px);
+              inset-inline-start: var(--s-space-xs, 4px); width: var(--s-space-base, 16px);
+              background: var(--s-color-action-link, #017097); }
+.g-ease-plot { flex: none; width: 56px; height: 56px;
+               background: var(--s-color-surface-sunken, #f7f5f5); }
+.g-ease-plot path { fill: none; stroke: var(--s-color-action-link, #017097); stroke-width: 4;
+                    vector-effect: non-scaling-stroke; }
+.g-kf-stage { margin-top: var(--s-space-sm, 8px); padding: var(--s-space-base, 16px);
+              background: var(--s-color-surface-sunken, #f7f5f5); }
+.g-kf-box { display: inline-block; padding: var(--s-space-sm, 8px) var(--s-space-base, 16px);
+            font-family: var(--s-font-family-doc-mono), ui-monospace, monospace;
+            font-size: var(--s-type-ui-xs-size, 11px);
+            color: var(--s-color-text-on-action, #fff);
+            background: var(--s-color-action-link, #017097); }
+@media (prefers-reduced-motion: reduce) {
+  /* the contract, applied to the page that documents it */
+  .g-ease-dot, .g-kf-box, .g-bar-viz { transition: none !important; animation: none !important; }
+  .g-play { opacity: .4; cursor: not-allowed; }
+}
+
+/* ---------- layout page ---------- */
+/* The width variants and the truncate demo are drawn live rather than described: the whole
+   question is what max-content and 1fr actually resolve to, and a picture of that would only be
+   an assertion. Each one reports its own numbers, measured after the fonts resolve. */
+.g-lay-row { display: grid; align-items: stretch; background: var(--s-color-surface-sunken);
+  box-shadow: 0 0 0 1px var(--s-color-border-on-sunken); }
+.g-lay-cell { padding: var(--s-space-sm) var(--s-space-md); min-width: 0; }
+.g-lay-cell[data-w="hug"] { background: var(--s-color-surface-raised); }
+.g-lay-cell span { font-family: var(--s-font-family-doc-mono); font-size: var(--s-type-code-sm-size);
+  letter-spacing: .08em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.g-lay-read { margin: var(--s-space-2xs) 0 0; font-family: var(--s-font-family-doc-mono);
+  font-size: var(--s-type-code-sm-size); color: var(--s-color-text-secondary); }
+
+.g-lay-trunc { display: grid; gap: var(--s-space-2xs); max-width: 34ch; }
+.g-lay-trunc p { margin: 0; padding: var(--s-space-2xs) var(--s-space-xs);
+  background: var(--s-color-surface-raised); box-shadow: 0 0 0 1px var(--s-color-border-on-raised); }
+/* the truncate rule itself, character for character what .aods-tabs__fold-label ships */
+.g-lay-clip { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.g-lay-pols { display: flex; gap: var(--s-space-lg); flex-wrap: wrap; }
+.g-lay-pol { display: flex; align-items: center; gap: var(--s-space-xs); }
+.g-lay-chip { display: inline-block; width: 34px; height: 20px; }
+.g-lay-n { font-family: var(--s-font-family-doc-mono); font-variant-numeric: tabular-nums; }
+.g-lay-tag { font-family: var(--s-font-family-doc-mono); font-size: var(--s-type-code-sm-size);
+  letter-spacing: .06em; text-transform: uppercase; color: var(--s-color-text-tertiary); }
+.g-lay-pol[data-band="out"] .g-lay-tag { color: var(--s-color-status-warning-text); }
+.g-lay-na { color: var(--s-color-text-tertiary); }
+
+/* 2026-09-02, found by a render sweep before a demo. Two documentation overflows, neither a
+   system defect: a <pre> holding a one-line declaration list could not wrap (layout.html
+   pushed the page 60px at 901), and the button specimen is a 7-column max-content matrix
+   that cannot fit a narrow column (components.html pushed 315px at 901). Code wraps; a
+   specimen matrix scrolls inside its own frame so the PAGE never scrolls sideways. */
+.g-demo pre, .g-specimen pre, .g-row pre { white-space: pre-wrap; }
+.g-demo { overflow-x: auto; }
+/* the element grammar is one unbroken token - .aods-prose > (h1|h2|h3|p|ul|ol|table|figure...) -
+   with no spaces to break at, so it pushed components.html 142px at 901. It is prose, not a
+   value, so it wraps rather than truncates. */
+.g-note, .g-id { overflow-wrap: anywhere; }
