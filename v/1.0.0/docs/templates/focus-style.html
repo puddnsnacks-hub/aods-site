@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Focus style — AODS page template</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- LINKS the system, never copies it. Fonts come with dist/tokens.css (one @font-face per file, emitted by the build). -->
+<link rel="stylesheet" href="../../dist/tokens.css">
+<link rel="stylesheet" href="../../dist/aods.css">
+<link rel="stylesheet" href="templates.css">
+<script src="../../dist/aods.js" defer></script>
+<script src="../doc-header.js" defer></script>
+<script src="focus-style.js" defer></script>
+
+<body class="aods-page">
+<!-- slot: skip-link — first element in body; target is main#main -->
+<a class="aods-skip-link" href="#main">Skip to main content</a>
+<!-- slot: header — sticky; the utility bar is always dark -->
+<header class="aods-header">
+  <div class="aods-header__utility" data-surface="dark"><div class="aods-header__content"><ul class="aods-header__utility-links"><li><a class="aods-header__utility-link" href="#">Help</a></li><li><a class="aods-header__utility-link" href="#">Contact</a></li><li><a class="aods-header__utility-link" href="#">Sign in</a></li></ul></div></div>
+  <div class="aods-header__bar"><div class="aods-header__content">
+    <a class="aods-header__lockup" href="#"><svg class="aods-header__logo" data-identity="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M2 2H12L46 36V46H36L2 12Z"/><path d="M10 28L20 38L12 46H2V36Z"/><path d="M28 10L36 2H46V12L38 20Z"/></svg><span class="aods-header__brand" data-identity="wordmark">Site name</span></a>
+    <button class="aods-header__menu" type="button" aria-label="Menu" aria-expanded="false"><svg class="aods-icon aods-header__menu-open" aria-hidden="true"><use href="#aods-menu"></use></svg><svg class="aods-icon aods-header__menu-close" aria-hidden="true"><use href="#aods-close"></use></svg></button>
+    <div class="aods-header__drawer"><nav aria-label="Primary"><ul class="aods-header__nav"><li><a class="aods-header__nav-item" href="#" aria-current="page">About</a></li><li><button class="aods-header__nav-item" type="button" aria-expanded="false" aria-controls="mega-programs">Topics</button></li><li><a class="aods-header__nav-item" href="#">News</a></li><li><button class="aods-header__nav-item" type="button" aria-expanded="false" aria-controls="mega-resources">Resources</button></li></ul></nav><form class="aods-header__search" role="search" onsubmit="return false"><label class="aods-sr-only" for="site-search-2">Search this site</label><input class="aods-input" id="site-search-2" type="search" placeholder="Search this site"><button class="aods-button" data-variant="primary" data-icon="only" aria-label="Search"><svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-search"></use></svg></button></form></div>
+  </div></div>
+  <div class="aods-header__mega" id="mega-programs" hidden><div class="aods-header__content"><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Guides</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Getting started</a></li><li><a class="aods-header__mega-link" href="#">Common tasks</a></li><li><a class="aods-header__mega-link" href="#">How-to articles</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Reference</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Terms</a></li><li><a class="aods-header__mega-link" href="#">Glossary</a></li><li><a class="aods-header__mega-link" href="#">Standards</a></li><li><a class="aods-header__mega-link" href="#">Index</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Updates</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Recent changes</a></li><li><a class="aods-header__mega-link" href="#">Announcements</a></li><li><a class="aods-header__mega-link" href="#">Archive</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Help</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Questions</a></li><li><a class="aods-header__mega-link" href="#">Support</a></li><li><a class="aods-header__mega-link" href="#">Feedback</a></li></ul></div></div></div>
+  <div class="aods-header__mega" id="mega-resources" hidden><div class="aods-header__content"><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Data</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Data</a></li><li><a class="aods-header__mega-link" href="#">Dashboards</a></li><li><a class="aods-header__mega-link" href="#">Open data</a></li></ul></div><div class="aods-header__mega-column"><p class="aods-header__mega-heading">Documents</p><ul class="aods-header__mega-list"><li><a class="aods-header__mega-link" href="#">Forms</a></li><li><a class="aods-header__mega-link" href="#">Annual reports</a></li><li><a class="aods-header__mega-link" href="#">Plan</a></li></ul></div></div></div>
+</header>
+<!-- slot: main — the skip-link target; one container, sections stacked inside -->
+<main id="main" tabindex="-1">
+<section class="aods-ground"><div class="aods-layout" data-kind="container" data-width="set" data-set="page"><div class="aods-layout" data-kind="stack" data-gap="xl">
+<!-- breadcrumb -->
+<nav class="aods-breadcrumb" aria-label="Breadcrumb"><ol class="aods-breadcrumb__list"><li><a class="aods-breadcrumb__link" href="landing.html">Home</a></li><li><a class="aods-breadcrumb__link" href="#">Accessibility</a></li><li><span class="aods-breadcrumb__current" aria-current="page">Focus style</span></li></ol></nav>
+<!-- section-heading — display scale carries the h1 -->
+<header class="aods-section-heading" data-scale="display"><p class="aods-eyebrow">Accessibility</p><div class="aods-section-heading__row"><h1 class="aods-section-heading__heading">Choose how focus looks</h1></div><p class="aods-section-heading__lede">Pick the focus indicator that works best for you. It applies right away, everywhere on this site.</p></header>
+<!-- prose — plain-language intro -->
+<article class="aods-prose"><p>When you move through a page with the Tab key, a ring appears around the thing you are on — a button, a link, a box to type in. That ring is called the focus indicator. It is how you know where you are, the same way a cursor shows where you are typing.</p><p>One size does not fit everyone. Some people want a thin, quiet ring. Some want a thick one that is easy to find on a busy page. Some want a color that stands out no matter what is behind it. Here you can choose for yourself — pick a style below and it takes effect immediately, on every page of this site.</p></article>
+<!-- the chooser — fieldset + real radios; the label wraps the whole card; selecting applies immediately -->
+<fieldset class="t-choices" data-focus-chooser>
+<legend class="aods-form__legend">Pick a focus style</legend>
+<label class="t-choice" data-style="standard">
+  <span class="t-choice__head"><input class="aods-radio__control t-choice__control" type="radio" name="focus-style" value="standard" checked><span>Standard</span></span>
+  <span class="t-choice__desc">The site&rsquo;s default: a teal ring, 3&nbsp;pixels wide, sitting just outside whatever you are on.</span>
+  <span class="t-choice__stage" aria-hidden="true"><span class="aods-button t-focus-sample" data-variant="secondary">Sample</span></span>
+</label>
+<label class="t-choice" data-style="highlight">
+  <span class="t-choice__head"><input class="aods-radio__control t-choice__control" type="radio" name="focus-style" value="highlight"><span>Highlight</span></span>
+  <span class="t-choice__desc">A thick periwinkle ring, 8&nbsp;pixels wide with extra breathing room — easy to spot from across the page.</span>
+  <span class="t-choice__stage" aria-hidden="true"><span class="aods-button t-focus-sample" data-variant="secondary">Sample</span></span>
+</label>
+<label class="t-choice" data-style="contrast">
+  <span class="t-choice__head"><input class="aods-radio__control t-choice__control" type="radio" name="focus-style" value="contrast"><span>High visibility</span></span>
+  <span class="t-choice__desc">A near-black ring with a bright yellow band inside it — the pair keeps its contrast on light and dark backgrounds alike.</span>
+  <span class="t-choice__stage" aria-hidden="true"><span class="aods-button t-focus-sample" data-variant="secondary">Sample</span></span>
+</label>
+</fieldset>
+<!-- try it — real controls; tab through them to feel the chosen style -->
+<header class="aods-section-heading"><div class="aods-section-heading__row"><h2 class="aods-section-heading__heading">Try it</h2></div><p class="aods-section-heading__lede">Tab through these to feel it.</p></header>
+<div class="t-try">
+  <button class="aods-button" data-variant="primary" type="button">A button</button>
+  <div class="aods-field"><label class="aods-label" for="fs-try-input">A text box</label><input class="aods-input" id="fs-try-input" type="text"></div>
+  <a class="aods-link" href="#">A link</a>
+  <label class="aods-checkbox"><input class="aods-checkbox__control" type="checkbox"> A checkbox</label>
+</div>
+<p class="t-focus-note">Your choice is saved in this browser and remembered whenever you come back to this site.</p>
+</div></div>
+</section>
+</main>
+<!-- slot: footer — always the dark variant -->
+<footer class="aods-footer" data-surface="dark">
+  <div class="aods-footer__band" data-band="top"><div class="aods-footer__content">
+    <div class="aods-footer__agency"><div class="aods-footer__lockup"><svg class="aods-footer__logo" data-identity="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M2 2H12L46 36V46H36L2 12Z"/><path d="M10 28L20 38L12 46H2V36Z"/><path d="M28 10L36 2H46V12L38 20Z"/></svg><p class="aods-footer__brand" data-identity="wordmark">Site name</p></div><address class="aods-footer__address">Street address<br>City, region, postal code<br>Phone number</address></div>
+    <form class="aods-footer__newsletter" onsubmit="return false"><p class="aods-footer__heading">Stay connected</p><p class="aods-footer__description">Get news and updates by email.</p><label class="aods-label" for="footer-email-1">Email address</label><div class="aods-footer__subscribe"><input class="aods-input" id="footer-email-1" type="email"><button class="aods-button" data-variant="primary">Subscribe</button></div></form>
+  </div></div>
+  <details class="aods-footer__band" data-band="nav" open><summary class="aods-footer__sitemap">Site map</summary><nav class="aods-footer__content" aria-label="Footer"><div class="aods-footer__columns"><div class="aods-footer__column"><p class="aods-footer__heading">About us</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">Mission</a></li><li><a class="aods-footer__link" href="#">Team</a></li><li><a class="aods-footer__link" href="#">Careers</a></li><li><a class="aods-footer__link" href="#">Reports</a></li><li><a class="aods-footer__link" href="#">Plan</a></li></ul></div><div class="aods-footer__column"><p class="aods-footer__heading">Topics</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">Guides</a></li><li><a class="aods-footer__link" href="#">Reference</a></li><li><a class="aods-footer__link" href="#">Updates</a></li><li><a class="aods-footer__link" href="#">Help</a></li><li><a class="aods-footer__link" href="#">Index</a></li></ul></div><div class="aods-footer__column"><p class="aods-footer__heading">Connect</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">News</a></li><li><a class="aods-footer__link" href="#">Subscribe</a></li><li><a class="aods-footer__link" href="#">Events</a></li><li><a class="aods-footer__link" href="#">Community</a></li><li><a class="aods-footer__link" href="#">Contact us</a></li></ul></div><div class="aods-footer__column"><p class="aods-footer__heading">Resources</p><ul class="aods-footer__list"><li><a class="aods-footer__link" href="#">Forms</a></li><li><a class="aods-footer__link" href="#">Reports</a></li><li><a class="aods-footer__link" href="#">Data</a></li><li><a class="aods-footer__link" href="#">Performance</a></li><li><a class="aods-footer__link" href="#">Open data</a></li></ul></div></div></nav></details>
+  <div class="aods-footer__band" data-band="social"><div class="aods-footer__content"><p class="aods-footer__social-label">Connect with us:</p><ul class="aods-footer__socials"><li><a class="aods-footer__social" href="#" aria-label="Feed one"><svg class="aods-icon" aria-hidden="true"><use href="#aods-external"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="Feed two"><svg class="aods-icon" aria-hidden="true"><use href="#aods-external"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="Feed three"><svg class="aods-icon" aria-hidden="true"><use href="#aods-external"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="Feed four"><svg class="aods-icon" aria-hidden="true"><use href="#aods-external"></use></svg></a></li><li><a class="aods-footer__social" href="#" aria-label="Feed five"><svg class="aods-icon" aria-hidden="true"><use href="#aods-external"></use></svg></a></li></ul></div></div>
+  <div class="aods-footer__band" data-band="compliance"><nav class="aods-footer__content" aria-label="Policies"><ul class="aods-footer__compliance"><li><a class="aods-footer__link" href="#">Privacy policy</a></li><li><a class="aods-footer__link" href="#">Data requests</a></li><li><a class="aods-footer__link" href="#">Accessibility</a></li><li><a class="aods-footer__link" href="#">Code of conduct</a></li><li><a class="aods-footer__link" href="#">Content standards</a></li><li><a class="aods-footer__link" href="#">Help center</a></li><li><a class="aods-footer__link" href="#">Writing guide</a></li><li><a class="aods-footer__link" href="#">Site policies</a></li></ul></nav></div>
+  <div class="aods-footer__band" data-band="copyright"><div class="aods-footer__content"><p class="aods-footer__legal"><span data-identity="wordmark">Site name</span> · Street address · City, region, postal code</p></div></div>
+</footer>
+</body>
+</html>

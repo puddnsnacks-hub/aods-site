@@ -431,7 +431,8 @@ bottom-sheet                                              <dialog>
 NAME      aria-labelledby := __title's id at bind, unless aria-labelledby is  #bottom-sheet.name
           present
 OPEN      remember the opener → showModal() with data-modal or from 48em, which
-          makes the page behind inert; show() otherwise → focus [autofocus],
+          makes the page behind inert; show() otherwise; the choice is made
+          once, at open, and holds until close → focus [autofocus],
           else __grabber, else the first focusable → fire `aods:open`   #bottom-sheet.open
   click a [data-sheet-open=<id>] button
                                  → open that dialog

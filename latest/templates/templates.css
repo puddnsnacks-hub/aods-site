@@ -17,7 +17,6 @@
 
 /* Template pages (templates/<slug>.html): the Close-template control.
    Kept out of the pages so they carry no page CSS of their own (index/laws.json, the template law). */
-.tpl-return { position: fixed; z-index: 2147483000; inset-block-end: var(--s-space-base); inset-inline-end: var(--s-space-base);
-  box-shadow: var(--s-elevation-overlay); }
+.tpl-return { display: flex; justify-content: flex-end; padding: var(--s-space-base); }
 html[data-shot] .tpl-return { display: none; }
 @media print { .tpl-return { display: none; } }

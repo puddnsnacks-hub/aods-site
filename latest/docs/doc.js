@@ -51,7 +51,7 @@ for (const t of M.laws.topics) {
   rules.append(h("li", { class: "law-topic", id: "law-" + t.id, ...since }, `<b>${esc(t.id)}</b><div><span>${esc(t.gloss)}</span></div>`));
   for (const l of rows) {
     const g = [].concat(l.gate || []).join(" ");
-    rules.append(h("li", { id: "law-" + l.id, "data-law": l.id, ...(l.changedSince ? { "data-changed-since": l.changedSince } : {}), ...since }, `<b>${esc(g || "unchecked")}</b><div><span>${esc(l.law)}</span>
+    rules.append(h("li", { id: "law-" + l.id, "data-law": l.id, ...(l.changedSince ? { "data-changed-since": l.changedSince } : {}), ...since }, `<b>${esc(g || "unchecked")}</b><div><span>${esc(l.law)}</span>${l.unchecked ? `<span class="law-unchecked">Unchecked: ${esc(l.unchecked)}</span>` : ""}
   ${l.ok ? `<pre class="ex ok"><span class="ex-tag">passes</span>${esc(l.ok)}</pre>` : ""}${l.bad ? `<pre class="ex bad"><span class="ex-tag">fails</span>${esc(l.bad)}</pre>` : ""}</div>`));
   }
 }

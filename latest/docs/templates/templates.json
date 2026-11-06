@@ -198,6 +198,7 @@
       "conv-typing",
       "conv-chip",
       "conv-composer",
+      "bottom-sheet",
       "footer"
     ],
     "purpose": "An AI assistant page: the header, a title, and the whole conversational exchange in a container, or in a bottom sheet in the sheet variant.",

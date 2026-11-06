@@ -263,3 +263,5 @@ html { scroll-behavior: auto; }   /* documentation JUMPS to an anchor, same ruli
    with no spaces to break at, so it pushed components.html 142px at 901. It is prose, not a
    value, so it wraps rather than truncates. */
 .g-note, .g-id { overflow-wrap: break-word; }
+.g-props td, .g-props th { overflow-wrap: anywhere; }
+.g-heading { overflow-wrap: anywhere; }

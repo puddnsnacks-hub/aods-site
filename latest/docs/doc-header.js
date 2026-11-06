@@ -63,7 +63,12 @@
     var ok = function (id) { return data().list.some(function (x) { return x.id === id; }); };
     var read = function () { try { return localStorage.getItem(KEY); } catch (e) { return null; } };
     var write = function (id) { try { localStorage.setItem(KEY, id); } catch (e) {} };
-    var attr = function (id) { if (id === data().house || !id) document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", id); };
+    var sheet = function (id) {                      /* a theme ships as one stylesheet, dist/themes/<id>.css; the house is tokens.css */
+      var old = document.querySelector("link[data-aods-theme]"); if (old) old.remove();
+      if (!id || id === data().house) return;
+      var l = document.createElement("link"); l.rel = "stylesheet"; l.setAttribute("data-aods-theme", id); l.href = ROOT + "dist/themes/" + id + ".css"; document.head.appendChild(l);
+    };
+    var attr = function (id) { sheet(id); if (id === data().house || !id) document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", id); };
     var current = null;
     var start = function () {                        /* once the theme list is known */
       if (started || !data().list.length) return;
@@ -201,7 +206,7 @@
 
     var search =
       '<form class="aods-header__search" role="search" method="get" action="' + DOCS + 'index.html">' +
-      '<input class="aods-input" type="search" name="q" aria-label="Search the system" placeholder="Search the system">' +
+      '<label class="aods-sr-only" for="doc-search">Search the system</label><input class="aods-input" id="doc-search" type="search" name="q" placeholder="Search the system">' +
       '<button class="aods-button" data-variant="primary" data-icon="only" aria-label="Search" type="submit">' +
       '<svg class="aods-icon aods-button__icon" aria-hidden="true"><use href="#aods-search"></use></svg></button></form>';
 

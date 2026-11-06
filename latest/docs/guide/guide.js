@@ -142,7 +142,7 @@ const SHOW_WEIGHT_TRACKING = false;
 const ROLE_FAMILY = { ui: "s.font.family.ui", body: "s.font.family.body", heading: "s.font.family.heading", display: "s.font.family.display", code: "s.font.family.code" };
 const FACE_STEP = { ui: "ui-2xl", body: "body-md", heading: "heading-md", display: "display-xs", code: "code-lg", doc: "body-sm", "doc-mono": "code-md" };
 const SAMPLE = {
-  display: "Build big, beautiful infrastructure.",
+  display: "Build big, beautiful things.",
   heading: "Nine Program Offices",
   body:    "Transportation is central to the strength of our Nation and its economy.",
   ui:      "Download the Plan",
@@ -687,7 +687,7 @@ function wireMotion() {
 const lawsOf = (...topics) => ((M.laws && M.laws.laws) || []).filter(l => topics.includes(l.topic));
 const lawGate = l => [].concat(l.gate || []).join(" ") || "unchecked";
 const lawRows = list => rows(list.map(l =>
-  row(lawGate(l), null, `<p class="g-body" style="margin:0">${esc(l.law)}</p>`, null, null)));
+  row(lawGate(l), null, `<p class="g-body" style="margin:0">${esc(l.law)}</p>${l.unchecked ? `<p class="g-note">Unchecked: ${esc(l.unchecked)}</p>` : ""}`, null, null)));
 
 function layNum(v) { const n = parseFloat(v); return isNaN(n) ? null : n; }
 
@@ -894,7 +894,8 @@ function pageLayers(main) {
   for (const l of lawsOf("layers")) list.append(lawRow(l, row(lawGate(l), l.kind, `<p class="g-body" style="margin:0">${esc(l.law)}</p>`, null, null)));
   incl.append(list); main.append(incl);
   const siteOpener = opener("A SITE", "A site pins one version", [
-    "A site lists itself in site.json: its name, the AODS version it pins, the layers and the theme it uses, and its pages, each with its template and its component order. Its pages link the pinned path and nothing else from AODS."
+    "A site lists itself in site.json: its name, the AODS version it pins, the layers and the theme it uses, and its pages, each with its template and its component order. Its pages link the pinned path and nothing else from AODS.",
+    "Each page takes id, template, title, path and order. The order is the template's order with insertions only: every component of the template stays, in its place, and the page inserts what it adds, each component once, at its first use. A page never drops one, so pick the template whose order the page holds; for a page that holds few of them, start from shell, whose order is skip-link, site-alert, header, layout, section-heading, prose, footer, and give the page those. The manifest's pages list each template's order."
   ]);
   siteOpener.append(el("pre", "g-token", esc(JSON.stringify({ name: "…", aods: { version: M.version, base: `/v/${M.version}/` }, layers: [{ id: "…", version: "…" }], theme: M.themes.default, pages: [{ id: "…", template: "shell", title: "…", path: "/", order: ["…"] }] }, null, 2))));
   main.append(siteOpener);
